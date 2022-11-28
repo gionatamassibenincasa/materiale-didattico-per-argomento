@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+
+title Casi d'uso
+
+actor Gestore
+actor Utente
+
+rectangle SoftwarePalestra {
+ rectangle Database {
+  usecase (Elenco degli iscritti a ogni corso) as p1
+  usecase (Numero dei posti liberi in ciascun corso) as p2
+  usecase (Elenco dei corsi tenuti da ogni istruttore) as p3
+  usecase (Elenco dei clienti con certificato medico scaduto) as p4
+ }
+
+ rectangle Web {
+  usecase (Visualizza informazioni corsi) as w1
+  usecase (Visualizza dettagli corso) as w2
+  usecase (Visualizza orario) as w3
+ }
+}
+
+Gestore --> Database
+Utente --> w1
+
+w1 ..> w2 : include
+w1 ..> w3 : include
+w1 ..> p2 : include
+@enduml

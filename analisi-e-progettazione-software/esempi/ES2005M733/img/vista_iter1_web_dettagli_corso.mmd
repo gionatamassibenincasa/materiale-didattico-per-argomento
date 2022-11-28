@@ -1,0 +1,10 @@
+classDiagram
+ class CorsoOfferto {
+  descrizione
+ }
+ class Corso {
+  descrizione
+ }
+
+ CorsoOfferto "0..n" -- "1" Corso
+ CorsoOfferto "0..n" -- "1" Istruttore : impartire

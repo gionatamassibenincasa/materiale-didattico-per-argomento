@@ -1,0 +1,13 @@
+@startuml
+
+Professore --> (Appello)
+(Scelta classe) --> (Appello)
+(Registrazione assenza) --> (Appello)
+(Registrazione giustificazione) --> (Appello)
+Professore --> (Registrazione interrogazione)
+(Scelta argomento) --> (Registrazione interrogazione)
+(Scelta interrogandi) --> (Registrazione interrogazione)
+(Proposta quesiti) --> (Registrazione interrogazione)
+(Valutazione) -->  (Registrazione interrogazione)
+
+@enduml

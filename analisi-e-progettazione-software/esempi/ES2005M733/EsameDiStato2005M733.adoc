@@ -1,0 +1,215 @@
+= Gestione informatizzata di una palestra (Esame di Stato M733/2005)
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+2022-09-27: prima versione Asciidoc
+:source-highlighter: highlight-js
+____
+📝 Il testo è disponinibile
+nell'https://www.istruzione.it/esame_di_stato/Secondo_Ciclo/tracce_prove_scritte/2005/tecnica/M733.pdf[archivio
+del Ministero dell'Istruzione]
+____
+
+== Descrizione del problema
+
+Una palestra vuole informatizzare la gestione dei *corsi* _offerti_ alla
+propria clientela che si caratterizzano per:
+
+* la presenza di *istruttori* _specializzati_ in ciascun corso;
+* il numero massimo di *partecipanti* variabile per ciascun corso;
+* l'*offerta* dello stesso corso in diversi *orari* della giornata;
+* la _partecipazione_ al corso con idoneo certificato medico di durata
+annuale.
+
+Organizzare un database in grado di fornire le seguenti informazioni:
+
+[arabic]
+. elenco degli iscritti a ogni corso
+. numero dei posti liberi in ciascun corso
+. elenco dei corsi _tenuti_ da ogni istruttore
+. elenco dei clienti con certificato medico scaduto e,
+
+dopo aver
+
+* descritto le caratteristiche dell'applicativo che si intende
+utilizzare,
+* elaborato il progetto dell'applicazione complessiva, comprendente
+l'analisi, lo schema, la definizione dei dati e il menu di scelta,
+
+realizzare almeno uno dei quattro punti sopra indicati utilizzando
+l'applicativo descritto.
+
+Progettare, infine, la pagina web con la quale la palestra presenta alla
+clientela i corsi, le relative caratteristiche e gli orari.
+
+Dati mancanti opportunamente scelti.
+
+== Soluzione
+
+=== Glossario di progetto
+
+[width="100%",cols="13%,41%,20%,5%,21%",options="header",]
+|===
+|Termine |Descrizione |Sinonimi |Omonimi |Termini correlati
+|Partecipante |Una persona che frequenta la palestra |Clientela,
+Cliente, Iscritto | |
+
+|Istruttore |Una persona che impartisce uno o più corsi | | |
+
+|Corso |Corso che la palestra intende offrire | |Offerta |Istruttore,
+Offerta
+
+|Corso offerto |Un corso in un certo orario impartito da un istruttore |
+|corso |Corso, Istruttore, Partecipante
+
+|Orario |Periodo durante il quale un corso offerto viene impartito | |
+|Corso Offerto
+
+|Partecipazione |La partecipazione di un partecipante ad un corso
+offerto |Iscrizione | |Partecipante, Corso offerto
+
+|Specializzazione |Abilitazione di un istruttore per impartire un corso
+| | |Istruttore, Corso
+|===
+
+=== Definizione delle specifiche
+
+==== Casi d'uso
+
+[plantuml,usecases,svg,align="center"]
+----
+include::img/usecases_diagram.puml[]
+----
+
+=== Requisiti
+
+==== Database
+
+[mermaid,db_requirements,svg,align="center"]
+----
+include::img/db_requirements.mmd[]
+----
+
+==== Sito web
+
+[mermaid,web_requirements,svg,align="center"]
+----
+include::img/web_requirements.mmd[]
+----
+
+=== Analisi
+
+==== Diagramma delle classi di analisi
+
+==== Vista delle classi per la specifica elenco_iscritti
+
+[mermaid,vista_iter1_elenco_iscritti,svg,align=center]
+----
+include::img/vista_iter1_elenco_iscritti.mmd[]
+----
+
+* Un partecipante può partecipare a più corsi offerti.
+* Un corso può avere più partecipanti
+* Un corso offerto si riferisce ad un solo corso
+* Un corso può essere offerto zero o più volte
+
+==== Vista delle classi per la specifica posti_liberi
+
+[mermaid,vista_iter1_posti_liberi,svg,align=center]
+----
+include::img/vista_iter1_posti_liberi.mmd[]
+----
+
+* Si suppone che ogni corso offerto possa indicare un numero massimo di
+partecipanti
+
+____
+📝 La scelta di inserire l'attributo sul numero di massimo di
+partecipanti in CorsoOfferto piuttosto che in corso è arbitraria e non
+indicata nel testo. Si suppone che il numero di posti possa variare
+anche per lo stesso corso.
+____
+
+==== Vista delle classi per la specifica corsi_per_istruttore
+
+[mermaid,vista_iter1_corsi_per_istruttore,svg,align=center]
+----
+include::img/vista_iter1_corsi_per_istruttore.mmd[]
+----
+
+* Un istruttore impartisce zero o più corsi offerti per cui è
+specializzato
+* Un corso offerto ha esattamente un istruttore
+* Un istruttore è specializzato in almeno un corso
+* Un corso può avere molti istruttori che vi sono specializzati
+
+==== Vista delle classi per la specifica certificati_scaduti
+
+[mermaid,vista_iter1_certificati_scaduti,svg,align=center]
+----
+include::img/vista_iter1_certificati_scaduti.mmd[]
+----
+
+* Un partecipante ha un solo certificato memorizzato nel sistema
+
+==== Vista delle classi per la specifica web_dettagli_corso
+
+[mermaid,vista_iter1_web_dettagli_corso,svg,align=center]
+----
+include::img/vista_iter1_web_dettagli_corso.mmd[]
+----
+
+==== Vista delle classi per la specifica web_orario_corso
+
+[mermaid,vista_iter1_web_orario_corso,svg,align=center]
+----
+include::img/vista_iter1_web_orario_corso.mmd[]
+----
+
+==== Integrazione delle viste
+
+[mermaid,vista_iter2_class_diagram,svg,align=center]
+----
+include::img/vista_iter2_class_diagram.mmd[]
+----
+
+==== Raffinamenti successivi
+
+Alcuni concetti sono mancanti e vanno integrati, alcuni concetti vanno raffinati, le entità vanno _normalizzate_.
+
+=== Progettazione
+
+==== Diagramma delle classi di progettazione
+
+[mermaid,class_diagram,svg,align=center]
+----
+include::img/class_diagram.mmd[]
+----
+
+==== Diagramma entità relazioni
+
+[mermaid,er_diagram,svg,align=center]
+----
+include::img/er_diagram.mmd[]
+----
+
+==== Schema delle relazioni
+
+include::relazioni/relazioni.adoc[]
+
+== Realizzazione
+
+=== Schema in SQL
+
+[source,sql]
+----
+include::sql/EsameDiStato2005M733.schema.sql[]
+----
+
+== Verifica
+
+=== Specifica 1 Query
+
+[source,sql]
+----
+include::sql/EsameDiStato2005M733.views.sql[]
+----
+

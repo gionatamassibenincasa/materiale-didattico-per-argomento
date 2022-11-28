@@ -1,0 +1,15 @@
+$CATEGORY: $course$/Codifica delle informazioni/Rappresentazione delle immagini/Codifica della lunghezza delle sequenze/Immagini a due colori/Dall'immagine codificata alla rappresentazione - Aperte
+
+{{#each this}}
+::Immagine codificata\: {{codifica}}::[html]<div><p>Considerando lo schema di codifica delle immagini presentato in "Computer Science Unplugged", determinare a quale carattere alfabetico assomiglia maggiormente l'immagine codificata su una griglia 5 x 5 come\:</p>
+<code>
+{{codifica}}
+</code>
+<p>La codifica avviene per righe.</br>
+Il primo numero di ogni riga &egrave; sempre relativo al numero dei pixel bianchi.</p>
+<p>Lettera {=%100%{{lettera}}#}</p>
+</div>
+
+
+{{/each}}
+

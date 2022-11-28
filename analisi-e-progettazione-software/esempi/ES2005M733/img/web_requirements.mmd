@@ -1,0 +1,66 @@
+requirementDiagram
+
+requirement w2_website {
+    id: 2
+    text: Il sito web dovrà presentare i corsi
+    risk: high
+    verifyMethod: test
+}
+
+functionalRequirement w21_elenco_corsi {
+    id: 2.1
+    text: Il sito web dovrà mostrare i corsi
+    risk: low
+    verifyMethod: test
+}
+
+requirement w22_dettagli_corso {
+    id: 2.2
+    text: Il sito web dovrà visualizzare i corsi offerti in base al corso selezionato
+    risk: low
+    verifyMethod: test
+}
+
+functionalRequirement w23_orario_corsi {
+    id: 2.3
+    text: Il sito web dovrà visualizzare l'orario del corso offerto selezionato
+    risk: high
+    verifyMethod: test
+}
+
+functionalRequirement w221_descrizione_offerta {
+    id: 2.2.1
+    text: Il sito web, selezionato un corso offerto, dovrà visualizzare la descrizione del corso selezionato
+    risk: high
+    verifyMethod: test
+}
+
+functionalRequirement w2211_istruttore {
+    id: 2.2.1.1
+    text: Il sito web, selezionato un corso offerto, dovrà visualizzare il nome e le specializzazioni dell'istruttore del corso offerto selezionato
+    risk: medium
+    verifyMethod: test
+}
+
+functionalRequirement w22111_specializzazioni {
+    id: 2.2.1.1.1
+    text: Il sito web, selezionato un corso offerto, dovrà visualizzare le specializzazioni dell'istruttore selezionato
+    risk: low
+    verifyMethod: test
+}
+
+functionalRequirement w2212_orario_offerta {
+    id: 2.2.3
+    text: Il sito web, selezionato un corso offerto, dovrà visualizzare l'orario e la sala del corso selezionato
+    risk: medium
+    verifyMethod: test
+}
+
+w2_website - contains -> w21_elenco_corsi
+w2_website - contains -> w22_dettagli_corso
+w2_website - contains -> w23_orario_corsi
+
+w22_dettagli_corso - contains -> w221_descrizione_offerta
+w221_descrizione_offerta - contains -> w2211_istruttore
+w2211_istruttore - contains -> w22111_specializzazioni
+w221_descrizione_offerta - contains -> w2212_orario_offerta

@@ -1,0 +1,654 @@
+= Scrittura tecnico-scientifica con AsciiDoc
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+Versione 0.1, 10 Ottobre 2017: Bozza in lavorazione
+:description: Struttura di un documento AsciiDoc, \
+creazione del primo documento, \
+aggiunta di elementi strutturali, \
+elenchi, blocchi e codice sorgente.
+:keywords: AsciiDoc, scrittura tecnico-scientifica.
+:page-layout: docs
+:page-description: {description}
+:page-keywords: {keywords}
+ifndef::env-site[]
+:toc: left
+:icons: font
+:idprefix:
+:idseparator: -
+:sectanchors:
+:source-highlighter: highlightjs
+:language: asciidoc
+:source-language: {language}
+:stem:
+:lang: it
+:unsafe:
+:pdf-page-size: A4
+ifeval::["{lang}" == "it"]
+:appendix-caption: Appendice
+:caution-caption: Attenzione
+:chapter-label: Capitolo
+:example-caption: Esempio
+:figure-caption: Figura
+:important-caption: Importante
+:last-update-label: Ultimo aggiornamento
+:listing-caption: Elenco
+:manname-title: NOME
+:note-caption: Nota
+:preface-title: Prefazione
+:table-caption: Tabella
+:tip-caption: Suggerimento
+:toc-title: Indice
+:untitled-label: Senza titolo
+:version-label: Versione
+:warning-caption: Attenzione
+endif::[]
+:sectnums:
+:comp-mode!:
+
+// Scopo
+Questo scritto, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer's Guide], ha lo scopo di avvicinare lo studente alla produzione di documenti scritti a carattere tecnico-scientifico. Considerata l'importanza della strutturazione logica del testo e la richiesta una resa tipografica di qualità, l'autore propone lo strumento AsciiDoc per la redazione e per la composizione del testo tecnico-scientifico al computer. L'uso di un linguaggio quale AsciiDoc avvicina lo studente al rigore dell'informatica e ai linguaggi di descrizione dei documenti elettronici. La descrizione del linguaggio stesso espone lo studente alle prime nozioni sulle grammatiche formali e sulle strutture ricorsive.
+
+// Prerequisiti
+Il lettore dovrebbe avere familiarità con gli aspetti generali della produzione scritta di tipo tecnico-scientifica, per i quali si consiglia _Saper comunicare: cenni di scrittura tecnico-scientifica_ <<sapercomunicare>>, in modo da poter produrre un testo con un contenuto informativo chiaro, non ambiguo e che risulti piacevole da consultare.
+
+// Strutturazione e indicizzazione
+Un testo tecnico non viene letto per diletto ma per soddifare un'esigenza informativa. Questa spesso è circoscritta a poche informazioni e il lettore vuole trovarle concentrate nello spazio di qualche capoverso. Lo scrittore deve, quindi, organizzare l'esposizione dei concetti in parti che spiegano un solo argomento e che siano facili da ricercare. Il testo dovrà essere suddiviso in capoversi che concernono uno stesso argomento e i capoversi dovranno essere raggruppati in strutture contenitrici che prendono i nomi di _sezioni_ (_parti_, _capitoli_, __paragrafi__...). Un indice generale permetterà una rapida ricerca dei contenuti e i temini più importanti saranno indicizzati e presentati in un indice analitico che rimanda al capoverso di definizione.
+
+// Motivazione AsciiDoc
+Il linguaggio AsciiDoc stesso forzerà la strutturazione del contenuto e fornirà gli strumenti automatici per la sua indicizzazione; aiuterà lo scrittore nell'uso corretto delle tabelle e delle illustrazioni; faciliterà la scrittura delle formule matematiche; faciliterà il compito di stesura del documento. L'uso del linguaggio AsciiDoc footnote:[L'uso di strumenti WYMIWYG pone l'attenzione sulla strutturazione del contenuto.] migliora la qualità del prodotto in sposta la concentrazione dello scrittore sul contenuto e non sulla forma footnote:[L'uso di strumenti WYSIWYG può far distrarre dal contenuto.].
+
+Lo scrittore che usa AsciiDoc può scegliere tra applicazioni che traducono il documenti in:
+
+- libri o articoli destinati alla stampa su carta (pdf);
+- presentazioni (html);
+- ebook (epub);
+- pagine web (html);
+- guide in linea (html);
+- documenti in altri formati (xml, tex).
+
+// Obiettivi specifici di apprendimento
+Il lettore troverà in questo documento quel materiale che lo porterà a:
+
+- creare un documento con AsciiDoc;
+- strutturare un documento AsciiDoc;
+- usare gli elementi strutturali di tipo elencho, citazione e listato di programma;
+- produrre pagine web con AsciiDoc.
+
+
+== Iniziare a scrivere in AsciiDoc
+
+L'obiettivo di questo paragrafo è quello di scrivere un primo documento in AsciiDoc.
+
+=== AsciiDoc, file in ingresso e in uscita
+
+
+Il termine AsciiDoc indica sia il linguaggio sia i traduttori dal file sorgente footnote:[Un file sorgente AsciiDoc è un file di testo non formattato scritto secondo le regole sintattiche definite dal linguaggio AsciiDoc.] al file di uscita, che sia un file per la stampa o per la lettura su dispositivi elettronici.
+
+Il file di input del traduttore è un file di testo non formattato.
+
+Può essere scritto con un programma per la scrittura di testi non formattati, ad esempio il _blocco note_. Non servono programmi complessi per l'elaborazione dei testi come _Microsoft Word_.
+
+Il file di output può essere di diversi formati. Si può produrre un file per la pubblicazione sul web, ad esempio pagine web o presentazioni, nel formato _HTML_; per la stampa su carta nel formato _PDF_; per la lettura su e-book reader, ad esempio nel formato _EPUB_. Chi si occupa di editoria digitale potrebbe richiede al traduttore un formato di uscita in in formato _DocBook_, _XML_ o latexmath:[\LaTeX{}].
+
+=== Contenuto vs presentazione
+
+Il linguaggio AsciiDoc è scritto come testo non formattato, e l'elemento fondamentale è il capoverso e il blocco logico che lo contiene.
+Il capoverso viene scritto su linee di testo e la formattazione dipenderà dal formato di uscita e/o dal visualizzatore.
+
+==== Capoverso
+
+Linee di testo adiacenti formano un capoverso. Per iniziare un nuovo capoverso digitare `Invio` due volte per ottenere una riga bianca, e digitare il nuovo contenuto.
+
+.Due capoversi in AsciiDoc
+[source,asciidoc]
+----
+include::lorem_ipsum.adoc[]
+----
+
+.Risultato: Due capoversi in AsciiDoc
+====
+include::lorem_ipsum.adoc[]
+====
+
+NOTE: I ritorni a capo non sono conservati.
+
+==== Scrivere in versi
+
+Il capoverso non mantiene le informazioni sui ritorni a capo.
+Si possono mantenere i versi in un capoverso, basta terminare la riga di testo in cui si presenta un verso con uno spazio seguito da un segno più (+)
+
+.Soldati
+----
+include::soldati.adoc[]
+----
+
+.Risultato: Soldati
+[quote, G. Ungaretti, Bosco di Courton luglio 1918]
+____
+include::soldati.adoc[]
+____
+
+==== Citazioni
+
+[quote, Michael R. Fellows, 1991]
+____
+L’informatica non riguarda i computer più di quanto l’astronomia riguardi i telescopi.
+____
+
+[quote, Gregory Chaitin, Alla ricerca di Omega, Adelphi Edizioni]
+____
+Il calcolatore era (ed è ancora) un nuovo e meraviglioso concetto filosofico e matematico. Il calcolatore è ancora più rivoluzionario come idea che come congegno pratico che modifica la società - e tutti sappiamo quanto abbia cambiato la nostra vita. Perché lo dico? Perché il calcolatore cambia l'epistemologia, modifica il significato del verbo «comprendere». A mio giudizio, si capisce qualcosa solo se si è capaci - noi, non altri! - di scriverne il programma. Altrimenti non si ha una vera comprensione, si crede soltanto di capire.
+____
+
+==== Ammonimenti
+
+Ci sono frasi che si vogliono inserie fuori dal flusso del contenuto e che si vogliono etichettare. Queste frasi possono essere chiamate __ammonimenti__. Lo stile dipende dall'etichetta dell'intestazione.  Ci sono 5 ammonimenti predefinite:
+
+* NOTE
+* TIP
+* IMPORTANT
+* CAUTION
+* WARNING
+
+Per usarle si usa l'etichetta, in stampatello maiuscolo, seguita dai (:) e da uno spazio.
+
+.Note
+NOTE: Nota.
+
+.Tip
+TIP: Suggerimento, consiglio.
+
+.Important
+IMPORTANT: Importante.
+
+.Caution
+CAUTION: Cautela, attenzione.
+
+.Warning
+WARNING: Attenzione, avviso.
+
+==== Testo in enfasi con segni di punteggiatura
+
+In un testo, per mettere in risalto una parola o una frase, si ricorre a variazioni del tipo di carattere in uso. AsciiDoc ci consente di farlo racchiudendo parole o frasi tra simboli di punteggiatura, ma l'obiettivo di chi scrive un documento resta quello di concentrarsi sul contenuto e non sull'aspetto grafico dei caratteri.
+
+Per ottenere del testo in neretto, lo si racchiude tra asterischi (`*`), se lo si vuole in corsivo si racchiude tra trattini bassi (`_`) e, se lo si vuole a spaziatura fissa, lo si racchiude tra accenti gravi (```).
+
+.Caratteri in neretto, corsivo, e monospaziato
+[source,asciidoc]
+----
+include::enfasi.adoc[]
+----
+
+Se si vuole evidenziare una parte di una parola o di una frase bisogna raddoppiare i simboli di punteggiatura.
+
+.Risultato: Caratteri in neretto, corsivo, e monospaziato
+====
+include::enfasi.adoc[]
+====
+
+==== Altri simboli
+
+In un testo formattato si fa uso anche di simboli che non sono presenti sulla tastiera.
+In AsciiDoc ci sono delle sequenze di caratteri che sono convertiti in simboli grafici.
+
+[cols="2,^1l,^1l,^1,2"]
+.Sostituzione dei simboli testuali
+|===
+|Nome |Sintassi |Codifica Unicode |Resa tipografica |Note
+
+|Copyright
+|\(C)
+|\&#169;
+|(C)
+|
+
+|Registered
+|\(R)
+|\&#174;
+|(R)
+|
+
+|Trademark
+|\(TM)
+|\&#8482;
+|(TM)
+|
+
+|Em dash
+|\--
+|\&#8212;
+|{empty}--{empty}
+|Rimpiazzato solo se tra due parole.
+
+|ellipses
+|\...
+|\&#8230;
+|...
+|
+
+|right single arrow
+|\->
+|\&#8594;
+|->
+|
+
+|right double arrow
+|\=>
+|\&#8658;
+|=>
+|
+
+|left single arrow
+|\<-
+|\&#8592;
+|<-
+|
+
+|left double arrow
+|\<=
+|\&#8656;
+|<=
+|
+
+|apostrophe
+|Writers\'s guide
+|Sam\&#8217;s
+|Writers's guide
+|
+|===
+
+=== Matematica e scienze
+
+==== Linguaggio matematico
+
+Le regole per la scrittura delle espressioni matematiche sono molto diverse da quelle usate nella composizione del testo.
+Un linguaggio per la scrittura di documenti dovrebbe fornire un modo semplice per l'inserimento di formule, anche complesse, e garantire una buona resa tipografica.
+
+Esiste un lingaggio di composizione tipografica, il latexmath:[\TeX] che è stato progettato per lavorare con espressioni matematiche complesse in modo che esse siano semplici da inserire. L'idea di base è che le formule complicate sono composte da formule meno complicate da comporre insieme. Se si sanno comporre formule semplici e si sanno combinare allora si sarà in grado di scrivere formule di complessità arbitraria.
+
+latexmath:[\sqrt{4} = 2]
+
+latexmath:[E = m \cdot c^2]
+
+latexmath:[\tan \alpha =\displaystyle
+              \frac{\sin \alpha}
+                   {\cos \alpha}]
+
+latexmath:[\displaystyle
+           \sin \ 15^\circ =
+           \sqrt
+           \frac{1 - \cos \ 30^\circ}
+                {2}]
+				
+latexmath:[\sum_{i=1}^n i = 1 + 2 + \cdots n = \frac{n \cdot (n+1)}{2}]
+
+latexmath:[(d_{n-1}\cdots d_2 d_1 d_0 , d_{-1} d_{-2} \cdots d_{-m})_b = 
+           \sum_{i = -m}^{n-1} d_i \cdot b^i =
+		   d_{n-1} \cdot b^{n-1} + \cdots + d_2 \cdot b^2 + d_1 \cdot b + d_0 + d_{-1} \cdot b^{-1} + d_{-2} \cdot b^{-2} + \cdots + b_{-m} \cdot b^{-m}]
+
+NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e una resa tipografica superba.
+
+==== Scienze
+
+Acqua (stem:[H_2O]).
+
+=== Tabelle e figure
+
+[width="15%"]
+|=======
+|1 |2 |A
+|3 |4 |B
+|5 |6 |C
+|=======
+
+.An example table
+[width="50%",cols=">s,^m,e",frame="topbot",options="header,footer"]
+|==========================
+|      2+|Columns 2 and 3
+|1       |Item 1  |Item 1
+|2       |Item 2  |Item 2
+|3       |Item 3  |Item 3
+|4       |Item 4  |Item 4
+|footer 1|footer 2|footer 3
+|==========================
+
+[cols="e,m,^,>s",width="25%"]
+|============================
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|============================
+
+=== Collegamenti
+
+
+NOTE: Fin qui sappiamo scrivere un testo come un utente medio di un programma di videoscrittura WYSIWYG. &Egrave; probabile che usando AsciiDoc siamo più produttivi e più concentrati sul contenuto, ma ancora non sappiamo come strutturare il testo.
+
+
+== Struttura del testo
+
+=== Tipo di documento
+
+=== Anatomia di un documento
+
+=== Sezionamento comune
+
+==== Intestazione
+
+===== Titolo
+
+===== Autore e indirizzo di corrispondenza
+
+===== Numero di revisione, data e note
+
+==== Attributi predefiniti
+
+.Attributi
+|===
+|Nome |Sintassi |Descrizione |Valore
+
+|doctitle
+|\{doctitle}
+|il titolo del documento
+|{doctitle}
+
+|author
+|\{author}
+|il nome completo dell'autore
+|{author}
+
+|email
+|\{email}
+|l'indirizzo email
+|{email}
+
+|firstname
+|\{firstname}
+|il primo nome dell'autore
+|{firstname}
+
+|secondname
+|\{secondname}
+|il secondo nome dell'autore
+|{secondname}
+
+|lastname
+|\{lastname}
+|il cognome
+|{lastname}
+
+|revnumber
+|\{revnumber}
+|il numero di revisione
+|{revnumber}
+
+|revdate
+|\{revdate}
+|la data di revisine
+|{revdate}
+
+|revremark
+|\{revremark}
+|il commento di revisione
+|{revremark}
+
+|description
+|\{description}
+|la descrizione del documento
+|{description}
+
+|keywords
+|\{keywords}
+|le parole chiave
+|{keywords}
+
+|
+|\{}
+|{}
+|{}
+|
+|===
+
+== Struttura di un documento AsciiDoc e sintassi
+
+Un compilatore di AsciiDoc elabora documenti scritti secondo la grammatica del linguaggio AsciiDoc per costruire il documento nel formato di uscita. Gli informatici usano le grammatiche per descrivere un linguaggio. Nel paragrafo viene usata una versione semplificata della descrizione EBNF.
+
+=== Documento
+
+Un documento è formato da:
+
+. un intestazione, che può essere omessa;
+. un preambolo, che può essere omesso;
+. e una sequenza di zero o più sezioni.
+
+.Sintassi
+----
+documento ::= (intestazione?, preambolo?, sezione*)
+----
+
+NOTE: Le parentesi tonde aperate (``(``) e chiuse (``)``) indicano una sequenza ordinata.
+
+NOTE: Il punto di domanda (``?``) nella descrizione della sintassi indica zero o una occorrenza della categoria sintattica.
+
+NOTE: L'asterisco (``*``) nella descrizione della sintassi indica zero o più occorrenze della categoria sintattica.
+
+=== Intestazione
+
+Un'intestazione è formata da:
+
+. un titolo;
+. le informazioni dell'autore, che possono essere omesse;
+. e le informazioni della revisione, che possono essere omesse.
+
+.Sintassi
+----
+intestazione ::= (titolo_documento (linea_autore linea_revisione?)? attributo* a_capo)
+
+----
+
+NOTE: Non si possono inserire le informazioni di revisione senza le informazioni sull'autore.
+
+==== Titolo
+
+Il titolo è un testo che deve essere scritto nella *prima riga* del documento. Questa deve iniziare con il simbolo uguale (``=``) cui devono seguire uno o più spazi (`` ``) e il testo del titolo.
+
+Un titolo può essere costituito da due parti:
+. il titolo vero e proprio;
+. e il sotto-titolo.
+
+Il titolo e il sottotitolo sono separati dal simbolo dei due punti (``:``) e da uno o più spazi (`` ``).
+
+CAUTION: Il titolo non può essere scritto su più di una riga.
+
+.Attributi del titolo di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Intestazione
+
+// Titolo
+
+|Titolo
+|\{doctitle}
+|{doctitle}
+
+|===
+
+
+==== Autore
+
+Le informazioni dell'autore sono composte da:
+
+. il primo nome;
+. un secondo nome, se presente;
+. un cognome, che può essere omesso se non è presente il secondo nome;
+. e un indirizzo email, che può essere omesso.
+
+.Sintassi
+----
+autore ::= (nome, (secondoNome?,cognome)?,email?)
+----
+
+NOTE: Il secondo nome può essere scritto solo se si scrive anche il cognome.
+
+Le informazioni dell'autore, se le presenti, devono essere scritte nella *seconda riga*.
+
+Il nome è separato dall'eventuale secondo nome e dal cognome con uno o più simboli di spazio (`` ``). L'indirizzo email deve essere scritto tra parentesi angolari, ossia il simbolo di minore (``<``) e il simbolo maggiore (``>``).
+
+NOTE: Se uno dei nomi o il cognome sono composto da più parole allora queste devono essere separate dal trattino basso (``_``) e non dallo spazio (`` ``). Nella presentazione del documento il trattino basso è sostituito dallo spazio.
+
+CAUTION: Le informazioni sull'autore non possono essere scritte su più di una riga.
+
+.Attributi dell'autore di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Autore
+
+|Nome
+|\{firstname}
+|{firstname}
+
+|Secondo nome
+|\{middlename}
+|{middlename}
+
+|Cognome
+|\{lastname}
+|{lastname}
+
+|Email
+|\{email}
+|{email}
+
+|===
+
+
+==== Revisione
+
+Le informazioni della revisione sono costituite da:
+
+. un numero di revisione, opzionale;
+. una data di revisione;
+. un commento, opzionale.
+
+.Sintassi
+----
+revisione ::= (numeroRev?, dataRev, commentoRev?)
+----
+
+Il numero di revisione, che può essere preceduto da un testo, è separato dalla data di revisone con una virgola (``,``) e zero o più spazi (`` ``).
+Il commento della revisione è un testo che è separato dalla data di revisione con i due punti (``:``).
+
+Le informazione della revisione devono essere scritte nella *terza riga*.
+
+.Attributi della revisione di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Revisione
+
+|Numero di revisione
+|\{revnumber}
+|{revnumber}
+
+|Data di revisione
+|\{revdate}
+|{revdate}
+
+|Commento di revisione
+|\{revremark}
+|{revremark}
+
+|===
+
+=== Preambolo
+
+----
+preambolo ::= (corpo)
+----
+
+=== Sezione
+
+----
+sezione ::= (titolo, corpo?, (sezione)*)
+----
+
+Il titolo...
+
+==== Corpo
+
+----
+corpo ::= (titoletto?,blocco)|macro)+
+----
+
+NOTE: + rappresenta una o più occorrenze della categoria sintattica.
+
+NOTE: | rappresenta la scelta tra una delle occorrenze.
+
+Il titoletto...
+
+=== Blocco
+
+----
+blocco ::= (capoverso|bloccoDelimitato|elenco|tabella)
+----
+
+=== Elenco
+
+----
+elenco ::= (elencoNonOrdinato|elencoOrdinato,elencoDescrittivo,elencoConRichiami)
+----
+
+==== Elenco non ordinato
+
+----
+elencoNonOrdinato ::= (elementoElenco)+
+----
+
+Un elemento dell'elenco...
+
+==== Elenco ordinato
+
+----
+elencoOrdinato ::= (elementoElenco)+
+----
+
+==== Elenco descrittivo
+
+----
+elencoDescrittivo ::= (voceElenco)+
+----
+
+==== Elenco con richiami
+
+----
+elencoConRichiami ::= (elementoElenco)+
+----
+
+==== Voce elenco
+
+----
+voceElenco ::= (etichiettaElenco, elementoElenco)
+----
+
+==== EtichiettaElenco
+
+----
+etichettaElenco ::= (termine+)
+----
+
+==== Elemento elenco
+
+----
+elementoElenco ::= (elementoTesto,(elenco|paragrafoElenco|continuazioneElenco)*)
+----
+
+:numbered!:
+[bibliography]
+== Riferimenti bibliografici
+
+- [[[sapercomunicare]]] Beccari, C.; Canavero, F.; Rossetti, U. & Valabrega, P. https://didattica.polito.it/pls/portal30/sviluppo.pg_segreteria.download_file?p_id=275[Saper comunicare: cenni di scrittura tecnico-scientifica]. Politecnico di Torino. 2013.

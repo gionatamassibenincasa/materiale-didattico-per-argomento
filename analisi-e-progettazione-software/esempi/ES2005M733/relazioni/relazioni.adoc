@@ -1,0 +1,66 @@
+`Partecipante` (
+  **partecipanteId**: INTEGER
+, nome: TEXT
+, cognome: TEXT
+)
+
+`Istruttore` (
+  **istruttoreId**: INTEGER
+, nome: TEXT
+, cognome: TEXT
+)
+
+`Corso` (
+  **corsoId**: INTEGER
+, denominazione: TEXT
+, descrizione: TEXT
+)
+
+`CorsoOfferto` (
+  **corsoOffertoId**: INTEGER
+, __corsoId__: INTEGER -> Corso(corsoId)
+, __istruttoreId__: INTEGER -> Istruttore(istruttoreId)
+, numeroMassimoPartecipanti: INTEGER
+, descrizione: TEXT
+, inizio: TEXT
+, fine: TEXT
+)
+
+`Giorno` (
+  **giornoId**: INTEGER
+, giorno: TEXT
+, abbreviazione: TEXT
+)
+
+`FasciaOraria` (
+  **fasciaOrariaId**: INTEGER
+, __giornoId__: INTEGER -> Giorno(giornoId)
+, inizio: TEXT
+, fine: TEXT
+)
+
+`Sala` (
+  **salaId**: INTEGER
+, sala: TEXT
+, capienza: INTEGER
+)
+
+`Orario` (
+  **__corsoOffertoId__**: INTEGER -> CorsoOfferto(corsoOffertoId)
+, **__fasciaOrariaId__**: INTEGER -> FasciaOraria(fasciaOrariaId)
+, __salaId__: INTEGER -> Sala(salaId)
+)
+
+`Partecipazione` (
+  **__partecipanteId__**: INTEGER -> Partecipante(partecipanteId)
+, **__corsoOffertoId__**: INTEGER -> CorsoOfferto(corsoOffertoId)
+, dataRilascioCertificato: TEXT
+, dataScadenzaCertificato: TEXT
+)
+
+`Specializzazione` (
+  **__istruttoreId__**: INTEGER -> Istruttore(IstruttoreId)
+, **__corsoId__**: INTEGER -> Corso(corsoId)
+, **titolo**: TEXT
+)
+

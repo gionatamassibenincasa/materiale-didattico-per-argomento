@@ -1,0 +1,42 @@
+
+requirementDiagram
+
+requirement requisiti_database {
+    id: 1
+    text: Il database dovrà essere completo rispetto alle funzionalità richieste.
+    risk: high
+    verifymethod: inspection
+}
+
+functionalRequirement elenco_iscritti  {
+ id: 1.1
+ text: Il sistema dovrà visualizzare l'elenco degli iscritti a ogni corso.
+ risk: high
+ verifymethod: inspection
+}
+
+functionalRequirement posti_liberi {
+    id: 1.2
+    text: Il sistema dovrà visualizzare i posti liberi per ciascun corso
+    risk: high
+    verifyMethod: test
+}
+
+functionalRequirement corsi_per_istruttore {
+    id: 1.3
+    text: Il sistema dovrà visualizzare l'elenco dei corsi per ciascun istruttore
+    risk: high
+    verifyMethod: test
+}
+
+functionalRequirement certificati_scaduti {
+    id: 1.4
+    text: Il sistema dovrà visualizzare l'elenco dei clienti con certificato medico scaduto
+    risk: high
+    verifyMethod: test
+}
+
+ requisiti_database - contains -> elenco_iscritti
+ requisiti_database - contains -> posti_liberi
+ requisiti_database - contains -> corsi_per_istruttore
+ requisiti_database - contains -> certificati_scaduti
