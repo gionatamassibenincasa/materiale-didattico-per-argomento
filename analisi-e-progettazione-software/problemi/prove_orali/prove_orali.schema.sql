@@ -56,6 +56,8 @@ CREATE TABLE IF NOT EXISTS Giustificazione (
 CREATE TABLE IF NOT EXISTS ArgomentiColloquio (
     argomentiColloquioId INTEGER PRIMARY KEY,
     argomentoId INTEGER NOT NULL REFERENCES Argomento(argomentoId),
+    descrizione TEXT NOT NULL,
+    data TEXT NOT NULL CHECK(data IS date(data, '+0 days')),
     numeroDomande INTEGER CHECK (
         numeroDomande IS NULL
         OR numeroDomande BETWEEN 1 AND 4

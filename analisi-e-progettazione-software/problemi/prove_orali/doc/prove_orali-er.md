@@ -59,6 +59,8 @@ erDiagram
  ArgomentiColloquio {
   INTEGER argomentiColloquioId PK
   INTEGER argomentoId FK
+  TEXT descrizione
+  TEXT data
   INTEGER numeroDomande
   INTEGER probabilita
  }

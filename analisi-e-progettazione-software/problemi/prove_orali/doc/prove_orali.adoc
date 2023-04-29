@@ -58,6 +58,8 @@
 `ArgomentiColloquio` (
   **argomentiColloquioId**: INTEGER
 , __argomentoId__: INTEGER -> Argomento(argomentoId)
+, descrizione: TEXT
+, data: TEXT
 , numeroDomande: INTEGER
 , probabilita: INTEGER
 )

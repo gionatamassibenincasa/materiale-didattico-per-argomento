@@ -13,7 +13,7 @@ Considera due tipi di giustificazioni:
 - quelle che non devono essere motivate, che sono $g_{cq}$ per quadrimestre, e
 - quelle dovute alle eventuali attività previste dal Piano Formativo Personalizzato, dal Piano Didattico Personalizzato e da impegni istituzionali (es: attività di orientamento, competizioni scolastiche...).
 
-Il prof. sceglie un sottoinsieme di argomenti $A_{ci}c$ oggetto di interrogazione fra gli argomenti $A_c$ programmati per la classe e inserisce, alternativamente, o il numero o la percentuale di domande per argomento. Per ogni argomento ci sono un insieme $D_{a}$ di $|D_{a}|$ domande predefinite. Individua, quindi, gli studenti $I_{ci}$ già interrogati almeno una volta su tutti gli argomenti $A_{ci}$.
+Il prof. sceglie un sottoinsieme di argomenti $A_{ci}$ oggetto di interrogazione fra gli argomenti $A_c$ programmati per la classe e inserisce, alternativamente, o il numero o la percentuale di domande per argomento. Per ogni argomento ci sono un insieme $D_{a}$ di $|D_{a}|$ domande predefinite. Individua, quindi, gli studenti $I_{ci}$ già interrogati almeno una volta su tutti gli argomenti $A_{ci}$.
 
 Considerati gli studenti candidati all'interrogazione $C_{cd} = S_c \setminus \bar{P}_{cd} \setminus G_{cd} \setminus I_{ca}$, dove $S_c$ sono gli studenti della classe, $\bar{P}_{cd}$ sono gli assenti nel giorno $d$ e $G_{cd}$ quelli giustificati, decide di interrogare $n$ studenti, dove $n \leq C_{ca}$.
 
@@ -73,3 +73,183 @@ Al termine dell'interrogazione, il prof. registra un voto, che è l'arrotondamen
 4. Progettare una base di dati per risolvere il problema; fornire lo schema dei dati e il codice SQL per la creazione della base di dati.
 5. Progettare l'interfaccia dell'applicazione web.
 6. Fornire le query da utilizzare nell'applicazione web.
+
+## Requisiti
+
+### Scelta della classe e della data
+
+```mermaid
+requirementDiagram
+
+requirement scelta_classe_data_req {
+    id: 1
+    text: L'applicazione deve far scegliere la data e la classe.
+    risk: high
+    verifymethod: test
+}
+```
+
+```plantuml
+@startsalt
+title Scelta classe e data
+{+
+{* Professore Web - Classe}
+{
+== Data e classe
+{
+{Data:   | ^2023-02-09^ }
+{Classe: | ^4 A SIA^ }
+}
+}
+{ [Appello] }
+}
+@endsalt
+```
+
+### Appello e giustificazioni
+
+```mermaid
+requirementDiagram
+
+requirement appello_giustificazione_req {
+    id: 2
+    text: L'applicazione deve registrare assenti e giustificati.
+    risk: high
+    verifymethod: test
+}
+```
+
+```plantuml
+@startsalt
+title Appello e giustificazioni
+{+
+{* Professore Web - Appello}
+== Appello - 4 A SIA - 2023-02-09
+{^"Elenco studenti"
+{SI
+    <b>Pos. | <b>Studente | <b>Assente | <b>N. giust. | <b>Giust.* | <b>Giust.
+    --|--                |--   |-- | -- | --
+    1 | Abate Giuseppe   | ()  | 2 | () | ()
+    2 | Acciarri Onofrio | (X) | 2 | () | ()
+    3 | Bianchi Nicola   | ()  | 1 | () | (X)
+    4 | Bianchi Valerio  | ()  | 0 | () | ()
+    5 | Carlone Mario    | ()  | 1 | (X) | ()
+}
+}
+{ [Salva] | [Argomenti]}
+}
+@endsalt
+```
+
+### Scelta degli argomenti
+
+```plantuml
+@startsalt
+title Raggruppamento argomenti
+{+
+{* Professore Web - Argomenti interrogazione}
+{
+== Argomenti del colloquio
+{^"Scelta argomenti salvati"
+
+    <b>Data | <b>Descrizione | N. argomenti | Seleziona
+    2022-10-03 | Sviluppo del software   | 1 | ()
+    2022-11-05 | Modello concettuale E/R | 1 | ()
+    2022-12-10 | Modello relazionale     | 1 | ()
+    2023-01-21 | Riepilogo 1mo quadr.    | 3 | (X)
+
+    [Interroga]
+}
+{^"Crea nuovo raggruppamento"
+  { Descrizione: | "Prima interrogazione secondo quadr. " }
+  Argomento | N. domande | %
+  [] Sviluppo del software   | " " | " "
+  [] Modello concettuale E/R | " " | " "
+  [X] Modello relazionale    | "2" | " "
+  [X] Linguaggio SQL         | "3" | " "
+  [] Linguaggio PHP | " " | " "
+  [] Pattern per Applicazioni Aziendali | " " | " "
+[Salva]
+}
+}
+}
+@endsalt
+```
+
+### Scelta dei candidati
+
+```plantuml
+@startsalt
+title Scelta dei candidati
+{+
+{* Professore Web - Scelta dei candidati}
+{
+==  Candidati - 4 A SIA - 2023-02-09
+{^"Candidati - Scelta non casuale"
+{SI
+    Sel. Pos. | Studente | N. voti (Prima interrogazione sec...)
+    [] 1 | Abate Giuseppe   | (0, 1, 1)
+    [] 4 | Bianchi Valerio  | (1, 1, 0)
+}
+}
+{^"Scelta casuale"
+  { Numero totale interrogandi: | "2 " (max 2) }
+}
+[Interroga]
+}
+}
+@endsalt
+```
+
+### Gestione domande
+
+```plantuml
+@startsalt
+title Interrogazione
+{+
+{* Professore Web - Interrogazione}
+{
+== Interrogati - 4 A SIA - 2023-02-09
+}
+{/ <b>Abate | Bianchi}
+{SI
+    <b>Domanda | <b>Livello | <b>Note
+    Descrivi la sintassi di SELECT | ^3 Corretto^ | ""
+    ...| ^2 Quasi completo^ |
+}
+[Nuova Domanda]
+[Fine - Verbale]
+}
+@endsalt
+```
+
+### Verbale
+
+```plantuml
+@startsalt
+title Interrogazione
+{+
+{* Professore Web - Verbale}
+{
+== Interrogati - 4 A SIA - 2023-02-09 - Abate
+}
+{S
+<b>Argomenti del colloquio:
+(1) Descrivi la traduzione delle associazioni molti a molti verso...
+(2) Mostra come ottenere l'operatore di giunzione a partire da...
+(3) Descrivi la sintassi di SELECT;
+(4) Elenca i comandi del DDL;
+(5) Trasforma le seguenti operazioni in codice SQL...
+
+<b>Note:
+(1) L'esempio scelto non è attinente
+
+<b>Griglia di valutazione: 
+.
+.
+{<b>Punteggio grezzo: | ^14^ }
+}
+{Voto: | ^7^ }
+}
+@endsalt
+```

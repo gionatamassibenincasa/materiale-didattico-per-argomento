@@ -16,7 +16,7 @@
 
 **Giustificazione** (  ***studenteId***: INTEGER -> Studente(studenteId), **data**: TEXT, immotivata: INTEGER)
 
-**ArgomentiColloquio** (  **argomentiColloquioId**: INTEGER, _argomentoId_: INTEGER -> Argomento(argomentoId), numeroDomande: INTEGER, probabilita: INTEGER)
+**ArgomentiColloquio** (  **argomentiColloquioId**: INTEGER, _argomentoId_: INTEGER -> Argomento(argomentoId), descrizione: TEXT, data: TEXT, numeroDomande: INTEGER, probabilita: INTEGER)
 
 **Indicatore** (  **indicatoreId**: INTEGER, indicatore: TEXT, descrizione: TEXT, peso: REAL)
 
