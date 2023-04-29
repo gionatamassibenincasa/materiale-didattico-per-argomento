@@ -1,0 +1,96 @@
+`AnnoScolastico` (
+  **annoScolasticoId**: INTEGER
+, testo: TEXT
+, inizio: TEXT
+, fine: TEXT
+)
+
+`Classe` (
+  **classeId**: INTEGER
+, __annoScolasticoId__: INTEGER -> AnnoScolastico(annoScolasticoId)
+, anno: INTEGER
+, sezione: TEXT
+, indirizzo: TEXT
+, articolazione: TEXT
+, maxGiustificazioni: INTEGER
+)
+
+`Studente` (
+  **studenteId**: INTEGER
+, nome: TEXT
+, cognome: TEXT
+, sesso: TEXT
+, email: TEXT
+)
+
+`Registro` (
+  **__studenteId__**: INTEGER -> Studente(studenteId)
+, **__classeId__**: INTEGER -> Classe(classeId)
+)
+
+`Argomento` (
+  **argomentoId**: INTEGER
+, argomento: TEXT
+)
+
+`Programmazione` (
+  **__classeId__**: INTEGER -> Classe(classeId)
+, **__argomentoId__**: INTEGER -> Argomento(argomentoId)
+)
+
+`Quesito` (
+  **quesitoId**: INTEGER
+, __argomentoId__: INTEGER -> Argomento(argomentoId)
+, quesito: TEXT
+)
+
+`Assenza` (
+  **__studenteId__**: INTEGER -> Studente(studenteId)
+, **data**: TEXT
+)
+
+`Giustificazione` (
+  **__studenteId__**: INTEGER -> Studente(studenteId)
+, **data**: TEXT
+, immotivata: INTEGER
+)
+
+`ArgomentiColloquio` (
+  **argomentiColloquioId**: INTEGER
+, __argomentoId__: INTEGER -> Argomento(argomentoId)
+, numeroDomande: INTEGER
+, probabilita: INTEGER
+)
+
+`Indicatore` (
+  **indicatoreId**: INTEGER
+, indicatore: TEXT
+, descrizione: TEXT
+, peso: REAL
+)
+
+`Descrittore` (
+  **descrittoreId**: INTEGER
+, __indicatoreId__: INTEGER -> Indicatore(indicatoreId)
+, descrittore: TEXT
+, descrizione: TEXT
+, livello: INTEGER
+)
+
+`Colloquio` (
+  **colloquioId**: INTEGER
+, __studenteId__: INTEGER -> Studente(studenteId)
+, __argomentiColloquioId__: INTEGER -> ArgomentiColloquio(ArgomentiColloquioId)
+, data: TEXT
+)
+
+`ValutazioneQuesito` (
+  **__colloquioId__**: INTEGER -> Colloquio(colloquioId)
+, **__descrittoreId__**: INTEGER -> Descrittore(descrittoreId)
+)
+
+`Verbale` (
+  **__colloquioId__**: INTEGER -> Colloquio(colloquioId)
+, **__quesitoId__**: INTEGER -> Quesito(quesitoId)
+)
+

@@ -6,34 +6,30 @@
 
 Il prof. Loquenzo Orali, chiarissimo e rigorosissimo prof. di informatica, usa un suo particolare metodo didattico.
 
-All'inizio della lezione del giorno $d$ nella classe $c$ egli fa l'appello e, ad ogni studente presente che ha la possibilità di giustificarsi per non essere interrogato in quel giorno, chiede se si avvale della giustificazione; in caso positivo lo annota in $G_{cd}$.
+All'inizio della lezione del giorno $d$ nella classe $c$ egli fa l'appello e, ad ogni studente presente chiede se si avvale della giustificazione per non essere interrogato in quel giorno; in caso positivo lo annota in $G_{cd}$.
 
-Le giustificazioni sono di due tipi:
+Considera due tipi di giustificazioni:
 
 - quelle che non devono essere motivate, che sono $g_{cq}$ per quadrimestre, e
 - quelle dovute alle eventuali attività previste dal Piano Formativo Personalizzato, dal Piano Didattico Personalizzato e da impegni istituzionali (es: attività di orientamento, competizioni scolastiche...).
 
-Il prof. sceglie un argomento $a_c$ oggetto di interrogazione, per il quale ha già preparato un insieme $D_{ca}$ di $|D_{ca}|$ domande e individua gli studenti $I_{ca}$ già interrogati almeno una volta sull'argomento $a_c$.
+Il prof. sceglie un sottoinsieme di argomenti $A_{ci}c$ oggetto di interrogazione fra gli argomenti $A_c$ programmati per la classe e inserisce, alternativamente, o il numero o la percentuale di domande per argomento. Per ogni argomento ci sono un insieme $D_{a}$ di $|D_{a}|$ domande predefinite. Individua, quindi, gli studenti $I_{ci}$ già interrogati almeno una volta su tutti gli argomenti $A_{ci}$.
 
-Considerati gli studenti candidati all'interrogazione $C_{cd} = S_c \setminus A_{cd} \setminus G_{cd} \setminus I_{ca}$, dove $S_c$ sono gli studenti della classe, $A_{cd}$ sono gli assenti nel giorno $d$ e $G_{cd}$ quelli giustificati, decide di interrogare $n$ studenti, dove $n \leq \min(|C_{ca}|, 4)$.
+Considerati gli studenti candidati all'interrogazione $C_{cd} = S_c \setminus \bar{P}_{cd} \setminus G_{cd} \setminus I_{ca}$, dove $S_c$ sono gli studenti della classe, $\bar{P}_{cd}$ sono gli assenti nel giorno $d$ e $G_{cd}$ quelli giustificati, decide di interrogare $n$ studenti, dove $n \leq C_{ca}$.
 
 Per ognuno degli $n$ interrogandi estrae un numero casuale $r$, controlla che lo studente che è iscritto nella posizione $r$ del registro di classe sia tra i candidati all'interrogazione $C_{cd}$. Se lo è, lo include nell'elenco degli interrogati $Q_{cd}$, altrimenti scorre le posizioni in avanti finché non trova uno studente che può essere interrogato $s \in C_{cd}$, e lo aggiunge alla lista $Q_{cd}$.
 
 Il prof. interroga gli studenti ponendo un quesito al primo studente estratto, poi un altro quesito secondo e così via. Giunto all'ultimo interrogando, ricomincia dal primo.
 
-Per determinare il quesito dell'interrogazione, estrae un numero casuale $1 \leq |D_{a}|$. Se il quesito è già stato già estratto nel giorno $E_{cg}$, allora cerca la prima domanda successiva che non sia stata già posta.
+Per determinare il quesito dell'interrogazione, seleziona l'argomento in accordo ai criteri sopra stabiliti ed estrae un numero casuale $1 \leq |D_{a}|$. Se il quesito è già stato già estratto nel giorno $E_{cg}$, allora cerca la prima domanda successiva che non sia stata già posta.
 
-La prova orale termina dopo che ogni interrogato è stato ascoltato su quattro domande.
+La prova orale termina dopo che ogni interrogato è stato ascoltato su di un numero prestabilito di domande, uguale per tutti.
 
-Mentre lo studente colloquia col professore, quest'ultimo annota domanda e commenti sulla risposta quindi formula un giudizio inserendo una sequenza di valori numerici, detti livelli, compresi tra 0 e 10.
+[//]: Mentre lo studente colloquia col professore, quest'ultimo annota domanda e commenti sulla risposta quindi formula un giudizio inserendo una sequenza di valori numerici, detti livelli, compresi tra 0 e 10.
 
-Il prof. valuta la prova orale usando sempre gli stessi indicatori: correttezza (i concetti devono essere espressi in accordo al loro significato), completezza (tutte le idee semplici del concetto devono essere esposte), pertinenza (i concetti devono essere quelli richiesti dal quesito e non altri), minimalità (l'esposizione non deve essere ridondante), intelligibilità (i concetti devono essere espressi in modo comprensibile, senza necessità di ulteriori quesiti aggiuntivi), appropriatezza del lessico (i concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale).
+Il prof. valuta la prova orale usando delle griglie di valutazione imposte dal dipartimento. Le griglie sono strutture a due livelli, detti indicatore e descrittore. Ad ogni indicatore sono associati un sottoinsieme di descrittori ed un peso. Il descrittore è proprio dell'indicatore e indica la qualità della prestazione analizzata insieme ad un livello. Il peso è un numero frazionario mentre il livello è un numero naturale. Il punteggio grezzo è la combinazione lineare dei pesi con i livelli corrispondenti.
 
-Ad ogni indicatore sono associati un sottoinsieme di descrittori ed un peso.
-
-Il descrittore è proprio dell'indicatore e indica la qualità della prestazione analizzata insieme ad un numero, detto livello.
-
-Il prof. Orali usa la seguente tabella:
+La griglia del dipartimento realizzata con i seguenti indicatori: correttezza (i concetti devono essere espressi in accordo al loro significato), completezza (tutte le idee semplici del concetto devono essere esposte), pertinenza (i concetti devono essere quelli richiesti dal quesito e non altri), minimalità (l'esposizione non deve essere ridondante), intelligibilità (i concetti devono essere espressi in modo comprensibile, senza necessità di ulteriori quesiti aggiuntivi), appropriatezza del lessico (i concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale). Pesi, indicatori e livelli sono in tabella:
 
 | Correttezza (peso 1)                                                                                                         |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
 | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS AnnoScolastico (
 );
 CREATE TABLE IF NOT EXISTS Classe (
     classeId INTEGER PRIMARY KEY,
-    annoScolasticoId INTEGER REFERENCES AnnoScolastico(annoScolasticoId),
+    annoScolasticoId INTEGER NOT NULL REFERENCES AnnoScolastico(annoScolasticoId),
     anno INTEGER CHECK (
         anno BETWEEN 1 AND 5
     ),
@@ -19,13 +19,12 @@ CREATE TABLE IF NOT EXISTS Studente (
     studenteId INTEGER PRIMARY KEY,
     nome TEXT NOT NULL,
     cognome TEXT NOT NULL,
-    sesso TEXT CHECK(sesso in ('F', 'M'),
-    email TEXT,
+    sesso TEXT CHECK(sesso IN ('F', 'M')),
+    email TEXT DEFAULT NULL
 );
-
 CREATE TABLE IF NOT EXISTS Registro (
-    studenteId INTEGER REFERENCES Studente(studenteId),
-    classeId INTEGER REFERENCES Classe(classeId),
+    studenteId INTEGER NOT NULL REFERENCES Studente(studenteId),
+    classeId INTEGER NOT NULL REFERENCES Classe(classeId),
     PRIMARY KEY(studenteId, classeId)
 );
 CREATE TABLE IF NOT EXISTS Argomento (
@@ -33,34 +32,48 @@ CREATE TABLE IF NOT EXISTS Argomento (
     argomento TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS Programmazione (
-    classeId INTEGER REFERENCES Classe(classeId),
-    argomentoId INTEGER REFERENCES Argomento(argomentoId),
+    classeId INTEGER NOT NULL REFERENCES Classe(classeId),
+    argomentoId INTEGER NOT NULL REFERENCES Argomento(argomentoId),
     PRIMARY KEY (classeId, argomentoId)
 );
 CREATE TABLE IF NOT EXISTS Quesito (
     quesitoId INTEGER PRIMARY KEY,
-    argomentoId INTEGER REFERENCES Argomento(argomentoId),
-    quesito TEXT
+    argomentoId INTEGER NOT NULL REFERENCES Argomento(argomentoId),
+    quesito TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS Assenza (
-    studenteId INTEGER REFERENCES Studente(studenteId),
-    data TEXT NOT NULL,
+    studenteId INTEGER NOT NULL REFERENCES Studente(studenteId),
+    data TEXT NOT NULL CHECK(data IS date(data, '+0 days')),
     PRIMARY KEY (studenteId, data)
 );
 CREATE TABLE IF NOT EXISTS Giustificazione (
     studenteId INTEGER NOT NULL REFERENCES Studente(studenteId),
-    data TEXT NOT NULL,
+    data TEXT NOT NULL CHECK(data IS date(data, '+0 days')),
     immotivata INTEGER,
     -- 1 immotivata, 0 motivata
     PRIMARY KEY (studenteId, data)
 );
-CREATE TABLE IF NOT EXISTS Interrogazione (
-    interrogazioneId INTEGER PRIMARY KEY,
-    studenteId INTEGER NOT NULL REFERENCES Studente(studenteId),
+CREATE TABLE IF NOT EXISTS ArgomentiColloquio (
+    argomentiColloquioId INTEGER PRIMARY KEY,
     argomentoId INTEGER NOT NULL REFERENCES Argomento(argomentoId),
-    data TEXT NOT NULL,
-    voto REAL NOT NULL,
-    descrizione TEXT
+    numeroDomande INTEGER CHECK (
+        numeroDomande IS NULL
+        OR numeroDomande BETWEEN 1 AND 4
+    ),
+    probabilita INTEGER CHECK (
+        probabilita IS NULL
+        OR probabilita BETWEEN 1 AND 100
+    ),
+    CHECK(
+        (
+            numeroDomande IS NULL
+            AND probabilita IS NOT NULL
+        )
+        OR (
+            numeroDomande IS NOT NULL
+            AND probabilita IS NULL
+        )
+    )
 );
 CREATE TABLE IF NOT EXISTS Indicatore (
     indicatoreId INTEGER PRIMARY KEY,
@@ -77,13 +90,19 @@ CREATE TABLE IF NOT EXISTS Descrittore (
         livello BETWEEN 0 AND 10
     )
 );
-CREATE TABLE IF NOT EXISTS Verbale (
-    interrogazioneId INTEGER NOT NULL REFERENCES Interrogazione(interrogazioneId),
-    quesitoId INTEGER NOT NULL REFERENCES Quesito(quesitoId),
-    PRIMARY KEY (interrogazioneId, quesitoId)
+CREATE TABLE Colloquio (
+    colloquioId INTEGER PRIMARY KEY,
+    studenteId INTEGER NOT NULL REFERENCES Studente(studenteId),
+    argomentiColloquioId INTEGER NOT NULL REFERENCES ArgomentiColloquio(ArgomentiColloquioId),
+    data TEXT NOT NULL CHECK(data IS date(data, '+0 days'))
 );
-CREATE TABLE IF NOT EXISTS Valutazione (
-    interrogazioneId INTEGER NOT NULL REFERENCES Interrogazione(interrrogazioneId),
+CREATE TABLE IF NOT EXISTS ValutazioneQuesito (
+    colloquioId INTEGER NOT NULL REFERENCES Colloquio(colloquioId),
     descrittoreId INTEGER NOT NULL REFERENCES Descrittore(descrittoreId),
-    PRIMARY KEY (interrogazioneId, descrittoreId)
+    PRIMARY KEY (colloquioId, descrittoreId)
+);
+CREATE TABLE IF NOT EXISTS Verbale (
+    colloquioId INTEGER NOT NULL REFERENCES Colloquio(colloquioId),
+    quesitoId INTEGER NOT NULL REFERENCES Quesito(quesitoId),
+    PRIMARY KEY (colloquioId, quesitoId)
 );

@@ -1,0 +1,114 @@
+classDiagram
+class AnnoScolastico {
+	annoScolasticoId: INTEGER
+	testo: TEXT
+	inizio: TEXT
+	fine: TEXT
+}
+
+class Classe {
+	classeId: INTEGER
+	annoScolasticoId: INTEGER
+	anno: INTEGER
+	sezione: TEXT
+	indirizzo: TEXT
+	articolazione: TEXT
+	maxGiustificazioni: INTEGER
+}
+
+class Studente {
+	studenteId: INTEGER
+	nome: TEXT
+	cognome: TEXT
+	sesso: TEXT
+	email: TEXT
+}
+
+class Registro {
+	studenteId: INTEGER
+	classeId: INTEGER
+}
+
+class Argomento {
+	argomentoId: INTEGER
+	argomento: TEXT
+}
+
+class Programmazione {
+	classeId: INTEGER
+	argomentoId: INTEGER
+}
+
+class Quesito {
+	quesitoId: INTEGER
+	argomentoId: INTEGER
+	quesito: TEXT
+}
+
+class Assenza {
+	studenteId: INTEGER
+	data: TEXT
+}
+
+class Giustificazione {
+	studenteId: INTEGER
+	data: TEXT
+	immotivata: INTEGER
+}
+
+class ArgomentiColloquio {
+	argomentiColloquioId: INTEGER
+	argomentoId: INTEGER
+	numeroDomande: INTEGER
+	probabilita: INTEGER
+}
+
+class Indicatore {
+	indicatoreId: INTEGER
+	indicatore: TEXT
+	descrizione: TEXT
+	peso: REAL
+}
+
+class Descrittore {
+	descrittoreId: INTEGER
+	indicatoreId: INTEGER
+	descrittore: TEXT
+	descrizione: TEXT
+	livello: INTEGER
+}
+
+class Colloquio {
+	colloquioId: INTEGER
+	studenteId: INTEGER
+	argomentiColloquioId: INTEGER
+	data: TEXT
+}
+
+class ValutazioneQuesito {
+	colloquioId: INTEGER
+	descrittoreId: INTEGER
+}
+
+class Verbale {
+	colloquioId: INTEGER
+	quesitoId: INTEGER
+}
+
+Classe "*" -- "1" AnnoScolastico : annoScolasticoId
+Registro "*" -- "1" Classe : classeId
+Registro "*" -- "1" Studente : studenteId
+Programmazione "*" -- "1" Argomento : argomentoId
+Programmazione "*" -- "1" Classe : classeId
+Quesito "*" -- "1" Argomento : argomentoId
+Assenza "*" -- "1" Studente : studenteId
+Giustificazione "*" -- "1" Studente : studenteId
+ArgomentiColloquio "*" -- "1" Argomento : argomentoId
+Descrittore "*" -- "1" Indicatore : indicatoreId
+Colloquio "*" -- "1" ArgomentiColloquio : argomentiColloquioId
+Colloquio "*" -- "1" Studente : studenteId
+ValutazioneQuesito "*" -- "1" Descrittore : descrittoreId
+ValutazioneQuesito "*" -- "1" Colloquio : colloquioId
+Verbale "*" -- "1" Quesito : quesitoId
+Verbale "*" -- "1" Colloquio : colloquioId
+
