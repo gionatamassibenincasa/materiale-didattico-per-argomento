@@ -5,6 +5,14 @@
 , fine: TEXT
 )
 
+`PeriodoValutazione` (
+  **periodoValutazioneId**: INTEGER
+, __annoScolasticoId__: INTEGER -> AnnoScolastico(annoScolasticoId)
+, descrizione: TEXT
+, inizio: TEXT
+, fine: TEXT
+)
+
 `Classe` (
   **classeId**: INTEGER
 , __annoScolasticoId__: INTEGER -> AnnoScolastico(annoScolasticoId)

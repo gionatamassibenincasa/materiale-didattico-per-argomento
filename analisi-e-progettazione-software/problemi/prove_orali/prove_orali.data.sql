@@ -1,6 +1,27 @@
 BEGIN TRANSACTION;
 INSERT INTO "AnnoScolastico" ("annoScolasticoId", "testo", "inizio", "fine")
 VALUES (1, '2022-23', '2022-09-01', '2023-08-31');
+INSERT INTO PeriodoValutazione (
+        periodoValutazioneId,
+        annoScolasticoId,
+        descrizione,
+        inizio,
+        fine
+    )
+VALUES (
+        1,
+        1,
+        "I Quadrimestre",
+        "2022-09-12",
+        "2023-01-31"
+    ),
+    (
+        2,
+        1,
+        "II Quadrimestre",
+        "2023-02-02",
+        "2023-06-10"
+    );
 INSERT INTO "Classe" (
         "classeId",
         "annoScolasticoId",
@@ -10,12 +31,26 @@ INSERT INTO "Classe" (
         "articolazione",
         "maxGiustificazioni"
     )
-VALUES (1000425, 1, 4, 'A', 'ITE', 'Mod AFM/SIA - SIA', 0),
+VALUES (
+        1000425,
+        1,
+        4,
+        'A',
+        'ITE',
+        'Mod AFM/SIA - SIA',
+        2
+    ),
     (1000455, 1, 5, 'E', 'LS', 'SA', 2),
     (1000469, 1, 5, 'A', 'ITE', 'SIA', 2),
     (1001011, 1, 3, 'A', 'ITE', 'Mod AFM/Sport', 1),
     (1001014, 1, 3, 'A', 'ITE', 'SIA', 1);
-INSERT INTO "Studente" ("studenteId", "nome", "cognome", "sesso", "email")
+INSERT INTO "Studente" (
+        "studenteId",
+        "nome",
+        "cognome",
+        "sesso",
+        "email"
+    )
 VALUES (
         1007372,
         'Raian',
@@ -970,7 +1005,11 @@ VALUES (
         2,
         'Quali sono i moduli principali del sistema operativo?'
     ),
-    (22, 2, 'Che cosa si intende con il termine SPOOL?'),
+    (
+        22,
+        2,
+        'Che cosa si intende con il termine SPOOL?'
+    ),
     (
         23,
         2,
@@ -991,7 +1030,11 @@ VALUES (
         2,
         'Quali sono le funzioni del modulo del sistema operativo per la gestione dei file?'
     ),
-    (27, 2, 'Che cosa si intende con il termine shell?'),
+    (
+        27,
+        2,
+        'Che cosa si intende con il termine shell?'
+    ),
     (
         28,
         2,
@@ -1176,8 +1219,16 @@ VALUES (
         'In quali fasi del lavoro di programmazione vengono rilevati gli errori di runtime e quelli logici?'
     ),
     (71, 4, 'Che cosa si intende con debugger?'),
-    (72, 5, 'Quali sono la fasi della programmazione?'),
-    (73, 5, 'Che cosa sono le strutture di controllo?'),
+    (
+        72,
+        5,
+        'Quali sono la fasi della programmazione?'
+    ),
+    (
+        73,
+        5,
+        'Che cosa sono le strutture di controllo?'
+    ),
     (
         74,
         5,
@@ -1254,7 +1305,11 @@ VALUES (
         6,
         'Perché sono importanti le frasi di commento all’interno di un programma?'
     ),
-    (90, 6, 'Come si costruisce un identificatore C++?'),
+    (
+        90,
+        6,
+        'Come si costruisce un identificatore C++?'
+    ),
     (
         91,
         6,
@@ -1342,13 +1397,21 @@ VALUES (
         'Quali sono gli elementi che definiscono un oggetto?'
     ),
     (109, 7, 'Che cosa si intende con classe?'),
-    (110, 7, 'Quale nesso esiste tra classe e oggetto?'),
+    (
+        110,
+        7,
+        'Quale nesso esiste tra classe e oggetto?'
+    ),
     (
         111,
         7,
         'Come vengono descritte graficamente le classi?'
     ),
-    (112, 7, 'Che cosa si intende con incapsulamento?'),
+    (
+        112,
+        7,
+        'Che cosa si intende con incapsulamento?'
+    ),
     (
         113,
         7,
@@ -1366,7 +1429,11 @@ VALUES (
         7,
         'Qual è la differenza tra public e private?'
     ),
-    (118, 7, 'Che cosa si intende con funzione friend?'),
+    (
+        118,
+        7,
+        'Che cosa si intende con funzione friend?'
+    ),
     (
         119,
         7,
@@ -1600,8 +1667,16 @@ VALUES (
         10,
         'Quali sono le funzioni principali di un browser?'
     ),
-    (176, 10, 'A che cosa serve un motore di ricerca?'),
-    (177, 10, 'Come si compila un messaggio di email?'),
+    (
+        176,
+        10,
+        'A che cosa serve un motore di ricerca?'
+    ),
+    (
+        177,
+        10,
+        'Come si compila un messaggio di email?'
+    ),
     (
         178,
         10,
@@ -1665,7 +1740,11 @@ VALUES (
         11,
         'Con quali tag si realizzano i collegamenti ipertestuali tra le pagine?'
     ),
-    (193, 11, 'Che cos’è la home page di un sito Web?'),
+    (
+        193,
+        11,
+        'Che cos’è la home page di un sito Web?'
+    ),
     (
         194,
         11,
@@ -1689,7 +1768,11 @@ VALUES (
         11,
         'È possibile validare le pagine Web e i fogli di stile?'
     ),
-    (201, 11, 'Che cosa si intende con accessibilità?'),
+    (
+        201,
+        11,
+        'Che cosa si intende con accessibilità?'
+    ),
     (
         202,
         11,
@@ -1823,7 +1906,11 @@ VALUES (
         13,
         'Che cosa si intende per modello fisico dei dati?'
     ),
-    (231, 13, 'Come può essere definito lo schema E/R?'),
+    (
+        231,
+        13,
+        'Come può essere definito lo schema E/R?'
+    ),
     (
         232,
         13,
@@ -2014,7 +2101,11 @@ VALUES (
         15,
         'Elenca i tipi standard per i dati utilizzabili in SQL.'
     ),
-    (274, 15, 'Qual è il significato del valore Null?'),
+    (
+        274,
+        15,
+        'Qual è il significato del valore Null?'
+    ),
     (
         275,
         15,
@@ -2030,7 +2121,11 @@ VALUES (
         15,
         'Qual è la struttura generale del comando Select?'
     ),
-    (278, 15, 'A che cosa serve la clausola Distinct?'),
+    (
+        278,
+        15,
+        'A che cosa serve la clausola Distinct?'
+    ),
     (
         279,
         15,
@@ -2158,7 +2253,11 @@ VALUES (
         17,
         'Qual è la definizione di sistema operativo?'
     ),
-    (306, 17, 'Spiega il significato di time sharing.'),
+    (
+        306,
+        17,
+        'Spiega il significato di time sharing.'
+    ),
     (
         307,
         17,
@@ -2229,7 +2328,11 @@ VALUES (
         'In che cosa consiste la virtualizzazione delle periferiche che si ottiene con il device management?'
     ),
     (324, 17, 'A che cosa serve lo spool?'),
-    (325, 17, 'Quali sono le funzioni del file system?'),
+    (
+        325,
+        17,
+        'Quali sono le funzioni del file system?'
+    ),
     (
         326,
         17,
@@ -2240,7 +2343,11 @@ VALUES (
         17,
         'Quali sono i diversi processi che vengono attivati a partire dall’accensione di un sistema?'
     ),
-    (328, 17, 'Come avviene la connessione al sistema?'),
+    (
+        328,
+        17,
+        'Come avviene la connessione al sistema?'
+    ),
     (
         329,
         17,
@@ -2269,7 +2376,11 @@ VALUES (
         'Perché è importante impostare i permessi sui file?'
     ),
     (336, 17, 'Come si impostano i permessi?'),
-    (337, 17, 'Qual è il comando per la calcolatrice?'),
+    (
+        337,
+        17,
+        'Qual è il comando per la calcolatrice?'
+    ),
     (338, 17, 'Quali sono i comandi per comunicare?'),
     (
         339,
@@ -2552,7 +2663,11 @@ VALUES (
         'Qual è il compito degli enti di certificazione?'
     ),
     (407, 19, 'Che cosa si intende con e-government?'),
-    (408, 19, 'Che cosa si intende con e-procurement?'),
+    (
+        408,
+        19,
+        'Che cosa si intende con e-procurement?'
+    ),
     (
         409,
         19,
@@ -2830,7 +2945,12 @@ VALUES (
         24,
         'Perché sono importanti le norme sull’accessibilità alle risorse informatiche?'
     );
-INSERT INTO "Indicatore" ("indicatoreId", "indicatore", "descrizione", "peso")
+INSERT INTO "Indicatore" (
+        "indicatoreId",
+        "indicatore",
+        "descrizione",
+        "peso"
+    )
 VALUES (
         1,
         'Correttezza',

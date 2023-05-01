@@ -1,8 +1,15 @@
 CREATE TABLE IF NOT EXISTS AnnoScolastico (
     annoScolasticoId INTEGER PRIMARY KEY,
     testo TEXT NOT NULL UNIQUE CHECK (length(testo) = 7),
-    inizio TEXT NOT NULL UNIQUE,
-    fine TEXT NOT NULL UNIQUE
+    inizio TEXT NOT NULL UNIQUE CHECK(inizio IS date(inizio, '+0 days')),
+    fine TEXT NOT NULL UNIQUE CHECK(fine IS date(fine, '+0 days'))
+);
+CREATE TABLE IF NOT EXISTS PeriodoValutazione (
+    periodoValutazioneId INTEGER PRIMARY KEY,
+    annoScolasticoId INTEGER NOT NULL REFERENCES AnnoScolastico(annoScolasticoId),
+    descrizione TEXT NOT NULL,
+    inizio TEXT NOT NULL UNIQUE CHECK(inizio IS date(inizio, '+0 days')),
+    fine TEXT NOT NULL UNIQUE CHECK(fine IS date(fine, '+0 days'))
 );
 CREATE TABLE IF NOT EXISTS Classe (
     classeId INTEGER PRIMARY KEY,

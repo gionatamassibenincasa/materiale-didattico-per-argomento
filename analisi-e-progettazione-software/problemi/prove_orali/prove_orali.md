@@ -25,8 +25,6 @@ Per determinare il quesito dell'interrogazione, seleziona l'argomento in accordo
 
 La prova orale termina dopo che ogni interrogato è stato ascoltato su di un numero prestabilito di domande, uguale per tutti.
 
-[//]: Mentre lo studente colloquia col professore, quest'ultimo annota domanda e commenti sulla risposta quindi formula un giudizio inserendo una sequenza di valori numerici, detti livelli, compresi tra 0 e 10.
-
 Il prof. valuta la prova orale usando delle griglie di valutazione imposte dal dipartimento. Le griglie sono strutture a due livelli, detti indicatore e descrittore. Ad ogni indicatore sono associati un sottoinsieme di descrittori ed un peso. Il descrittore è proprio dell'indicatore e indica la qualità della prestazione analizzata insieme ad un livello. Il peso è un numero frazionario mentre il livello è un numero naturale. Il punteggio grezzo è la combinazione lineare dei pesi con i livelli corrispondenti.
 
 La griglia del dipartimento realizzata con i seguenti indicatori: correttezza (i concetti devono essere espressi in accordo al loro significato), completezza (tutte le idee semplici del concetto devono essere esposte), pertinenza (i concetti devono essere quelli richiesti dal quesito e non altri), minimalità (l'esposizione non deve essere ridondante), intelligibilità (i concetti devono essere espressi in modo comprensibile, senza necessità di ulteriori quesiti aggiuntivi), appropriatezza del lessico (i concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale). Pesi, indicatori e livelli sono in tabella:
@@ -244,7 +242,7 @@ title Interrogazione
 <b>Note:
 (1) L'esempio scelto non è attinente
 
-<b>Griglia di valutazione: 
+<b>Griglia di valutazione:
 .
 .
 {<b>Punteggio grezzo: | ^14^ }

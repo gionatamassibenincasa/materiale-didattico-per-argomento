@@ -6,6 +6,14 @@ erDiagram
   TEXT fine
  }
 
+ PeriodoValutazione {
+  INTEGER periodoValutazioneId PK
+  INTEGER annoScolasticoId FK
+  TEXT descrizione
+  TEXT inizio
+  TEXT fine
+ }
+
  Classe {
   INTEGER classeId PK
   INTEGER annoScolasticoId FK
@@ -97,6 +105,7 @@ erDiagram
   INTEGER quesitoId PK
  }
 
+ PeriodoValutazione }o--|| AnnoScolastico : annoScolasticoId
  Classe }o--|| AnnoScolastico : annoScolasticoId
  Registro }o--|| Classe : classeId
  Registro }o--|| Studente : studenteId

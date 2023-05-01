@@ -6,6 +6,14 @@ class AnnoScolastico {
 	fine: TEXT
 }
 
+class PeriodoValutazione {
+	periodoValutazioneId: INTEGER
+	annoScolasticoId: INTEGER
+	descrizione: TEXT
+	inizio: TEXT
+	fine: TEXT
+}
+
 class Classe {
 	classeId: INTEGER
 	annoScolasticoId: INTEGER
@@ -97,6 +105,7 @@ class Verbale {
 	quesitoId: INTEGER
 }
 
+PeriodoValutazione "*" -- "1" AnnoScolastico : annoScolasticoId
 Classe "*" -- "1" AnnoScolastico : annoScolasticoId
 Registro "*" -- "1" Classe : classeId
 Registro "*" -- "1" Studente : studenteId
