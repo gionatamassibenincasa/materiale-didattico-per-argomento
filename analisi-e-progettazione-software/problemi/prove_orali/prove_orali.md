@@ -83,7 +83,7 @@ Al termine dell'interrogazione, il prof. registra un voto, che è l'arrotondamen
 5. Progettare l'interfaccia dell'applicazione web.
 6. Fornire le query da utilizzare nell'applicazione web.
 
-## 1. Requisiti
+## Requisiti (fase 1)
 
 ### Visione d'insieme dei Casi d'Uso
 
@@ -331,9 +331,9 @@ creazione_gruppo_argomenti_req - contains -> creazione_gruppo_argomenti_n_domand
 #### Modello _wire frame_
 
 @startsalt
-title Raggruppamento argomenti
+title Argomenti dei colloqui
 {+
-{* Professore Web - Argomenti interrogazione}
+{* Professore Web - Argomenti dei colloqui}
 {
 == Argomenti del colloquio
 {^"Selezione argomenti salvati"
@@ -348,7 +348,7 @@ title Raggruppamento argomenti
 }
 {^"Crea nuovo raggruppamento"
   { Descrizione: | "Prima interrogazione secondo quadr. " }
-  Argomento | N. domande | %
+  Argomento | N. quesiti | % quesiti
   [] Sviluppo del software   | " " | " "
   [] Modello concettuale E/R | " " | " "
   [X] Modello relazionale    | "2" | " "
@@ -500,3 +500,223 @@ title Verbale
 {Voto: | ^7^ }
 }
 @endsalt
+
+## Base di dati (fase 4)
+
+### Modello E/R 
+
+@startuml
+left to right direction
+skinparam roundcorner 5
+skinparam linetype ortho
+skinparam shadowing false
+skinparam handwritten false
+skinparam class {
+    BackgroundColor white
+    ArrowColor #2688d4
+    BorderColor #2688d4
+}
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define primary_and_foreign_key(x) <b><i><color:#b8861b><&key></color> x</i></b>
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, white) >>
+
+table( AnnoScolastico ) {
+   primary_key( annoScolasticoId )  :INTEGER 
+   column( testo )  :TEXT 
+   column( inizio )  :TEXT 
+   column( fine )  :TEXT 
+ }
+
+
+table( PeriodoValutazione ) {
+   primary_key( periodoValutazioneId )  :INTEGER 
+   foreign_key( annoScolasticoId )  :INTEGER 
+   column( descrizione )  :TEXT 
+   column( inizio )  :TEXT 
+   column( fine )  :TEXT 
+ }
+
+
+table( Classe ) {
+   primary_key( classeId )  :INTEGER 
+   foreign_key( annoScolasticoId )  :INTEGER 
+   column( anno )  :INTEGER 
+   column( sezione )  :TEXT 
+   column( indirizzo )  :TEXT 
+   column( articolazione )  :TEXT 
+   column( maxGiustificazioni )  :INTEGER 
+ }
+
+
+table( Studente ) {
+   primary_key( studenteId )  :INTEGER 
+   column( nome )  :TEXT 
+   column( cognome )  :TEXT 
+   column( sesso )  :TEXT 
+   column( email )  :TEXT 
+ }
+
+
+table( Registro ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_and_foreign_key( classeId )  :INTEGER 
+ }
+
+
+table( Ritirato ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_and_foreign_key( classeId )  :INTEGER 
+   primary_key( data )  :TEXT 
+ }
+
+
+table( Argomento ) {
+   primary_key( argomentoId )  :INTEGER 
+   column( argomento )  :TEXT 
+ }
+
+
+table( Programmazione ) {
+   primary_and_foreign_key( classeId )  :INTEGER 
+   primary_and_foreign_key( argomentoId )  :INTEGER 
+ }
+
+
+table( Quesito ) {
+   primary_key( quesitoId )  :INTEGER 
+   foreign_key( argomentoId )  :INTEGER 
+   column( quesito )  :TEXT 
+ }
+
+
+table( Assenza ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_key( data )  :TEXT 
+ }
+
+
+table( Giustificazione ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_key( data )  :TEXT 
+   column( immotivata )  :INTEGER 
+ }
+
+
+table( ArgomentiColloquio ) {
+   primary_key( argomentiColloquioId )  :INTEGER 
+   foreign_key( argomentoId )  :INTEGER 
+   column( descrizione )  :TEXT 
+   column( data )  :TEXT 
+   column( numeroDomande )  :INTEGER 
+   column( probabilita )  :INTEGER 
+ }
+
+
+table( Indicatore ) {
+   primary_key( indicatoreId )  :INTEGER 
+   column( indicatore )  :TEXT 
+   column( descrizione )  :TEXT 
+   column( peso )  :REAL 
+ }
+
+
+table( Descrittore ) {
+   primary_key( descrittoreId )  :INTEGER 
+   foreign_key( indicatoreId )  :INTEGER 
+   column( descrittore )  :TEXT 
+   column( descrizione )  :TEXT 
+   column( livello )  :INTEGER 
+ }
+
+
+table( Colloquio ) {
+   primary_key( colloquioId )  :INTEGER 
+   foreign_key( studenteId )  :INTEGER 
+   foreign_key( argomentiColloquioId )  :INTEGER 
+   column( data )  :TEXT 
+ }
+
+
+table( ValutazioneQuesito ) {
+   primary_and_foreign_key( colloquioId )  :INTEGER 
+   primary_and_foreign_key( descrittoreId )  :INTEGER 
+ }
+
+
+table( Verbale ) {
+   primary_and_foreign_key( colloquioId )  :INTEGER 
+   primary_and_foreign_key( quesitoId )  :INTEGER 
+ }
+
+
+ PeriodoValutazione }o--|| AnnoScolastico
+ Classe }o--|| AnnoScolastico
+ Registro }o--|| Classe
+ Registro }o--|| Studente
+ Ritirato }o--|| Registro
+ Ritirato }o--|| Registro
+ Programmazione }o--|| Argomento
+ Programmazione }o--|| Classe
+ Quesito }o--|| Argomento
+ Assenza }o--|| Studente
+ Giustificazione }o--|| Studente
+ ArgomentiColloquio }o--|| Argomento
+ Descrittore }o--|| Indicatore
+ Colloquio }o--|| ArgomentiColloquio
+ Colloquio }o--|| Studente
+ ValutazioneQuesito }o--|| Descrittore
+ ValutazioneQuesito }o--|| Colloquio
+ Verbale }o--|| Quesito
+ Verbale }o--|| Colloquio
+
+@enduml
+
+### Schema relazionale
+
+**AnnoScolastico** (  **annoScolasticoId**: INTEGER, testo: TEXT, inizio: TEXT, fine: TEXT)
+
+**ArgomentiColloquio** (  **argomentiColloquioId**: INTEGER, _argomentoId_: INTEGER -> Argomento(argomentoId), descrizione: TEXT, data: TEXT, numeroDomande: INTEGER, probabilita: INTEGER)
+
+**Argomento** (  **argomentoId**: INTEGER, argomento: TEXT)
+
+**Assenza** (  ***studenteId***: INTEGER -> Studente(studenteId), **data**: TEXT)
+
+**Classe** (  **classeId**: INTEGER, _annoScolasticoId_: INTEGER -> AnnoScolastico(annoScolasticoId), anno: INTEGER, sezione: TEXT, indirizzo: TEXT, articolazione: TEXT, maxGiustificazioni: INTEGER)
+
+**Colloquio** (  **colloquioId**: INTEGER, _studenteId_: INTEGER -> Studente(studenteId), _argomentiColloquioId_: INTEGER -> ArgomentiColloquio(argomentiColloquioId), data: TEXT)
+
+**Descrittore** (  **descrittoreId**: INTEGER, _indicatoreId_: INTEGER -> Indicatore(indicatoreId), descrittore: TEXT, descrizione: TEXT, livello: INTEGER)
+
+**Giustificazione** (  ***studenteId***: INTEGER -> Studente(studenteId), **data**: TEXT, immotivata: INTEGER)
+
+**Indicatore** (  **indicatoreId**: INTEGER, indicatore: TEXT, descrizione: TEXT, peso: REAL)
+
+**PeriodoValutazione** (  **periodoValutazioneId**: INTEGER, _annoScolasticoId_: INTEGER -> AnnoScolastico(annoScolasticoId), descrizione: TEXT, inizio: TEXT, fine: TEXT)
+
+**Programmazione** (  ***classeId***: INTEGER -> Classe(classeId), ***argomentoId***: INTEGER -> Argomento(argomentoId))
+
+**Quesito** (  **quesitoId**: INTEGER, _argomentoId_: INTEGER -> Argomento(argomentoId), quesito: TEXT)
+
+**Registro** (  ***studenteId***: INTEGER -> Studente(studenteId), ***classeId***: INTEGER -> Classe(classeId))
+
+**Ritirato** (  ***studenteId***: INTEGER -> Registro(studenteId), ***classeId***: INTEGER -> Registro(classeId), **data**: TEXT)
+
+**Studente** (  **studenteId**: INTEGER, nome: TEXT, cognome: TEXT, sesso: TEXT, email: TEXT)
+
+**ValutazioneQuesito** (  ***colloquioId***: INTEGER -> Colloquio(colloquioId), ***descrittoreId***: INTEGER -> Descrittore(descrittoreId))
+
+**Verbale** (  ***colloquioId***: INTEGER -> Colloquio(colloquioId), ***quesitoId***: INTEGER -> Quesito(quesitoId))
+
+### Codice SQL
+
+```SQL
+CREATE TABLE IF NOT EXISTS AnnoScolastico (
+    annoScolasticoId INTEGER PRIMARY KEY,
+    testo TEXT NOT NULL UNIQUE CHECK (length(testo) = 7),
+    inizio TEXT NOT NULL UNIQUE CHECK(inizio IS date(inizio, '+0 days')),
+    fine TEXT NOT NULL UNIQUE CHECK(fine IS date(fine, '+0 days'))
+);
+
+```

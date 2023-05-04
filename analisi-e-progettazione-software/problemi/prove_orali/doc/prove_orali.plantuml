@@ -1,0 +1,167 @@
+@startuml
+left to right direction
+skinparam roundcorner 5
+skinparam linetype ortho
+skinparam shadowing false
+skinparam handwritten false
+skinparam class {
+    BackgroundColor white
+    ArrowColor #2688d4
+    BorderColor #2688d4
+}
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define primary_and_foreign_key(x) <b><i><color:#b8861b><&key></color> x</i></b>
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, white) >>
+
+table( AnnoScolastico ) {
+   primary_key( annoScolasticoId )  :INTEGER 
+   column( testo )  :TEXT 
+   column( inizio )  :TEXT 
+   column( fine )  :TEXT 
+ }
+
+
+table( PeriodoValutazione ) {
+   primary_key( periodoValutazioneId )  :INTEGER 
+   foreign_key( annoScolasticoId )  :INTEGER 
+   column( descrizione )  :TEXT 
+   column( inizio )  :TEXT 
+   column( fine )  :TEXT 
+ }
+
+
+table( Classe ) {
+   primary_key( classeId )  :INTEGER 
+   foreign_key( annoScolasticoId )  :INTEGER 
+   column( anno )  :INTEGER 
+   column( sezione )  :TEXT 
+   column( indirizzo )  :TEXT 
+   column( articolazione )  :TEXT 
+   column( maxGiustificazioni )  :INTEGER 
+ }
+
+
+table( Studente ) {
+   primary_key( studenteId )  :INTEGER 
+   column( nome )  :TEXT 
+   column( cognome )  :TEXT 
+   column( sesso )  :TEXT 
+   column( email )  :TEXT 
+ }
+
+
+table( Registro ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_and_foreign_key( classeId )  :INTEGER 
+ }
+
+
+table( Ritirato ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_and_foreign_key( classeId )  :INTEGER 
+   primary_key( data )  :TEXT 
+ }
+
+
+table( Argomento ) {
+   primary_key( argomentoId )  :INTEGER 
+   column( argomento )  :TEXT 
+ }
+
+
+table( Programmazione ) {
+   primary_and_foreign_key( classeId )  :INTEGER 
+   primary_and_foreign_key( argomentoId )  :INTEGER 
+ }
+
+
+table( Quesito ) {
+   primary_key( quesitoId )  :INTEGER 
+   foreign_key( argomentoId )  :INTEGER 
+   column( quesito )  :TEXT 
+ }
+
+
+table( Assenza ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_key( data )  :TEXT 
+ }
+
+
+table( Giustificazione ) {
+   primary_and_foreign_key( studenteId )  :INTEGER 
+   primary_key( data )  :TEXT 
+   column( immotivata )  :INTEGER 
+ }
+
+
+table( ArgomentiColloquio ) {
+   primary_key( argomentiColloquioId )  :INTEGER 
+   foreign_key( argomentoId )  :INTEGER 
+   column( descrizione )  :TEXT 
+   column( data )  :TEXT 
+   column( numeroDomande )  :INTEGER 
+   column( probabilita )  :INTEGER 
+ }
+
+
+table( Indicatore ) {
+   primary_key( indicatoreId )  :INTEGER 
+   column( indicatore )  :TEXT 
+   column( descrizione )  :TEXT 
+   column( peso )  :REAL 
+ }
+
+
+table( Descrittore ) {
+   primary_key( descrittoreId )  :INTEGER 
+   foreign_key( indicatoreId )  :INTEGER 
+   column( descrittore )  :TEXT 
+   column( descrizione )  :TEXT 
+   column( livello )  :INTEGER 
+ }
+
+
+table( Colloquio ) {
+   primary_key( colloquioId )  :INTEGER 
+   foreign_key( studenteId )  :INTEGER 
+   foreign_key( argomentiColloquioId )  :INTEGER 
+   column( data )  :TEXT 
+ }
+
+
+table( ValutazioneQuesito ) {
+   primary_and_foreign_key( colloquioId )  :INTEGER 
+   primary_and_foreign_key( descrittoreId )  :INTEGER 
+ }
+
+
+table( Verbale ) {
+   primary_and_foreign_key( colloquioId )  :INTEGER 
+   primary_and_foreign_key( quesitoId )  :INTEGER 
+ }
+
+
+ PeriodoValutazione }o--|| AnnoScolastico : annoScolasticoId
+ Classe }o--|| AnnoScolastico : annoScolasticoId
+ Registro }o--|| Classe : classeId
+ Registro }o--|| Studente : studenteId
+ Ritirato }o--|| Registro : studenteId
+ Ritirato }o--|| Registro : classeId
+ Programmazione }o--|| Argomento : argomentoId
+ Programmazione }o--|| Classe : classeId
+ Quesito }o--|| Argomento : argomentoId
+ Assenza }o--|| Studente : studenteId
+ Giustificazione }o--|| Studente : studenteId
+ ArgomentiColloquio }o--|| Argomento : argomentoId
+ Descrittore }o--|| Indicatore : indicatoreId
+ Colloquio }o--|| ArgomentiColloquio : argomentiColloquioId
+ Colloquio }o--|| Studente : studenteId
+ ValutazioneQuesito }o--|| Descrittore : descrittoreId
+ ValutazioneQuesito }o--|| Colloquio : colloquioId
+ Verbale }o--|| Quesito : quesitoId
+ Verbale }o--|| Colloquio : colloquioId
+
+@enduml
