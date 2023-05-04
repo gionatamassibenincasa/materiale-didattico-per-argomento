@@ -37,6 +37,12 @@ class Registro {
 	classeId: INTEGER
 }
 
+class Ritirato {
+	studenteId: INTEGER
+	classeId: INTEGER
+	data: TEXT
+}
+
 class Argomento {
 	argomentoId: INTEGER
 	argomento: TEXT
@@ -109,6 +115,8 @@ PeriodoValutazione "*" -- "1" AnnoScolastico : annoScolasticoId
 Classe "*" -- "1" AnnoScolastico : annoScolasticoId
 Registro "*" -- "1" Classe : classeId
 Registro "*" -- "1" Studente : studenteId
+Ritirato "*" -- "1" Registro : studenteId
+Ritirato "*" -- "1" Registro : classeId
 Programmazione "*" -- "1" Argomento : argomentoId
 Programmazione "*" -- "1" Classe : classeId
 Quesito "*" -- "1" Argomento : argomentoId

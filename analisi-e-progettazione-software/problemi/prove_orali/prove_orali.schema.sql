@@ -34,6 +34,15 @@ CREATE TABLE IF NOT EXISTS Registro (
     classeId INTEGER NOT NULL REFERENCES Classe(classeId),
     PRIMARY KEY(studenteId, classeId)
 );
+CREATE TABLE IF NOT EXISTS Ritirato (
+    studenteId INTEGER NOT NULL,
+    -- REFERENCES Studente(studenteId),
+    classeId INTEGER NOT NULL,
+    -- REFERENCES Classe(classeId),
+    data TEXT NOT NULL CHECK(data IS date(data, '+0 days')),
+    PRIMARY KEY(studenteId, classeId, data),
+    FOREIGN KEY(studenteId, classeId) REFERENCES Registro(studenteId, classeId)
+);
 CREATE TABLE IF NOT EXISTS Argomento (
     argomentoId INTEGER PRIMARY KEY,
     argomento TEXT NOT NULL

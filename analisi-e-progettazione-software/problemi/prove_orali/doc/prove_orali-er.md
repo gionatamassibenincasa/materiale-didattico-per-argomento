@@ -37,6 +37,12 @@ erDiagram
   INTEGER classeId PK
  }
 
+ Ritirato {
+  INTEGER studenteId PK
+  INTEGER classeId PK
+  TEXT data PK
+ }
+
  Argomento {
   INTEGER argomentoId PK
   TEXT argomento
@@ -109,6 +115,8 @@ erDiagram
  Classe }o--|| AnnoScolastico : annoScolasticoId
  Registro }o--|| Classe : classeId
  Registro }o--|| Studente : studenteId
+ Ritirato }o--|| Registro : studenteId
+ Ritirato }o--|| Registro : classeId
  Programmazione }o--|| Argomento : argomentoId
  Programmazione }o--|| Classe : classeId
  Quesito }o--|| Argomento : argomentoId

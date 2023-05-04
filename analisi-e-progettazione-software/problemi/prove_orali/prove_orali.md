@@ -1,4 +1,12 @@
-# Prove orali: interrogazioni nella scuola delle griglie
+---
+headingNumber: true
+enableMacro: true
+---
+
+
+# Prove orali: interrogazioni al tempo delle griglie
+
+[toc]{type: "ol", level: [1,2,3]}
 
 ## Descrizione sommaria del software e delle necessità dell'utente
 
@@ -29,41 +37,44 @@ Il prof. valuta la prova orale usando delle griglie di valutazione imposte dal d
 
 La griglia del dipartimento realizzata con i seguenti indicatori: correttezza (i concetti devono essere espressi in accordo al loro significato), completezza (tutte le idee semplici del concetto devono essere esposte), pertinenza (i concetti devono essere quelli richiesti dal quesito e non altri), minimalità (l'esposizione non deve essere ridondante), intelligibilità (i concetti devono essere espressi in modo comprensibile, senza necessità di ulteriori quesiti aggiuntivi), appropriatezza del lessico (i concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale). Pesi, indicatori e livelli sono in tabella:
 
-| Correttezza (peso 1)                                                                                                         |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-| ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| I concetti devono essere espressi in accordo al loro significato nel rispetto della grammatica del linguaggio di descrizione |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-|                                                                                                                              | 3                                                                                                                   | 2                                                                                                                                                      | 1                                                                                                                                | 0                                                                                                                 |
-|                                                                                                                              | Corretto                                                                                                            | Parzialmente corretto                                                                                                                                  | Scarsamente corretto                                                                                                             | Non corretto                                                                                                      |
-|                                                                                                                              | I concetti sono espressi in accordo al loro significato nel rispetto della grammatica del linguaggio di descrizione | La maggior parte dei concetti sono espressi in accordo al loro significato nel rispetto della grammatica del linguaggio di descrizione                 | I concetti non sono espressi in accordo al loro significato o non è stata rispettata la grammatica del linguaggio di descrizione | I concetti non sono in accordo al loro significato e la grammatica del linguaggio di descrizione non è rispettata |
-| Completezza (peso 1)                                                                                                         |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-| Tutte le idee semplici del concetto devono essere esposte e devono potersi creare delle relazioni tra concetti               |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-|                                                                                                                              | 3                                                                                                                   | 2                                                                                                                                                      | 1                                                                                                                                | 0                                                                                                                 |
-|                                                                                                                              | Completo                                                                                                            | Quasi completo                                                                                                                                         | Poco completo                                                                                                                    | Incompleto                                                                                                        |
-|                                                                                                                              | Tutte le idee semplici sono esposte ed è possibile stabilire tutte le relazioni tra esse                            | La maggior parte delle idee semplici sono esposte ed è possibile stabilire la maggior parte delle relazioni tra esse                                   | Solo poche delle idee semplici sono esposte o non è sempre possibile stabilire le relazioni tra esse                             | Poche idee semplici sono esposte e non è possibile stabilire relazioni tra esse                                   |
-| Pertinenza (peso 0.5)                                                                                                        |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-| I concetti devono essere quelli richiesti dal quesito e non altri                                                            |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-|                                                                                                                              | 2                                                                                                                   | 1                                                                                                                                                      | 0                                                                                                                                |                                                                                                                   |
-|                                                                                                                              | Pertinente                                                                                                          | Poco pertinente                                                                                                                                        | Non pertinente                                                                                                                   |                                                                                                                   |
-|                                                                                                                              | I concetti sono tutti e soli quelli richiesti dal quesito                                                           | Vi sono concetti non richiesti dal quesito o vi sono solo un sottoinsieme proprio dei concetti richiesti                                               | Non vi sono i concetti richiesti                                                                                                 |                                                                                                                   |
-| Minimalità (peso 0.5)                                                                                                        |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-| L'esposizione non deve essere ridondante                                                                                     |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-|                                                                                                                              | 2                                                                                                                   | 1                                                                                                                                                      | 0                                                                                                                                |                                                                                                                   |
-|                                                                                                                              | Minimale                                                                                                            | Poco ridondante                                                                                                                                        | Ridondante                                                                                                                       |                                                                                                                   |
-|                                                                                                                              | L'esposizione non presenta ridondanze                                                                               | L'esposizione include delle ridondanze che potrebbero essere unificate ma che sono funzionali ad una descrizione di particolarizzazioni di un concetto | L'esposizione è ridondante                                                                                                       |                                                                                                                   |
-| Intelligibilità (peso 0.5)                                                                                                   |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-| I concetti sono espressi in modo comprensibile, senza necessità di ulteriori quesiti aggiuntivi                              |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-|                                                                                                                              | 2                                                                                                                   | 1                                                                                                                                                      | 0                                                                                                                                |                                                                                                                   |
-|                                                                                                                              | Intelligibile                                                                                                       | Poco intelligibile                                                                                                                                     | Non intelligibile                                                                                                                |                                                                                                                   |
-|                                                                                                                              | Il concetto è esposto in modo facilmente comprensibile e non richiede ulteriori quesiti                             | Il concetto è esposto in modo non facilmente comprensibile o richiede ulteriori quesiti                                                                | Il concetto è esposto in modo non facilmente comprensibile e richiede ulteriori quesiti                                          |                                                                                                                   |
-| Appropriatezza del lessico (peso 0.5)                                                                                        |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-| I concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale                          |                                                                                                                     |                                                                                                                                                        |                                                                                                                                  |                                                                                                                   |
-|                                                                                                                              | 2                                                                                                                   | 1                                                                                                                                                      | 0                                                                                                                                |                                                                                                                   |
-|                                                                                                                              | Appropriato                                                                                                         | Poco appropriato                                                                                                                                       | Non appropriato                                                                                                                  |                                                                                                                   |
-|                                                                                                                              | Il lessico usato è quello settoriale                                                                                | La maggior parte dei concetti è espressa nei termini del linguaggio settoriale                                                                         | La scelta dei termini è casuale                                                                                                  |                                                                                                                   |
+### Griglia di valutazione
+
+| Indicatore | Descrittori ||||
+| --- | --- | --- | --- | --- |
+| **Correttezza** (peso 1) |||||
+| I concetti devono essere espressi in accordo al loro significato nel rispetto della grammatica del linguaggio di descrizione |||||
+| | 3 | 2 | 1 | 0  |
+| | **Corretto** | **Parzialmente corretto** | **Scarsamente corretto** | **Non corretto** |
+| | I concetti sono espressi in accordo al loro significato nel rispetto della grammatica del linguaggio di descrizione | La maggior parte dei concetti sono espressi in accordo al loro significato nel rispetto della grammatica del linguaggio di descrizione                 | I concetti non sono espressi in accordo al loro significato o non è stata rispettata la grammatica del linguaggio di descrizione | I concetti non sono in accordo al loro significato e la grammatica del linguaggio di descrizione non è rispettata |
+| **Completezza** (peso 1) |||||
+| Tutte le idee semplici del concetto devono essere esposte e devono potersi creare delle relazioni tra concetti |||||
+| | 3 | 2 | 1 | 0 |
+| | **Completo** | **Quasi completo** | **Poco completo** | **Incompleto** |
+| | Tutte le idee semplici sono esposte ed è possibile stabilire tutte le relazioni tra esse | La maggior parte delle idee semplici sono esposte ed è possibile stabilire la maggior parte delle relazioni tra esse | Solo poche delle idee semplici sono esposte o non è sempre possibile stabilire le relazioni tra esse | Poche idee semplici sono esposte e non è possibile stabilire relazioni tra esse |
+| **Pertinenza** (peso 0.5) |||||
+| I concetti devono essere quelli richiesti dal quesito e non altri |||||
+| | | 2 | 1 | 0 |
+| | | Pertinente | Poco pertinente | Non pertinente |
+| | | I concetti sono tutti e soli quelli richiesti dal quesito | Vi sono concetti non richiesti dal quesito o vi sono solo un sottoinsieme proprio dei concetti richiesti | Non vi sono i concetti richiesti |
+| **Minimalità** (peso 0.5) |||||
+| L'esposizione non deve essere ridondante |||||
+| | | 2 | 1 | 0 |
+| | | Minimale | Poco ridondante | Ridondante |
+| | | L'esposizione non presenta ridondanze | L'esposizione include delle ridondanze che potrebbero essere unificate ma che sono funzionali ad una descrizione di particolarizzazioni di un concetto | L'esposizione è ridondante |
+| **Intelligibilità** (peso 0.5) |||||
+| I concetti sono espressi in modo comprensibile, senza necessità di ulteriori quesiti aggiuntivi |||||
+| | | 2 | 1 | 0 |
+| | | Intelligibile | Poco intelligibile | Non intelligibile |
+| | | Il concetto è esposto in modo facilmente comprensibile e non richiede ulteriori quesiti | Il concetto è esposto in modo non facilmente comprensibile o richiede ulteriori quesiti | Il concetto è esposto in modo non facilmente comprensibile e richiede ulteriori quesiti |
+| **Appropriatezza del lessico** (peso 0.5) |||||
+| I concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale |||||
+| | | 2 | 1 | 0 |
+| | | Appropriato | Poco appropriato | Non appropriato |
+| | | Il lessico usato è quello settoriale | La maggior parte dei concetti è espressa nei termini del linguaggio settoriale | La scelta dei termini è casuale |
 
 Al termine dell'interrogazione, il prof. registra un voto, che è l'arrotondamento al multiplo di 0,5 più vicino alla media ponderata dei livelli, e un resoconto (verbale) dell'interrogazione.
 
-## Lavoro e consegne
+## Fasi di Sviluppo del Software
 
 1. Determinare i requisiti funzionali dell'applicazione web che aiuta il professore nello svolgimento del suo lavoro; specificarli.
 2. Fornire un glossario di progetto.
@@ -72,28 +83,96 @@ Al termine dell'interrogazione, il prof. registra un voto, che è l'arrotondamen
 5. Progettare l'interfaccia dell'applicazione web.
 6. Fornire le query da utilizzare nell'applicazione web.
 
-## Requisiti
+## 1. Requisiti
 
-### Scelta della classe e della data
+### Visione d'insieme dei Casi d'Uso
+
+@startuml
+actor Professore as P <<Human>>
+
+usecase "Selezione lezione" as SL
+P --> SL
+
+usecase "Appello" as A
+P --> A
+A <|.. SL
+
+usecase "Selezione argomenti" as SA
+P --> SA
+SA <|.. SL
+
+usecase "Selezione candidati" as SC
+P --> SC
+SC <|.. SA
+SC <|.. A
+
+usecase "Interrogazione" AS I
+P --> I
+I <|.. SC
+I <|.. SA
+
+usecase "Verbalizzazione" AS V
+P --> V
+V <|.. I
+
+@enduml
+
+### Selezione della lezione
+
+#### Caso d'uso
+
+@startuml
+actor Professore as P <<Human>>
+
+package "webpage Lezione" {
+    usecase "Selezione lezione" as SL
+    usecase "Selezione data" as sd
+    usecase "Selezione classe" as sc
+}
+P --> SL
+SL <-- sd
+SL <-- sc
+
+@enduml
+
+#### Specifica SysML
 
 ```mermaid
 requirementDiagram
 
-requirement scelta_classe_data_req {
+requirement selezione_lezione_req {
     id: 1
-    text: L'applicazione deve far scegliere la data e la classe.
-    risk: high
+    text: L'applicazione deve far scegliere la lezione.
+    risk: low
     verifymethod: test
 }
+
+requirement selezione_data_req {
+    id: 1.1
+    text: L'applicazione deve far scegliere la classe.
+    risk: low
+    verifymethod: test
+}
+
+requirement selezione_classe_req {
+    id: 1.2
+    text: L'applicazione deve far scegliere la classe.
+    risk: low
+    verifymethod: test
+}
+
+selezione_lezione_req - contains -> selezione_data_req
+selezione_lezione_req - contains -> selezione_classe_req
 ```
 
-```plantuml
+#### Modello _wire frame_
+
 @startsalt
-title Scelta classe e data
+title Selezione lezione
 {+
 {* Professore Web - Classe}
 {
-== Data e classe
+== Lezione
 {
 {Data:   | ^2023-02-09^ }
 {Classe: | ^4 A SIA^ }
@@ -102,9 +181,32 @@ title Scelta classe e data
 { [Appello] }
 }
 @endsalt
-```
 
 ### Appello e giustificazioni
+
+#### Caso d'uso
+
+@startuml
+
+actor Professore as P <<Human>>
+
+usecase "Selezione lezione" as SL
+
+package "Webpage Appello" {
+    usecase "Appello" as A
+    usecase "Assenti" as assenti
+    usecase "Giustificati" as g
+    usecase "Tipo giustificazione" as tg
+}
+P --> A
+A <|.. assenti
+A <|.. g
+g <|.. tg
+SL <|.. A
+
+@enduml
+
+#### Specifica SysML
 
 ```mermaid
 requirementDiagram
@@ -115,9 +217,43 @@ requirement appello_giustificazione_req {
     risk: high
     verifymethod: test
 }
+
+requirement appello_req {
+    id: 2.1
+    text: L'applicazione deve registrare gli assenti.
+    risk: high
+    verifymethod: test
+}
+
+requirement giustificazione_req {
+    id: 2.2
+    text: L'applicazione deve registrare le giustificazioni, solo se lo studente è presente.
+    risk: high
+    verifymethod: test
+}
+
+requirement giustificazione_motivata_req {
+    id: 2.2.1
+    text: L'applicazione deve registrare un solo tipo di giustificazione, dando la priorità a quelle motivate.
+    risk: high
+    verifymethod: test
+}
+
+requirement giustificazione_immotivata_req {
+    id: 2.2.2
+    text: L'applicazione deve registrare le giustificazioni immotivate, solo se lo studente non ha usufruito del numero massimo di giustificazioni nel periodo di valutazione.
+    risk: high
+    verifymethod: test
+}
+
+appello_giustificazione_req - contains -> appello_req
+appello_giustificazione_req - contains -> giustificazione_req
+giustificazione_req - contains -> giustificazione_motivata_req
+giustificazione_req - contains -> giustificazione_immotivata_req
 ```
 
-```plantuml
+#### Modello _wire frame_
+
 @startsalt
 title Appello e giustificazioni
 {+
@@ -137,18 +273,70 @@ title Appello e giustificazioni
 { [Salva] | [Argomenti]}
 }
 @endsalt
+
+### Selezione degli argomenti
+
+#### Caso d'uso
+
+@startuml
+
+actor Professore as P <<Human>>
+
+usecase "Appello" as A
+
+package "Webpage Argomenti" {
+    usecase "Argomenti" as Arg
+    usecase "Creazione gruppi argomenti" as ca
+    usecase "Selezione gruppo argomenti " as sa
+}
+
+P --> Arg
+Arg <|.. ca
+Arg <|.. sa
+Arg <|.. A
+
+@enduml
+
+#### Specifica SysML
+
+```mermaid
+requirementDiagram
+
+requirement argomenti_req {
+    id: 3
+    text: L'applicazione deve gestire gli argomenti.
+    risk: high
+    verifymethod: test
+}
+
+requirement creazione_gruppo_argomenti_req {
+    id: 3.1
+    text: L'applicazione deve permettere l'aggregazione degli argomenti oggetto del colloquio.
+    risk: high
+    verifymethod: test
+}
+
+requirement creazione_gruppo_argomenti_n_domande_req {
+    id: 3.1.1
+    text: L'applicazione deve permettere di scegliere, alternativamente, il numero di quesiti oppure la percentuale di domande.
+    risk: high
+    verifymethod: test
+}
+
+
+argomenti_req - contains -> creazione_gruppo_argomenti_req
+creazione_gruppo_argomenti_req - contains -> creazione_gruppo_argomenti_n_domande_req
 ```
 
-### Scelta degli argomenti
+#### Modello _wire frame_
 
-```plantuml
 @startsalt
 title Raggruppamento argomenti
 {+
 {* Professore Web - Argomenti interrogazione}
 {
 == Argomenti del colloquio
-{^"Scelta argomenti salvati"
+{^"Selezione argomenti salvati"
 
     <b>Data | <b>Descrizione | N. argomenti | Seleziona
     2022-10-03 | Sviluppo del software   | 1 | ()
@@ -172,36 +360,95 @@ title Raggruppamento argomenti
 }
 }
 @endsalt
+
+### Selezione dei candidati
+
+#### Caso d'uso
+
+@startuml
+
+actor Professore as P <<Human>>
+
+usecase "Appello" as A
+
+package "Webpage Candidati" {
+    usecase "Selezione candidati" as SC
+    usecase "Scelta casuale" as rand
+    usecase "Scelta arbitraria" as det
+}
+P --> SC
+SC <|-- A
+rand <|.. SC
+det <|.. SC
+
+@enduml
+
+#### Specifica SysML
+
+```mermaid
+requirementDiagram
+
+requirement candidati_req {
+    id: 4
+    text: L'applicazione deve far scegliere gli interrogandi.
+    risk: high
+    verifymethod: test
+}
+
+requirement candidati_totali_req {
+    id: 4.1
+    text: L'applicazione deve far scegliere il numero di interrogandi.
+    risk: high
+    verifymethod: test
+}
+
+requirement candidati_totali_req {
+    id: 4.2
+    text: L'applicazione deve far scegliere in modo deterministico alcuni interrogandi.
+    risk: high
+    verifymethod: test
+}
+
+
+requirement candidati_totali_req {
+    id: 4.3
+    text: L'applicazione deve far scegliere in modo casuale alcuni interrogandi.
+    risk: high
+    verifymethod: test
+}
+
+
+candidati_req - contains -> candidati_totale_req
 ```
 
-### Scelta dei candidati
 
-```plantuml
+#### Modello _wire frame_
+
 @startsalt
-title Scelta dei candidati
+title Selezione dei candidati
 {+
-{* Professore Web - Scelta dei candidati}
+{* Professore Web - Selezione dei candidati}
 {
 ==  Candidati - 4 A SIA - 2023-02-09
-{^"Candidati - Scelta non casuale"
+{^"Candidati - Selezione non casuale"
 {SI
     Sel. Pos. | Studente | N. voti (Prima interrogazione sec...)
     [] 1 | Abate Giuseppe   | (0, 1, 1)
     [] 4 | Bianchi Valerio  | (1, 1, 0)
 }
 }
-{^"Scelta casuale"
+{^"Selezione casuale"
   { Numero totale interrogandi: | "2 " (max 2) }
 }
 [Interroga]
 }
 }
 @endsalt
-```
 
-### Gestione domande
+### Gestione del colloquio
 
-```plantuml
+#### Modello _wire frame_
+
 @startsalt
 title Interrogazione
 {+
@@ -219,13 +466,16 @@ title Interrogazione
 [Fine - Verbale]
 }
 @endsalt
-```
+
+### Valutazione
+
 
 ### Verbale
 
-```plantuml
+#### Modello _wire frame_
+
 @startsalt
-title Interrogazione
+title Verbale
 {+
 {* Professore Web - Verbale}
 {
@@ -250,4 +500,3 @@ title Interrogazione
 {Voto: | ^7^ }
 }
 @endsalt
-```

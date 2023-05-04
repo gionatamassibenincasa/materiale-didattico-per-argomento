@@ -3134,4 +3134,7 @@ VALUES (
         'La scelta dei termini è casuale',
         0
     );
+INSERT INTO Ritirato(studenteId, classeId, data)
+VALUES (1008655, 1001014, '2023-01-31'),
+    (1008953, 1001011, '2022-11-01');
 COMMIT;

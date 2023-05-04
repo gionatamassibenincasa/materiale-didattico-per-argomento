@@ -36,6 +36,12 @@
 , **__classeId__**: INTEGER -> Classe(classeId)
 )
 
+`Ritirato` (
+  **__studenteId__**: INTEGER -> Registro(studenteId)
+, **__classeId__**: INTEGER -> Registro(classeId)
+, **data**: TEXT
+)
+
 `Argomento` (
   **argomentoId**: INTEGER
 , argomento: TEXT
