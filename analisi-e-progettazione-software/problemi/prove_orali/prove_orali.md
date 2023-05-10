@@ -91,29 +91,33 @@ Al termine dell'interrogazione, il prof. registra un voto, che è l'arrotondamen
 actor Professore as P <<Human>>
 
 usecase "Selezione lezione" as SL
-P --> SL
+P --> SL : 1 classe e data
 
 usecase "Appello" as A
-P --> A
+P --> A : 2 assenti e giustificati
 A <|.. SL
 
 usecase "Selezione argomenti" as SA
-P --> SA
+P --> SA : 3 argomenti del colloquio
 SA <|.. SL
 
 usecase "Selezione candidati" as SC
-P --> SC
+P --> SC : 4 elenco degli interrogati
 SC <|.. SA
 SC <|.. A
 
 usecase "Interrogazione" AS I
-P --> I
+P --> I : 5 domande e annotazioni
 I <|.. SC
 I <|.. SA
 
-usecase "Verbalizzazione" AS V
-P --> V
-V <|.. I
+usecase "Valutazione" AS Val
+P --> Val : 6 voto e motivazione
+Val <|.. I
+
+usecase "Verbalizzazione" AS Ver
+P --> Ver : 7 registrazione del voto
+Ver <|.. Val
 
 @enduml
 
