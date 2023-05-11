@@ -1,10 +1,10 @@
 <?php
 $titolo = "Scelta classe - 1";
 $intestazione = "Scelta del giorno e della classe";
-require_once('database.php');
+require_once 'database.php';
 $classi = caricaClassi();
 chiudiConnessione();
-include('prologo.php');
+include 'prologo.php';
 ?>
 <section>
     <div class="container">
@@ -20,12 +20,12 @@ include('prologo.php');
                 </div>
                 <div>
                     <label for="classe">Classe:</label>
-                    <select id="classe" name="classeId">
-                        <?php
-                        foreach ($classi as $c) {
-                            echo "<option value=\"{$c['classeId']}\">{$c['classe']}</option>";
-                        }
-                        ?>
+                    <select id="classe" name="classeId"><?php
+foreach ($classi as $c) {
+    echo "\n\t\t\t\t\t\t<option value=\"{$c['classeId']}\">{$c['classe']}</option>";
+}
+?>
+
                     </select>
                 </div>
                 <div>
@@ -41,5 +41,5 @@ include('prologo.php');
     });;
 </script>
 <?php
-include('epilogo.php');
+include 'epilogo.php';
 ?>

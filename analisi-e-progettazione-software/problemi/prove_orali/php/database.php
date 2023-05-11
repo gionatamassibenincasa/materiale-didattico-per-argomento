@@ -6,7 +6,7 @@ $path = 'data/prove_orali.sqlite';
 $db;
 try {
     // Connect to SQLite database in file
-    $db = new PDO('sqlite:' . $path);
+    $db = new PDO("sqlite:{$path}");
     // Set errormode to exceptions
     $db->setAttribute(
         PDO::ATTR_ERRMODE,
@@ -21,7 +21,6 @@ try {
 
 date_default_timezone_set('UTC');
 
-
 /**
  * apriConnessione apre la connessione con il db e setta la variabile globale $db
  *
@@ -30,7 +29,10 @@ date_default_timezone_set('UTC');
 function apriConnessione()
 {
     global $path, $db;
-    if ($db != null) return;
+    if ($db != null) {
+        return;
+    }
+
     try {
         // Connect to SQLite database in file
         $db = new PDO('sqlite:' . $path);
@@ -67,7 +69,10 @@ function caricaClassi()
 {
     global $db;
     $classi = [];
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     try {
         $sql = "SELECT classeId, anno || ' ' || sezione || ' ' || articolazione AS classe" .
             " FROM Classe INNER JOIN AnnoScolastico USING (annoScolasticoId) " .
@@ -93,7 +98,10 @@ function maxGiustificazioni($classeId)
 {
     global $db;
     $m = 0;
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     try {
         $stmt = $db->prepare("SELECT maxGiustificazioni FROM Classe WHERE classeId=:classeId");
         $stmt->bindValue(':classeId', $classeId, SQLITE3_INTEGER);
@@ -118,7 +126,10 @@ function classe($classeId)
 {
     global $db;
     $c = '';
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     try {
         $stmt = $db->prepare("SELECT anno || ' ' || sezione || ' ' || articolazione AS classe FROM Classe WHERE classeId=:classeId");
         $stmt->bindValue(':classeId', $classeId, SQLITE3_INTEGER);
@@ -144,21 +155,24 @@ function studentiDellaClasse($classeId, $data)
 {
     global $db;
     $studenti = [];
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     try {
         $pStmtStudenti = $db->prepare(
             'SELECT ' .
-                '	RANK() OVER (ORDER BY cognome, nome) AS pos, ' .
-                '	reg.studenteId, ' .
-                '	cognome, ' .
-                '	nome ' .
-                'FROM ' .
-                '	Registro reg ' .
-                '		LEFT OUTER JOIN Studente s USING (studenteId) ' .
-                '		LEFT OUTER JOIN Ritirato rit USING (studenteId, classeId) ' .
-                'WHERE ' .
-                '	classeId = :classeId AND (rit.data IS NULL OR :data < rit.data) ' .
-                'ORDER BY cognome, nome'
+            '	RANK() OVER (ORDER BY cognome, nome) AS pos, ' .
+            '	reg.studenteId, ' .
+            '	cognome, ' .
+            '	nome ' .
+            'FROM ' .
+            '	Registro reg ' .
+            '		LEFT OUTER JOIN Studente s USING (studenteId) ' .
+            '		LEFT OUTER JOIN Ritirato rit USING (studenteId, classeId) ' .
+            'WHERE ' .
+            '	classeId = :classeId AND (rit.data IS NULL OR :data < rit.data) ' .
+            'ORDER BY cognome, nome'
         );
         $pStmtStudenti->bindValue(':classeId', $classeId, SQLITE3_INTEGER);
         $pStmtStudenti->bindValue(':data', $data, SQLITE3_TEXT);
@@ -312,14 +326,18 @@ function caricaAppello($classeId, $data)
         $gm = false;
         $gi = false;
         if (isset($giustificati[$id])) {
-            if ($giustificati[$id] == 0)
+            if ($giustificati[$id] == 0) {
                 $gm = true;
-            else
+            } else {
                 $gi = true;
+            }
+
         }
         $residuo = $maxGiustificazioni;
-        if (isset($giustificazioniResidue[$id]))
+        if (isset($giustificazioniResidue[$id])) {
             $residuo = $giustificazioniResidue[$id];
+        }
+
         array_push(
             $righe,
             array('pos' => $s['pos'], 'studenteId' => $s['studenteId'], 'cognome' => $s['cognome'], 'nome' => $s['nome'], 'assente' => $a, 'residuo' => $residuo, 'gm' => $gm, 'gi' => $gi)
@@ -338,7 +356,10 @@ function caricaAppello($classeId, $data)
 function cancellaAssenti($data, $classeId)
 {
     global $db;
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     //$sql = "DELETE FROM Assenza WHERE data = :data AND studenteId IN (SELECT studenteId FROM Studente INNER JOIN Registro USING (studenteId) WHERE classeId = :classeId)";
     try {
         //$stmt = $db->prepare($sql);
@@ -363,7 +384,10 @@ function cancellaAssenti($data, $classeId)
 function cancellaGiustificazioni($data, $classeId)
 {
     global $db;
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     try {
         $db->exec("DELETE FROM Giustificazione WHERE data = '{$data}' AND studenteId IN (SELECT studenteId FROM Studente INNER JOIN Registro USING (studenteId) WHERE classeId = {$classeId})");
     } catch (Exception $e) {
@@ -383,7 +407,10 @@ function cancellaGiustificazioni($data, $classeId)
 function inserisciAssenti($data, $assenti)
 {
     global $db;
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     // $sql = "INSERT INTO Assenza (studenteId, data) VALUES (?, ?)";
     try {
         //$stmt = $db->prepare($sql);
@@ -415,7 +442,10 @@ function inserisciAssenti($data, $assenti)
 function inserisciGiustificazioni($data, $giustificatiRinnovabile, $giustificatiNonRinnovabile)
 {
     global $db;
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     try {
         $db->beginTransaction();
         foreach ($giustificatiRinnovabile as $s) {
@@ -447,7 +477,10 @@ function caricaArgomenti($classeId)
 {
     global $db;
     $argomenti = [];
-    if ($db == null) apriConnessione();
+    if ($db == null) {
+        apriConnessione();
+    }
+
     try {
         // TODO: usare prepared statement!
         $sql = "SELECT argomentoId, argomento" .
@@ -474,8 +507,10 @@ function caricaArgomenti($classeId)
 function controllaParametri($array, $elenco)
 {
     foreach ($elenco as $p) {
-        if (!isset($array[$p]))
+        if (!isset($array[$p])) {
             return false;
+        }
+
     }
     return true;
 }
