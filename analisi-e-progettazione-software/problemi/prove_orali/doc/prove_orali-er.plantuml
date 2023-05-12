@@ -70,11 +70,17 @@ erDiagram
   INTEGER immotivata
  }
 
- ArgomentiColloquio {
-  INTEGER argomentiColloquioId PK
-  INTEGER argomentoId FK
+ PredisposizioneColloquio {
+  INTEGER predisposizioneColloquioId PK
   TEXT descrizione
   TEXT data
+  INTEGER numeroDomande
+ }
+
+ ArgomentiColloquio {
+  INTEGER predisposizioneColloquioId PK
+  INTEGER argomentoId PK
+  TEXT descrizione
   INTEGER numeroDomande
   INTEGER probabilita
  }
@@ -97,7 +103,7 @@ erDiagram
  Colloquio {
   INTEGER colloquioId PK
   INTEGER studenteId FK
-  INTEGER argomentiColloquioId FK
+  INTEGER predisposizioneColloquioId FK
   TEXT data
  }
 
@@ -109,6 +115,31 @@ erDiagram
  Verbale {
   INTEGER colloquioId PK
   INTEGER quesitoId PK
+ }
+
+ Competenza {
+  INTEGER competenzaId PK
+  TEXT competenza
+  INTEGER cittadinanza
+ }
+
+ Conoscenza {
+  INTEGER conoscenzaId PK
+  INTEGER competenzaId FK
+  TEXT conoscenza
+  INTEGER obiettivoMinino
+ }
+
+ Abilita {
+  INTEGER abilitaId PK
+  INTEGER competenzaId FK
+  TEXT abilita
+  INTEGER obiettivoMinino
+ }
+
+ Traguardo {
+  INTEGER argomentoId PK
+  INTEGER competenzaId PK
  }
 
  PeriodoValutazione }o--|| AnnoScolastico : annoScolasticoId
@@ -123,11 +154,16 @@ erDiagram
  Assenza }o--|| Studente : studenteId
  Giustificazione }o--|| Studente : studenteId
  ArgomentiColloquio }o--|| Argomento : argomentoId
+ ArgomentiColloquio }o--|| PredisposizioneColloquio : predisposizioneColloquioId
  Descrittore }o--|| Indicatore : indicatoreId
- Colloquio }o--|| ArgomentiColloquio : argomentiColloquioId
+ Colloquio }o--|| PredisposizioneColloquio : predisposizioneColloquioId
  Colloquio }o--|| Studente : studenteId
  ValutazioneQuesito }o--|| Descrittore : descrittoreId
  ValutazioneQuesito }o--|| Colloquio : colloquioId
  Verbale }o--|| Quesito : quesitoId
  Verbale }o--|| Colloquio : colloquioId
+ Conoscenza }o--|| Competenza : competenzaId
+ Abilita }o--|| Competenza : competenzaId
+ Traguardo }o--|| Competenza : competenzaId
+ Traguardo }o--|| Argomento : argomentoId
 

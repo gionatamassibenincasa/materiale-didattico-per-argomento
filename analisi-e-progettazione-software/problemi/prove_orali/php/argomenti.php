@@ -27,9 +27,13 @@ include 'prologo.php';
                 <h2>Nuova struttura degli argomenti del colloquio</h2>
                 <h3>Inserisci l'argomento e la quantità, o preferibilmente la proporzione, di quesiti</h3>
             </hgroup>
-            <form method="get" action="">
+            <form method="get" action="" id="salva">
                 <input type="hidden" name="data" value="<?=$data?>">
                 <input type="hidden" name="classeId" value="<?=$classeId?>">
+                <label for="descrizione">Descrizione</label>
+                <input type="text" id="descrizione" name="descrizione" placeholder="Interrogazione sul capitolo..." required>
+                <label for="descrizione">Numero di domande</label>
+                <input type="number" id="nDomande" name="nDomande" min="1" max="10" required>
                 <figure>
                     <table>
                         <thead>
@@ -112,6 +116,12 @@ foreach ($righe as $r) {
             });
         });
     });
+
+    const salva = function() {
+        const f = document.getElementById('salva');
+        f.action = "salva_gruppo_argomenti.php";
+        f.submit();
+    };
 </script>
 
 <?php

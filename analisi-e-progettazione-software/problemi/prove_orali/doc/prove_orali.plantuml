@@ -97,11 +97,18 @@ table( Giustificazione ) {
  }
 
 
-table( ArgomentiColloquio ) {
-   primary_key( argomentiColloquioId )  :INTEGER 
-   foreign_key( argomentoId )  :INTEGER 
+table( PredisposizioneColloquio ) {
+   primary_key( predisposizioneColloquioId )  :INTEGER 
    column( descrizione )  :TEXT 
    column( data )  :TEXT 
+   column( numeroDomande )  :INTEGER 
+ }
+
+
+table( ArgomentiColloquio ) {
+   primary_and_foreign_key( predisposizioneColloquioId )  :INTEGER 
+   primary_and_foreign_key( argomentoId )  :INTEGER 
+   column( descrizione )  :TEXT 
    column( numeroDomande )  :INTEGER 
    column( probabilita )  :INTEGER 
  }
@@ -127,7 +134,7 @@ table( Descrittore ) {
 table( Colloquio ) {
    primary_key( colloquioId )  :INTEGER 
    foreign_key( studenteId )  :INTEGER 
-   foreign_key( argomentiColloquioId )  :INTEGER 
+   foreign_key( predisposizioneColloquioId )  :INTEGER 
    column( data )  :TEXT 
  }
 
@@ -144,24 +151,58 @@ table( Verbale ) {
  }
 
 
- PeriodoValutazione }o--|| AnnoScolastico : annoScolasticoId
- Classe }o--|| AnnoScolastico : annoScolasticoId
- Registro }o--|| Classe : classeId
- Registro }o--|| Studente : studenteId
- Ritirato }o--|| Registro : studenteId
- Ritirato }o--|| Registro : classeId
- Programmazione }o--|| Argomento : argomentoId
- Programmazione }o--|| Classe : classeId
- Quesito }o--|| Argomento : argomentoId
- Assenza }o--|| Studente : studenteId
- Giustificazione }o--|| Studente : studenteId
- ArgomentiColloquio }o--|| Argomento : argomentoId
- Descrittore }o--|| Indicatore : indicatoreId
- Colloquio }o--|| ArgomentiColloquio : argomentiColloquioId
- Colloquio }o--|| Studente : studenteId
- ValutazioneQuesito }o--|| Descrittore : descrittoreId
- ValutazioneQuesito }o--|| Colloquio : colloquioId
- Verbale }o--|| Quesito : quesitoId
- Verbale }o--|| Colloquio : colloquioId
+table( Competenza ) {
+   primary_key( competenzaId )  :INTEGER 
+   column( competenza )  :TEXT 
+   column( cittadinanza )  :INTEGER 
+ }
+
+
+table( Conoscenza ) {
+   primary_key( conoscenzaId )  :INTEGER 
+   foreign_key( competenzaId )  :INTEGER 
+   column( conoscenza )  :TEXT 
+   column( obiettivoMinino )  :INTEGER 
+ }
+
+
+table( Abilita ) {
+   primary_key( abilitaId )  :INTEGER 
+   foreign_key( competenzaId )  :INTEGER 
+   column( abilita )  :TEXT 
+   column( obiettivoMinino )  :INTEGER 
+ }
+
+
+table( Traguardo ) {
+   primary_and_foreign_key( argomentoId )  :INTEGER 
+   primary_and_foreign_key( competenzaId )  :INTEGER 
+ }
+
+
+ PeriodoValutazione }o--|| AnnoScolastico
+ Classe }o--|| AnnoScolastico
+ Registro }o--|| Classe
+ Registro }o--|| Studente
+ Ritirato }o--|| Registro
+ Ritirato }o--|| Registro
+ Programmazione }o--|| Argomento
+ Programmazione }o--|| Classe
+ Quesito }o--|| Argomento
+ Assenza }o--|| Studente
+ Giustificazione }o--|| Studente
+ ArgomentiColloquio }o--|| Argomento
+ ArgomentiColloquio }o--|| PredisposizioneColloquio
+ Descrittore }o--|| Indicatore
+ Colloquio }o--|| PredisposizioneColloquio
+ Colloquio }o--|| Studente
+ ValutazioneQuesito }o--|| Descrittore
+ ValutazioneQuesito }o--|| Colloquio
+ Verbale }o--|| Quesito
+ Verbale }o--|| Colloquio
+ Conoscenza }o--|| Competenza
+ Abilita }o--|| Competenza
+ Traguardo }o--|| Competenza
+ Traguardo }o--|| Argomento
 
 @enduml

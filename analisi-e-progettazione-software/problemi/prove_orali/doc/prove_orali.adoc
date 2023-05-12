@@ -69,11 +69,17 @@
 , immotivata: INTEGER
 )
 
-`ArgomentiColloquio` (
-  **argomentiColloquioId**: INTEGER
-, __argomentoId__: INTEGER -> Argomento(argomentoId)
+`PredisposizioneColloquio` (
+  **predisposizioneColloquioId**: INTEGER
 , descrizione: TEXT
 , data: TEXT
+, numeroDomande: INTEGER
+)
+
+`ArgomentiColloquio` (
+  **__predisposizioneColloquioId__**: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId)
+, **__argomentoId__**: INTEGER -> Argomento(argomentoId)
+, descrizione: TEXT
 , numeroDomande: INTEGER
 , probabilita: INTEGER
 )
@@ -96,7 +102,7 @@
 `Colloquio` (
   **colloquioId**: INTEGER
 , __studenteId__: INTEGER -> Studente(studenteId)
-, __argomentiColloquioId__: INTEGER -> ArgomentiColloquio(ArgomentiColloquioId)
+, __predisposizioneColloquioId__: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId)
 , data: TEXT
 )
 
@@ -108,5 +114,30 @@
 `Verbale` (
   **__colloquioId__**: INTEGER -> Colloquio(colloquioId)
 , **__quesitoId__**: INTEGER -> Quesito(quesitoId)
+)
+
+`Competenza` (
+  **competenzaId**: INTEGER
+, competenza: TEXT
+, cittadinanza: INTEGER
+)
+
+`Conoscenza` (
+  **conoscenzaId**: INTEGER
+, __competenzaId__: INTEGER -> Competenza(competenzaId)
+, conoscenza: TEXT
+, obiettivoMinino: INTEGER
+)
+
+`Abilita` (
+  **abilitaId**: INTEGER
+, __competenzaId__: INTEGER -> Competenza(competenzaId)
+, abilita: TEXT
+, obiettivoMinino: INTEGER
+)
+
+`Traguardo` (
+  **__argomentoId__**: INTEGER -> Argomento(argomentoId)
+, **__competenzaId__**: INTEGER -> Competenza(competenzaId)
 )
 

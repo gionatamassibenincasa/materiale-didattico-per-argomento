@@ -315,7 +315,7 @@ requirement argomenti_req {
 
 requirement creazione_gruppo_argomenti_req {
     id: 3.1
-    text: L'applicazione deve permettere l'aggregazione degli argomenti oggetto del colloquio.
+    text: L'applicazione deve permettere la predisposizione degli argomenti oggetto del colloquio.
     risk: high
     verifymethod: test
 }
