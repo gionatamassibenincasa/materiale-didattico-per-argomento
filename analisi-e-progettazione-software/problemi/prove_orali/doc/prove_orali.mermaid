@@ -72,6 +72,7 @@ class Giustificazione {
 
 class PredisposizioneColloquio {
 	predisposizioneColloquioId: INTEGER
+	classeId: INTEGER
 	descrizione: TEXT
 	data: TEXT
 	numeroDomande: INTEGER
@@ -80,7 +81,6 @@ class PredisposizioneColloquio {
 class ArgomentiColloquio {
 	predisposizioneColloquioId: INTEGER
 	argomentoId: INTEGER
-	descrizione: TEXT
 	numeroDomande: INTEGER
 	probabilita: INTEGER
 }
@@ -153,6 +153,7 @@ Programmazione "*" -- "1" Classe : classeId
 Quesito "*" -- "1" Argomento : argomentoId
 Assenza "*" -- "1" Studente : studenteId
 Giustificazione "*" -- "1" Studente : studenteId
+PredisposizioneColloquio "*" -- "1" Classe : classeId
 ArgomentiColloquio "*" -- "1" Argomento : argomentoId
 ArgomentiColloquio "*" -- "1" PredisposizioneColloquio : predisposizioneColloquioId
 Descrittore "*" -- "1" Indicatore : indicatoreId

@@ -2,7 +2,7 @@
 $titolo = "Appello - 2";
 $intestazione = "Appello e giustificazioni";
 
-require_once('database.php');
+require_once 'database.php';
 
 // PREREQUISITI
 $parametriObbligatori = array('classeId', 'data');
@@ -19,7 +19,7 @@ foreach ($parametri as $p) {
 $righe = caricaAppello($classeId, $data);
 $e = elencaStudenteId($righe);
 chiudiConnessione();
-include('prologo.php');
+include 'prologo.php';
 ?>
 <section>
     <div class="container-fluid">
@@ -29,8 +29,8 @@ include('prologo.php');
                 <h3>Inserisci gli assenti e i giustificati</h3>
             </hgroup>
             <form method="get" action="">
-                <input type="hidden" name="data" value="<?= $data ?>">
-                <input type="hidden" name="classeId" value="<?= $classeId ?>">
+                <input type="hidden" name="data" value="<?=$data?>">
+                <input type="hidden" name="classeId" value="<?=$classeId?>">
                 <figure>
                     <table>
                         <thead>
@@ -46,31 +46,43 @@ include('prologo.php');
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($righe as $r) {
-                                echo "<tr>";
-                                echo "<td>{$r['pos']}</td>";
-                                echo "<td>{$r['cognome']}</td>";
-                                echo "<td>{$r['nome']}</td>";
-                                echo "<td><input role=\"switch\" type=\"checkbox\" name=\"assenza[]\" value=\"{$r['studenteId']}\"";
-                                if ($r['assente']) echo "checked";
-                                echo "/></td>";
-                                echo "<td>{$r['residuo']}</td>";
-                                echo "<td><input role=\"switch\" type=\"checkbox\" name=\"giustMot[]\" value=\"{$r['studenteId']}\"";
-                                if ($r['gm']) echo "checked ";
-                                echo "id=\"gm{$r['studenteId']}\" /></td>";
-                                echo "<td><input role=\"switch\" type=\"checkbox\" name=\"giustImm[]\" value=\"{$r['studenteId']}\"";
-                                if ($r['gi']) echo "checked ";
-                                if ($r['residuo'] == 0) echo "disabled ";
-                                echo "id=\"gi{$r['studenteId']}\"";
-                                echo "/></td>";
-                                echo "</tr>";
-                            }
-                            ?>
+foreach ($righe as $r) {
+    echo "<tr>";
+    echo "<td>{$r['pos']}</td>";
+    echo "<td>{$r['cognome']}</td>";
+    echo "<td>{$r['nome']}</td>";
+    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"assenza[]\" value=\"{$r['studenteId']}\"";
+    if ($r['assente']) {
+        echo "checked";
+    }
+
+    echo "/></td>";
+    echo "<td>{$r['residuo']}</td>";
+    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"giustMot[]\" value=\"{$r['studenteId']}\"";
+    if ($r['gm']) {
+        echo "checked ";
+    }
+
+    echo "id=\"gm{$r['studenteId']}\" /></td>";
+    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"giustImm[]\" value=\"{$r['studenteId']}\"";
+    if ($r['gi']) {
+        echo "checked ";
+    }
+
+    if ($r['residuo'] == 0) {
+        echo "disabled ";
+    }
+
+    echo "id=\"gi{$r['studenteId']}\"";
+    echo "/></td>";
+    echo "</tr>";
+}
+?>
                         </tbody>
                     </table>
                 </figure>
                 <button onclick="salva()">Salva</button>
-                <button onclick="argomenti()">Argomenti</button>
+                <button onclick="argomenti()">Predisponi il colloquio</button>
             </form>
         </article>
     </div>
@@ -84,11 +96,11 @@ include('prologo.php');
 
     function argomenti() {
         const f = document.getElementsByTagName('form')[0];
-        f.action = "argomenti.php";
+        f.action = "predisposizione.php";
         if (confirm("Sicuro di aver salvato l'appello?"))
-            location.href = 'argomenti.php';
+            location.href = 'predisposizione.php';
     }
-    [<?= $e ?>].forEach(id => {
+    [<?=$e?>].forEach(id => {
         srcId = "gm" + id;
         dstId = "gi" + id;
         const s = document.getElementById(srcId);
@@ -103,5 +115,5 @@ include('prologo.php');
     });
 </script>
 <?php
-include('epilogo.php');
+include 'epilogo.php';
 ?>

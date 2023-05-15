@@ -335,18 +335,18 @@ creazione_gruppo_argomenti_req - contains -> creazione_gruppo_argomenti_n_domand
 #### Modello _wire frame_
 
 @startsalt
-title Argomenti dei colloqui
+title Predisposizione del colloquio
 {+
-{* Professore Web - Argomenti dei colloqui}
+{* Professore Web - Predisposizione dei colloqui}
 {
-== Argomenti del colloquio
+== Predisposizione del colloquio
 {^"Selezione argomenti salvati"
 
-    <b>Data | <b>Descrizione | N. argomenti | Seleziona
-    2022-10-03 | Sviluppo del software   | 1 | ()
-    2022-11-05 | Modello concettuale E/R | 1 | ()
-    2022-12-10 | Modello relazionale     | 1 | ()
-    2023-01-21 | Riepilogo 1mo quadr.    | 3 | (X)
+    <b>Data | <b>Descrizione | N. argomenti | Seleziona | Elimina
+    2022-10-03 | Sviluppo del software   | 1 | () | X
+    2022-11-05 | Modello concettuale E/R | 1 | () | X
+    2022-12-10 | Modello relazionale     | 1 | () | X
+    2023-01-21 | Riepilogo 1mo quadr.    | 3 | (X) | X
 
     [Interroga]
 }

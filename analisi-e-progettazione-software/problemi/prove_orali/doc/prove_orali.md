@@ -20,9 +20,9 @@
 
 **Giustificazione** (  ***studenteId***: INTEGER -> Studente(studenteId), **data**: TEXT, immotivata: INTEGER)
 
-**PredisposizioneColloquio** (  **predisposizioneColloquioId**: INTEGER, descrizione: TEXT, data: TEXT, numeroDomande: INTEGER)
+**PredisposizioneColloquio** (  **predisposizioneColloquioId**: INTEGER, _classeId_: INTEGER -> Classe(classeId), descrizione: TEXT, data: TEXT, numeroDomande: INTEGER)
 
-**ArgomentiColloquio** (  ***predisposizioneColloquioId***: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId), ***argomentoId***: INTEGER -> Argomento(argomentoId), descrizione: TEXT, numeroDomande: INTEGER, probabilita: INTEGER)
+**ArgomentiColloquio** (  ***predisposizioneColloquioId***: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId), ***argomentoId***: INTEGER -> Argomento(argomentoId), numeroDomande: INTEGER, probabilita: INTEGER)
 
 **Indicatore** (  **indicatoreId**: INTEGER, indicatore: TEXT, descrizione: TEXT, peso: REAL)
 

@@ -1,6 +1,6 @@
 <?php
-$titolo = "Argomenti - 3";
-$intestazione = "Argomenti dei colloqui";
+$titolo = "Predisposizione - 3";
+$intestazione = "Predisposizione dei colloqui";
 
 require_once 'database.php';
 
@@ -16,7 +16,8 @@ foreach ($parametri as $p) {
     $$p = $_GET[$p];
 }
 
-$righe = caricaArgomenti($classeId);
+$predisposizioni = caricaPredisposizioneColloqui($classeId);
+$argomenti = caricaArgomenti($classeId);
 chiudiConnessione();
 include 'prologo.php';
 ?>
@@ -24,10 +25,51 @@ include 'prologo.php';
     <div class="container-fluid">
         <article>
             <hgroup>
+                <h2>Scegli il programma predisposto per il colloquio</h2>
+                <h3>Seleziona un gruppo oppure creane uno nuovo con la maschera sotto</h3>
+            </hgroup>
+            <form method="get" action="" id="scelta">
+                <input type="hidden" name="data" value="<?=$data?>">
+                <input type="hidden" name="classeId" value="<?=$classeId?>">
+                <figure>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Descrizione</th>
+                                <th>Data</th>
+                                <th>Numero argomenti</th>
+                                <th>Numero domande</th>
+                                <th>Seleziona</th>
+                                <th>Elimina</th>
+                            </tr>
+                        </thead>
+                        <tbody><?php
+foreach ($predisposizioni as $r) {
+    echo "\n\t\t\t\t\t\t\t<tr>";
+    echo "\n\t\t\t\t\t\t\t\t<td>{$r['descrizione']}</td>";
+    echo "\n\t\t\t\t\t\t\t\t<td>{$r['data']}</td>";
+    echo "\n\t\t\t\t\t\t\t\t<td>{$r['numeroArgomenti']}</td>";
+    echo "\n\t\t\t\t\t\t\t\t<td>{$r['numeroDomande']}</td>";
+    echo "\n\t\t\t\t\t\t\t</tr>\n";
+}
+?>
+
+                        </tbody>
+                    </table>
+                </figure>
+                <button onclick="candidati()">Scegli i candidati</button>
+            </form>
+        </article>
+    </div>
+</section>
+<section>
+    <div class="container-fluid">
+        <article>
+            <hgroup>
                 <h2>Nuova struttura degli argomenti del colloquio</h2>
                 <h3>Inserisci l'argomento e la quantità, o preferibilmente la proporzione, di quesiti</h3>
             </hgroup>
-            <form method="get" action="" id="salva">
+            <form method="get" action="" id="conservazione">
                 <input type="hidden" name="data" value="<?=$data?>">
                 <input type="hidden" name="classeId" value="<?=$classeId?>">
                 <label for="descrizione">Descrizione</label>
@@ -41,15 +83,15 @@ include 'prologo.php';
                                 <th>Argomento</th>
                                 <th>Seleziona</th>
                                 <th>Num quesiti</th>
-                                <th>% quesiti.</th>
+                                <th>% quesiti</th>
                             </tr>
                         </thead>
                         <tbody><?php
-foreach ($righe as $r) {
+foreach ($argomenti as $r) {
     echo "\n\t\t\t\t\t\t\t<tr>";
     echo "\n\t\t\t\t\t\t\t\t<td>{$r['argomento']}</td>";
     echo "\n\t\t\t\t\t\t\t\t<td><input id=\"selettore_arg_{$r['argomentoId']}\" role=\"switch\" type=\"checkbox\" name=\"argomenti[]\" value=\"{$r['argomentoId']}\" /></td>";
-    echo "\n\t\t\t\t\t\t\t\t<td class=\"tooltip\"><input id=\"n_domande_arg_{$r['argomentoId']}\" type=\"range\" min=\"0\" max=\"5\" value=\"0\" name=\"nQuesiti[]\" disabled=\"true\" /><span class=\"tooltiptext\" id=\"sNQuesiti_arg_{$r['argomentoId']}\">0</span></td>";
+    echo "\n\t\t\t\t\t\t\t\t<td class=\"tooltip\"><input id=\"n_domande_arg_{$r['argomentoId']}\" type=\"range\" min=\"0\" max=\"5\" value=\"0\" name=\"nQuesitiPerArgomento[]\" disabled=\"true\" /><span class=\"tooltiptext\" id=\"sNQuesiti_arg_{$r['argomentoId']}\">0</span></td>";
     echo "\n\t\t\t\t\t\t\t\t<td class=\"tooltip\"><input id=\"p_domande_arg_{$r['argomentoId']}\" type=\"range\" min=\"0\" max=\"100\" value=\"0\" name=\"pQuesiti[]\" disabled=\"true\"/><span class=\"tooltiptext\" id=\"sPQuesiti_arg_{$r['argomentoId']} disabled\">0</span></td>";
     echo "\n\t\t\t\t\t\t\t</tr>\n";
 }
@@ -60,6 +102,7 @@ foreach ($righe as $r) {
                             <th id="num_args">0</th>
                             <th id="tot_domande">0</th>
                             <th id="tot_percentuale">0</th>
+                        </tfoot>
                     </table>
                 </figure>
                 <button onclick="salva()">Salva</button>
@@ -75,6 +118,7 @@ foreach ($righe as $r) {
     const aggiornaPiede = () => {
         document.getElementById("num_args").innerText = numeroArgomentiSelezionati;
         document.getElementById("tot_domande").innerText = numeroDomandeTotali;
+        document.getElementById("nDomande").value = numeroDomandeTotali;
     }
 
     window.addEventListener("load", (event) => {
@@ -118,8 +162,8 @@ foreach ($righe as $r) {
     });
 
     const salva = function() {
-        const f = document.getElementById('salva');
-        f.action = "salva_gruppo_argomenti.php";
+        const f = document.getElementById("conservazione");
+        f.action = "salva_predisposizione.php";
         f.submit();
     };
 </script>

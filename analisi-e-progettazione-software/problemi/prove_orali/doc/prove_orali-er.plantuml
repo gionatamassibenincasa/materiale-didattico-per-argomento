@@ -72,6 +72,7 @@ erDiagram
 
  PredisposizioneColloquio {
   INTEGER predisposizioneColloquioId PK
+  INTEGER classeId FK
   TEXT descrizione
   TEXT data
   INTEGER numeroDomande
@@ -80,7 +81,6 @@ erDiagram
  ArgomentiColloquio {
   INTEGER predisposizioneColloquioId PK
   INTEGER argomentoId PK
-  TEXT descrizione
   INTEGER numeroDomande
   INTEGER probabilita
  }
@@ -153,6 +153,7 @@ erDiagram
  Quesito }o--|| Argomento : argomentoId
  Assenza }o--|| Studente : studenteId
  Giustificazione }o--|| Studente : studenteId
+ PredisposizioneColloquio }o--|| Classe : classeId
  ArgomentiColloquio }o--|| Argomento : argomentoId
  ArgomentiColloquio }o--|| PredisposizioneColloquio : predisposizioneColloquioId
  Descrittore }o--|| Indicatore : indicatoreId

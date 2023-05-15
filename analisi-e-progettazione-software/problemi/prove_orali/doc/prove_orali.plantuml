@@ -99,6 +99,7 @@ table( Giustificazione ) {
 
 table( PredisposizioneColloquio ) {
    primary_key( predisposizioneColloquioId )  :INTEGER 
+   foreign_key( classeId )  :INTEGER 
    column( descrizione )  :TEXT 
    column( data )  :TEXT 
    column( numeroDomande )  :INTEGER 
@@ -108,7 +109,6 @@ table( PredisposizioneColloquio ) {
 table( ArgomentiColloquio ) {
    primary_and_foreign_key( predisposizioneColloquioId )  :INTEGER 
    primary_and_foreign_key( argomentoId )  :INTEGER 
-   column( descrizione )  :TEXT 
    column( numeroDomande )  :INTEGER 
    column( probabilita )  :INTEGER 
  }
@@ -191,6 +191,7 @@ table( Traguardo ) {
  Quesito }o--|| Argomento
  Assenza }o--|| Studente
  Giustificazione }o--|| Studente
+ PredisposizioneColloquio }o--|| Classe
  ArgomentiColloquio }o--|| Argomento
  ArgomentiColloquio }o--|| PredisposizioneColloquio
  Descrittore }o--|| Indicatore

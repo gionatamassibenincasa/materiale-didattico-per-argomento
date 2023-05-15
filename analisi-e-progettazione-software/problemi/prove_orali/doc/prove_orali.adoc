@@ -71,6 +71,7 @@
 
 `PredisposizioneColloquio` (
   **predisposizioneColloquioId**: INTEGER
+, __classeId__: INTEGER -> Classe(classeId)
 , descrizione: TEXT
 , data: TEXT
 , numeroDomande: INTEGER
@@ -79,7 +80,6 @@
 `ArgomentiColloquio` (
   **__predisposizioneColloquioId__**: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId)
 , **__argomentoId__**: INTEGER -> Argomento(argomentoId)
-, descrizione: TEXT
 , numeroDomande: INTEGER
 , probabilita: INTEGER
 )

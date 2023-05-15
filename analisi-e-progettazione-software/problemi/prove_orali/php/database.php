@@ -497,6 +497,66 @@ function caricaArgomenti($classeId)
     return $argomenti;
 }
 
+function caricaPredisposizioneColloqui($classeId)
+{
+    global $db;
+    $predisposizione = [];
+    if ($db == null) {
+        apriConnessione();
+    }
+
+    try {
+        $sql = "SELECT pc.predisposizioneColloquioId, pc.descrizione, pc.data, pc.numeroDomande, count(*) AS numeroArgomenti FROM PredisposizioneColloquio pc
+INNER JOIN ArgomentiColloquio ac USING (predisposizioneColloquioId) WHERE classeId = {$classeId} GROUP BY pc.predisposizioneColloquioId, pc.descrizione, pc.data, pc.numeroDomande ORDER BY data DESC
+";
+        //echo "{$sql}<br>";
+        $predisposizione = $db->query($sql)->fetchAll();
+    } catch (Exception $e) {
+        echo "ECCEZIONE";
+        echo $e->getMessage();
+        $db = null;
+        throw $e;
+    }
+
+    return $predisposizione;
+}
+
+function salvaPredisposizioneColloqui($classeId, $descrizione, $nDomande, $argomenti, $nQuesitiPerArgomento)
+{
+    global $db;
+    if ($db == null) {
+        apriConnessione();
+    }
+    //
+    $predisposizioneId = 0;
+
+    try {
+        //$istat = $db->prepare($sql);
+        $db->beginTransaction();
+        //$istat . execute(array($descrizione, $nDomande));
+        $sql = "INSERT INTO PredisposizioneColloquio(classeId, descrizione, numeroDomande) VALUES ({$classeId}, '{$descrizione}', {$nDomande})";
+        $db->query($sql);
+        echo "{$sql}<br>";
+        $predisposizioneId = $db->lastInsertId();
+        echo "Inserito {$predisposizioneId}<br>";
+        $argcount = count($argomenti);
+        for ($i = 0; $i < $argcount; $i++) {
+            if ($nQuesitiPerArgomento[$i] > 0) {
+                $sql = "INSERT INTO ArgomentiColloquio (predisposizioneColloquioId, argomentoId, numeroDomande) VALUES ({$predisposizioneId},{$argomenti[$i]},{$nQuesitiPerArgomento[$i]})";
+                $db->query($sql);
+                echo "Inserito {$sql}<br>";
+            }
+        }
+        $db->commit();
+    } catch (Exception $e) {
+        echo "ECCEZIONE<br>";
+        $db->rollback();
+        echo $e->getMessage();
+        $db = null;
+        throw $e;
+    }
+}
+
 /**
  * controllaParametri
  *

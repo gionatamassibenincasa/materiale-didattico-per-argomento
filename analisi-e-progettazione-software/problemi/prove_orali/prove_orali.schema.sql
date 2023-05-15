@@ -71,20 +71,20 @@ CREATE TABLE IF NOT EXISTS Giustificazione (
 );
 CREATE TABLE IF NOT EXISTS PredisposizioneColloquio (
     predisposizioneColloquioId INTEGER PRIMARY KEY AUTOINCREMENT,
+    classeId INTEGER NOT NULL REFERENCES Classe(classeId),
     descrizione TEXT NOT NULL,
     data TEXT NOT NULL CHECK(data IS date(data, '+0 days')) DEFAULT CURRENT_DATE,
     numeroDomande INTEGER CHECK (
         numeroDomande IS NULL
-        OR numeroDomande BETWEEN 1 AND 4
+        OR numeroDomande BETWEEN 1 AND 10
     )
 );
 CREATE TABLE IF NOT EXISTS ArgomentiColloquio (
     predisposizioneColloquioId INTEGER NOT NULL REFERENCES PredisposizioneColloquio(predisposizioneColloquioId),
     argomentoId INTEGER NOT NULL REFERENCES Argomento(argomentoId),
-    descrizione TEXT NOT NULL,
     numeroDomande INTEGER CHECK (
         numeroDomande IS NULL
-        OR numeroDomande BETWEEN 1 AND 4
+        OR numeroDomande BETWEEN 1 AND 10
     ),
     probabilita INTEGER CHECK (
         probabilita IS NULL
