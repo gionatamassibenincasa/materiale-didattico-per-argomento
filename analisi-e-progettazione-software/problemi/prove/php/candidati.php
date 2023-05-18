@@ -1,11 +1,11 @@
 <?php
-$titolo = "Appello - 2";
-$intestazione = "Appello e giustificazioni";
+$titolo = "Candidati - 4";
+$intestazione = "Selezione degli interrogandi";
 
 require_once 'database.php';
 
 // PREREQUISITI
-$parametriObbligatori = array('classeId', 'data');
+$parametriObbligatori = array('classeId', 'data', 'predisposizioneId');
 if (!controllaParametri($_GET, $parametriObbligatori)) {
     header('Location: index.php');
     die();
@@ -16,7 +16,7 @@ foreach ($parametri as $p) {
     $$p = $_GET[$p];
 }
 
-$righe = caricaAppello($classeId, $data);
+$righe = caricaCandidati($classeId, $data, $predisposizioneId);
 $e = elencaStudenteId($righe);
 chiudiConnessione();
 include 'prologo.php';
@@ -25,56 +25,37 @@ include 'prologo.php';
     <div class="container-fluid">
         <article>
             <hgroup>
-                <h2>Assenze e giustificazioni</h2>
-                <h3>Inserisci gli assenti e i giustificati</h3>
+                <h2>Selezione dei candidati</h2>
+                <h3>Numero di interrogandi</h3>
+            </hgroup>
+        </article>
+    </div>
+    <div class="container-fluid">
+        <article>
+            <hgroup>
+                <h2>Selezione dei candidati</h2>
+                <h3>Interrogandi scelti dall'insegnante</h3>
             </hgroup>
             <form method="get" action="">
                 <input type="hidden" name="data" value="<?=$data?>">
                 <input type="hidden" name="classeId" value="<?=$classeId?>">
                 <figure>
-                    <table>
+                    <table role="grid">
                         <thead>
                             <tr>
-                                <th>Pos.</th>
+                                <th>Seleziona.</th>
                                 <th>Cognome</th>
                                 <th>Nome</th>
-                                <th>Assente</th>
-                                <th>G residue</th>
-                                <th>Giust. motivata</th>
-                                <th>Giust.</th>
+                                <th>N. voti</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
 foreach ($righe as $r) {
     echo "<tr>";
-    echo "<td>{$r['pos']}</td>";
+    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"studenteId[]\" value=\"{$r['studenteId']}\"/></td>";
     echo "<td>{$r['cognome']}</td>";
     echo "<td>{$r['nome']}</td>";
-    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"assenza[]\" value=\"{$r['studenteId']}\"";
-    if ($r['assente']) {
-        echo "checked";
-    }
-
-    echo "/></td>";
-    echo "<td>{$r['residuo']}</td>";
-    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"giustMot[]\" value=\"{$r['studenteId']}\"";
-    if ($r['gm']) {
-        echo "checked ";
-    }
-
-    echo "id=\"gm{$r['studenteId']}\" /></td>";
-    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"giustImm[]\" value=\"{$r['studenteId']}\"";
-    if ($r['gi']) {
-        echo "checked ";
-    }
-
-    if ($r['residuo'] == 0) {
-        echo "disabled ";
-    }
-
-    echo "id=\"gi{$r['studenteId']}\"";
-    echo "/></td>";
     echo "</tr>";
 }
 ?>

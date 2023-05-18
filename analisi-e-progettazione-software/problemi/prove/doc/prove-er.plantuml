@@ -70,16 +70,22 @@ erDiagram
   INTEGER immotivata
  }
 
- PredisposizioneColloquio {
-  INTEGER predisposizioneColloquioId PK
+ Griglia {
+  INTEGER grigliaId PK
+  TEXT descrizione
+ }
+
+ PredisposizioneProva {
+  INTEGER predisposizioneProvaId PK
   INTEGER classeId FK
+  INTEGER grigliaId FK
   TEXT descrizione
   TEXT data
   INTEGER numeroDomande
  }
 
- ArgomentiColloquio {
-  INTEGER predisposizioneColloquioId PK
+ ArgomentiProva {
+  INTEGER predisposizioneProvaId PK
   INTEGER argomentoId PK
   INTEGER numeroDomande
   INTEGER probabilita
@@ -87,6 +93,7 @@ erDiagram
 
  Indicatore {
   INTEGER indicatoreId PK
+  INTEGER grigliaId FK
   TEXT indicatore
   TEXT descrizione
   REAL peso
@@ -100,20 +107,20 @@ erDiagram
   INTEGER livello
  }
 
- Colloquio {
-  INTEGER colloquioId PK
+ Prova {
+  INTEGER provaId PK
   INTEGER studenteId FK
-  INTEGER predisposizioneColloquioId FK
+  INTEGER predisposizioneProvaId FK
   TEXT data
  }
 
  ValutazioneQuesito {
-  INTEGER colloquioId PK
+  INTEGER provaId PK
   INTEGER descrittoreId PK
  }
 
  Verbale {
-  INTEGER colloquioId PK
+  INTEGER provaId PK
   INTEGER quesitoId PK
  }
 
@@ -153,16 +160,18 @@ erDiagram
  Quesito }o--|| Argomento : argomentoId
  Assenza }o--|| Studente : studenteId
  Giustificazione }o--|| Studente : studenteId
- PredisposizioneColloquio }o--|| Classe : classeId
- ArgomentiColloquio }o--|| Argomento : argomentoId
- ArgomentiColloquio }o--|| PredisposizioneColloquio : predisposizioneColloquioId
+ PredisposizioneProva }o--|| Griglia : grigliaId
+ PredisposizioneProva }o--|| Classe : classeId
+ ArgomentiProva }o--|| Argomento : argomentoId
+ ArgomentiProva }o--|| PredisposizioneProva : predisposizioneProvaId
+ Indicatore }o--|| Griglia : grigliaId
  Descrittore }o--|| Indicatore : indicatoreId
- Colloquio }o--|| PredisposizioneColloquio : predisposizioneColloquioId
- Colloquio }o--|| Studente : studenteId
+ Prova }o--|| PredisposizioneProva : predisposizioneProvaId
+ Prova }o--|| Studente : studenteId
  ValutazioneQuesito }o--|| Descrittore : descrittoreId
- ValutazioneQuesito }o--|| Colloquio : colloquioId
+ ValutazioneQuesito }o--|| Prova : provaId
  Verbale }o--|| Quesito : quesitoId
- Verbale }o--|| Colloquio : colloquioId
+ Verbale }o--|| Prova : provaId
  Conoscenza }o--|| Competenza : competenzaId
  Abilita }o--|| Competenza : competenzaId
  Traguardo }o--|| Competenza : competenzaId

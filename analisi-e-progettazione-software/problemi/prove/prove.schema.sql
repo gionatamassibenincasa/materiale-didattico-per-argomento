@@ -69,9 +69,14 @@ CREATE TABLE IF NOT EXISTS Giustificazione (
     -- 1 immotivata, 0 motivata
     PRIMARY KEY (studenteId, data)
 );
-CREATE TABLE IF NOT EXISTS PredisposizioneColloquio (
-    predisposizioneColloquioId INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE IF NOT EXISTS Griglia (
+    grigliaId INTEGER PRIMARY KEY AUTOINCREMENT,
+    descrizione TEXT
+);
+CREATE TABLE IF NOT EXISTS PredisposizioneProva (
+    predisposizioneProvaId INTEGER PRIMARY KEY AUTOINCREMENT,
     classeId INTEGER NOT NULL REFERENCES Classe(classeId),
+    grigliaId INTEGER NOT NULL REFERENCES Griglia(grigliaId),
     descrizione TEXT NOT NULL,
     data TEXT NOT NULL CHECK(data IS date(data, '+0 days')) DEFAULT CURRENT_DATE,
     numeroDomande INTEGER CHECK (
@@ -79,8 +84,8 @@ CREATE TABLE IF NOT EXISTS PredisposizioneColloquio (
         OR numeroDomande BETWEEN 1 AND 10
     )
 );
-CREATE TABLE IF NOT EXISTS ArgomentiColloquio (
-    predisposizioneColloquioId INTEGER NOT NULL REFERENCES PredisposizioneColloquio(predisposizioneColloquioId),
+CREATE TABLE IF NOT EXISTS ArgomentiProva (
+    predisposizioneProvaId INTEGER NOT NULL REFERENCES PredisposizioneProva(predisposizioneProvaId),
     argomentoId INTEGER NOT NULL REFERENCES Argomento(argomentoId),
     numeroDomande INTEGER CHECK (
         numeroDomande IS NULL
@@ -100,10 +105,11 @@ CREATE TABLE IF NOT EXISTS ArgomentiColloquio (
             AND probabilita IS NULL
         )
     ),
-    PRIMARY KEY (predisposizioneColloquioId, argomentoId)
+    PRIMARY KEY (predisposizioneProvaId, argomentoId)
 );
 CREATE TABLE IF NOT EXISTS Indicatore (
     indicatoreId INTEGER PRIMARY KEY AUTOINCREMENT,
+    grigliaId INTEGER NOT NULL REFERENCES Griglia(grigliaId),
     indicatore TEXT,
     descrizione TEXT,
     peso REAL
@@ -117,21 +123,21 @@ CREATE TABLE IF NOT EXISTS Descrittore (
         livello BETWEEN 0 AND 10
     )
 );
-CREATE TABLE Colloquio (
-    colloquioId INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE Prova (
+    provaId INTEGER PRIMARY KEY AUTOINCREMENT,
     studenteId INTEGER NOT NULL REFERENCES Studente(studenteId),
-    predisposizioneColloquioId INTEGER NOT NULL REFERENCES PredisposizioneColloquio(predisposizioneColloquioId),
+    predisposizioneProvaId INTEGER NOT NULL REFERENCES PredisposizioneProva(predisposizioneProvaId),
     data TEXT NOT NULL CHECK(data IS date(data, '+0 days'))
 );
 CREATE TABLE IF NOT EXISTS ValutazioneQuesito (
-    colloquioId INTEGER NOT NULL REFERENCES Colloquio(colloquioId),
+    provaId INTEGER NOT NULL REFERENCES Prova(provaId),
     descrittoreId INTEGER NOT NULL REFERENCES Descrittore(descrittoreId),
-    PRIMARY KEY (colloquioId, descrittoreId)
+    PRIMARY KEY (provaId, descrittoreId)
 );
 CREATE TABLE IF NOT EXISTS Verbale (
-    colloquioId INTEGER NOT NULL REFERENCES Colloquio(colloquioId),
+    provaId INTEGER NOT NULL REFERENCES Prova(provaId),
     quesitoId INTEGER NOT NULL REFERENCES Quesito(quesitoId),
-    PRIMARY KEY (colloquioId, quesitoId)
+    PRIMARY KEY (provaId, quesitoId)
 );
 CREATE TABLE Competenza (
     competenzaId INTEGER PRIMARY KEY AUTOINCREMENT,

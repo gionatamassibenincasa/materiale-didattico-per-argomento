@@ -20,19 +20,21 @@
 
 **Giustificazione** (  ***studenteId***: INTEGER -> Studente(studenteId), **data**: TEXT, immotivata: INTEGER)
 
-**PredisposizioneColloquio** (  **predisposizioneColloquioId**: INTEGER, _classeId_: INTEGER -> Classe(classeId), descrizione: TEXT, data: TEXT, numeroDomande: INTEGER)
+**Griglia** (  **grigliaId**: INTEGER, descrizione: TEXT)
 
-**ArgomentiColloquio** (  ***predisposizioneColloquioId***: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId), ***argomentoId***: INTEGER -> Argomento(argomentoId), numeroDomande: INTEGER, probabilita: INTEGER)
+**PredisposizioneProva** (  **predisposizioneProvaId**: INTEGER, _classeId_: INTEGER -> Classe(classeId), _grigliaId_: INTEGER -> Griglia(grigliaId), descrizione: TEXT, data: TEXT, numeroDomande: INTEGER)
 
-**Indicatore** (  **indicatoreId**: INTEGER, indicatore: TEXT, descrizione: TEXT, peso: REAL)
+**ArgomentiProva** (  ***predisposizioneProvaId***: INTEGER -> PredisposizioneProva(predisposizioneProvaId), ***argomentoId***: INTEGER -> Argomento(argomentoId), numeroDomande: INTEGER, probabilita: INTEGER)
+
+**Indicatore** (  **indicatoreId**: INTEGER, _grigliaId_: INTEGER -> Griglia(grigliaId), indicatore: TEXT, descrizione: TEXT, peso: REAL)
 
 **Descrittore** (  **descrittoreId**: INTEGER, _indicatoreId_: INTEGER -> Indicatore(indicatoreId), descrittore: TEXT, descrizione: TEXT, livello: INTEGER)
 
-**Colloquio** (  **colloquioId**: INTEGER, _studenteId_: INTEGER -> Studente(studenteId), _predisposizioneColloquioId_: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId), data: TEXT)
+**Prova** (  **provaId**: INTEGER, _studenteId_: INTEGER -> Studente(studenteId), _predisposizioneProvaId_: INTEGER -> PredisposizioneProva(predisposizioneProvaId), data: TEXT)
 
-**ValutazioneQuesito** (  ***colloquioId***: INTEGER -> Colloquio(colloquioId), ***descrittoreId***: INTEGER -> Descrittore(descrittoreId))
+**ValutazioneQuesito** (  ***provaId***: INTEGER -> Prova(provaId), ***descrittoreId***: INTEGER -> Descrittore(descrittoreId))
 
-**Verbale** (  ***colloquioId***: INTEGER -> Colloquio(colloquioId), ***quesitoId***: INTEGER -> Quesito(quesitoId))
+**Verbale** (  ***provaId***: INTEGER -> Prova(provaId), ***quesitoId***: INTEGER -> Quesito(quesitoId))
 
 **Competenza** (  **competenzaId**: INTEGER, competenza: TEXT, cittadinanza: INTEGER)
 

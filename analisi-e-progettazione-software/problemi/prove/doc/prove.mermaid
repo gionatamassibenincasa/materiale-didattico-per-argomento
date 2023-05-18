@@ -70,16 +70,22 @@ class Giustificazione {
 	immotivata: INTEGER
 }
 
-class PredisposizioneColloquio {
-	predisposizioneColloquioId: INTEGER
+class Griglia {
+	grigliaId: INTEGER
+	descrizione: TEXT
+}
+
+class PredisposizioneProva {
+	predisposizioneProvaId: INTEGER
 	classeId: INTEGER
+	grigliaId: INTEGER
 	descrizione: TEXT
 	data: TEXT
 	numeroDomande: INTEGER
 }
 
-class ArgomentiColloquio {
-	predisposizioneColloquioId: INTEGER
+class ArgomentiProva {
+	predisposizioneProvaId: INTEGER
 	argomentoId: INTEGER
 	numeroDomande: INTEGER
 	probabilita: INTEGER
@@ -87,6 +93,7 @@ class ArgomentiColloquio {
 
 class Indicatore {
 	indicatoreId: INTEGER
+	grigliaId: INTEGER
 	indicatore: TEXT
 	descrizione: TEXT
 	peso: REAL
@@ -100,20 +107,20 @@ class Descrittore {
 	livello: INTEGER
 }
 
-class Colloquio {
-	colloquioId: INTEGER
+class Prova {
+	provaId: INTEGER
 	studenteId: INTEGER
-	predisposizioneColloquioId: INTEGER
+	predisposizioneProvaId: INTEGER
 	data: TEXT
 }
 
 class ValutazioneQuesito {
-	colloquioId: INTEGER
+	provaId: INTEGER
 	descrittoreId: INTEGER
 }
 
 class Verbale {
-	colloquioId: INTEGER
+	provaId: INTEGER
 	quesitoId: INTEGER
 }
 
@@ -153,16 +160,18 @@ Programmazione "*" -- "1" Classe : classeId
 Quesito "*" -- "1" Argomento : argomentoId
 Assenza "*" -- "1" Studente : studenteId
 Giustificazione "*" -- "1" Studente : studenteId
-PredisposizioneColloquio "*" -- "1" Classe : classeId
-ArgomentiColloquio "*" -- "1" Argomento : argomentoId
-ArgomentiColloquio "*" -- "1" PredisposizioneColloquio : predisposizioneColloquioId
+PredisposizioneProva "*" -- "1" Griglia : grigliaId
+PredisposizioneProva "*" -- "1" Classe : classeId
+ArgomentiProva "*" -- "1" Argomento : argomentoId
+ArgomentiProva "*" -- "1" PredisposizioneProva : predisposizioneProvaId
+Indicatore "*" -- "1" Griglia : grigliaId
 Descrittore "*" -- "1" Indicatore : indicatoreId
-Colloquio "*" -- "1" PredisposizioneColloquio : predisposizioneColloquioId
-Colloquio "*" -- "1" Studente : studenteId
+Prova "*" -- "1" PredisposizioneProva : predisposizioneProvaId
+Prova "*" -- "1" Studente : studenteId
 ValutazioneQuesito "*" -- "1" Descrittore : descrittoreId
-ValutazioneQuesito "*" -- "1" Colloquio : colloquioId
+ValutazioneQuesito "*" -- "1" Prova : provaId
 Verbale "*" -- "1" Quesito : quesitoId
-Verbale "*" -- "1" Colloquio : colloquioId
+Verbale "*" -- "1" Prova : provaId
 Conoscenza "*" -- "1" Competenza : competenzaId
 Abilita "*" -- "1" Competenza : competenzaId
 Traguardo "*" -- "1" Competenza : competenzaId

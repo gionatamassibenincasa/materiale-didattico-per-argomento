@@ -97,17 +97,24 @@ table( Giustificazione ) {
  }
 
 
-table( PredisposizioneColloquio ) {
-   primary_key( predisposizioneColloquioId )  :INTEGER 
+table( Griglia ) {
+   primary_key( grigliaId )  :INTEGER 
+   column( descrizione )  :TEXT 
+ }
+
+
+table( PredisposizioneProva ) {
+   primary_key( predisposizioneProvaId )  :INTEGER 
    foreign_key( classeId )  :INTEGER 
+   foreign_key( grigliaId )  :INTEGER 
    column( descrizione )  :TEXT 
    column( data )  :TEXT 
    column( numeroDomande )  :INTEGER 
  }
 
 
-table( ArgomentiColloquio ) {
-   primary_and_foreign_key( predisposizioneColloquioId )  :INTEGER 
+table( ArgomentiProva ) {
+   primary_and_foreign_key( predisposizioneProvaId )  :INTEGER 
    primary_and_foreign_key( argomentoId )  :INTEGER 
    column( numeroDomande )  :INTEGER 
    column( probabilita )  :INTEGER 
@@ -116,6 +123,7 @@ table( ArgomentiColloquio ) {
 
 table( Indicatore ) {
    primary_key( indicatoreId )  :INTEGER 
+   foreign_key( grigliaId )  :INTEGER 
    column( indicatore )  :TEXT 
    column( descrizione )  :TEXT 
    column( peso )  :REAL 
@@ -131,22 +139,22 @@ table( Descrittore ) {
  }
 
 
-table( Colloquio ) {
-   primary_key( colloquioId )  :INTEGER 
+table( Prova ) {
+   primary_key( provaId )  :INTEGER 
    foreign_key( studenteId )  :INTEGER 
-   foreign_key( predisposizioneColloquioId )  :INTEGER 
+   foreign_key( predisposizioneProvaId )  :INTEGER 
    column( data )  :TEXT 
  }
 
 
 table( ValutazioneQuesito ) {
-   primary_and_foreign_key( colloquioId )  :INTEGER 
+   primary_and_foreign_key( provaId )  :INTEGER 
    primary_and_foreign_key( descrittoreId )  :INTEGER 
  }
 
 
 table( Verbale ) {
-   primary_and_foreign_key( colloquioId )  :INTEGER 
+   primary_and_foreign_key( provaId )  :INTEGER 
    primary_and_foreign_key( quesitoId )  :INTEGER 
  }
 
@@ -191,16 +199,18 @@ table( Traguardo ) {
  Quesito }o--|| Argomento
  Assenza }o--|| Studente
  Giustificazione }o--|| Studente
- PredisposizioneColloquio }o--|| Classe
- ArgomentiColloquio }o--|| Argomento
- ArgomentiColloquio }o--|| PredisposizioneColloquio
+ PredisposizioneProva }o--|| Griglia
+ PredisposizioneProva }o--|| Classe
+ ArgomentiProva }o--|| Argomento
+ ArgomentiProva }o--|| PredisposizioneProva
+ Indicatore }o--|| Griglia
  Descrittore }o--|| Indicatore
- Colloquio }o--|| PredisposizioneColloquio
- Colloquio }o--|| Studente
+ Prova }o--|| PredisposizioneProva
+ Prova }o--|| Studente
  ValutazioneQuesito }o--|| Descrittore
- ValutazioneQuesito }o--|| Colloquio
+ ValutazioneQuesito }o--|| Prova
  Verbale }o--|| Quesito
- Verbale }o--|| Colloquio
+ Verbale }o--|| Prova
  Conoscenza }o--|| Competenza
  Abilita }o--|| Competenza
  Traguardo }o--|| Competenza

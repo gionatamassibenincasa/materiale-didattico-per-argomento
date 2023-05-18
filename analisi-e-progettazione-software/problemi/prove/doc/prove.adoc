@@ -69,16 +69,22 @@
 , immotivata: INTEGER
 )
 
-`PredisposizioneColloquio` (
-  **predisposizioneColloquioId**: INTEGER
+`Griglia` (
+  **grigliaId**: INTEGER
+, descrizione: TEXT
+)
+
+`PredisposizioneProva` (
+  **predisposizioneProvaId**: INTEGER
 , __classeId__: INTEGER -> Classe(classeId)
+, __grigliaId__: INTEGER -> Griglia(grigliaId)
 , descrizione: TEXT
 , data: TEXT
 , numeroDomande: INTEGER
 )
 
-`ArgomentiColloquio` (
-  **__predisposizioneColloquioId__**: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId)
+`ArgomentiProva` (
+  **__predisposizioneProvaId__**: INTEGER -> PredisposizioneProva(predisposizioneProvaId)
 , **__argomentoId__**: INTEGER -> Argomento(argomentoId)
 , numeroDomande: INTEGER
 , probabilita: INTEGER
@@ -86,6 +92,7 @@
 
 `Indicatore` (
   **indicatoreId**: INTEGER
+, __grigliaId__: INTEGER -> Griglia(grigliaId)
 , indicatore: TEXT
 , descrizione: TEXT
 , peso: REAL
@@ -99,20 +106,20 @@
 , livello: INTEGER
 )
 
-`Colloquio` (
-  **colloquioId**: INTEGER
+`Prova` (
+  **provaId**: INTEGER
 , __studenteId__: INTEGER -> Studente(studenteId)
-, __predisposizioneColloquioId__: INTEGER -> PredisposizioneColloquio(predisposizioneColloquioId)
+, __predisposizioneProvaId__: INTEGER -> PredisposizioneProva(predisposizioneProvaId)
 , data: TEXT
 )
 
 `ValutazioneQuesito` (
-  **__colloquioId__**: INTEGER -> Colloquio(colloquioId)
+  **__provaId__**: INTEGER -> Prova(provaId)
 , **__descrittoreId__**: INTEGER -> Descrittore(descrittoreId)
 )
 
 `Verbale` (
-  **__colloquioId__**: INTEGER -> Colloquio(colloquioId)
+  **__provaId__**: INTEGER -> Prova(provaId)
 , **__quesitoId__**: INTEGER -> Quesito(quesitoId)
 )
 

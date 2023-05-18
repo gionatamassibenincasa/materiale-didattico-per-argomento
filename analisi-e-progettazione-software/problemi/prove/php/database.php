@@ -497,6 +497,12 @@ function caricaArgomenti($classeId)
     return $argomenti;
 }
 
+/**
+ * caricaPredisposizioneColloqui
+ *
+ * @param  mixed $classeId
+ * @return  [predisposizioneId, descrizione, data, numeroDomande, numeroArgomenti]
+ */
 function caricaPredisposizioneColloqui($classeId)
 {
     global $db;
@@ -506,7 +512,7 @@ function caricaPredisposizioneColloqui($classeId)
     }
 
     try {
-        $sql = "SELECT pc.predisposizioneColloquioId, pc.descrizione, pc.data, pc.numeroDomande, count(*) AS numeroArgomenti FROM PredisposizioneColloquio pc
+        $sql = "SELECT pc.predisposizioneColloquioId AS predisposizioneId, pc.descrizione AS descrizione, pc.data AS data, pc.numeroDomande AS numeroDomande, count(*) AS numeroArgomenti FROM PredisposizioneColloquio pc
 INNER JOIN ArgomentiColloquio ac USING (predisposizioneColloquioId) WHERE classeId = {$classeId} GROUP BY pc.predisposizioneColloquioId, pc.descrizione, pc.data, pc.numeroDomande ORDER BY data DESC
 ";
         //echo "{$sql}<br>";
@@ -521,6 +527,52 @@ INNER JOIN ArgomentiColloquio ac USING (predisposizioneColloquioId) WHERE classe
     return $predisposizione;
 }
 
+/**
+ * caricaCandidati
+ *
+ * I candidati per la selezione manuale devono essere:
+ * 1. presenti
+ * 2. non giustificati
+ *
+ * @param  mixed $classeId
+ * @param  mixed $data
+ * @param  mixed $predisposizioneId
+ * @return void
+ */
+function caricaCandidati($classeId, $data, $predisposizioneId)
+{
+    return [];
+}
+
+/**
+ * caricaCandidatiSceltaCasuale
+ *
+ * I candidati per la selezione manuale devono essere:
+ * 1. presenti
+ * 2. non giustificati
+ * 3. interrogati solo su un sottoinsieme degli argomenti, non su tutti
+ *
+ * @param  mixed $classeId
+ * @param  mixed $data
+ * @param  mixed $predisposizioneId
+ * @return void
+ */
+function caricaCandidatiSceltaCasuale($classeId, $data, $predisposizioneId)
+{
+
+    return [];
+}
+
+/**
+ * salvaPredisposizioneColloqui
+ *
+ * @param  mixed $classeId
+ * @param  mixed $descrizione
+ * @param  mixed $nDomande
+ * @param  mixed $argomenti
+ * @param  mixed $nQuesitiPerArgomento
+ * @return void
+ */
 function salvaPredisposizioneColloqui($classeId, $descrizione, $nDomande, $argomenti, $nQuesitiPerArgomento)
 {
     global $db;
