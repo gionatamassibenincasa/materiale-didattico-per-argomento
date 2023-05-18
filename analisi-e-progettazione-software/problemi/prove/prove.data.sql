@@ -1,5 +1,5 @@
 BEGIN TRANSACTION;
-INSERT INTO "AnnoScolastico" ("annoScolasticoId", "testo", "inizio", "fine")
+INSERT INTO AnnoScolastico (annoScolasticoId, testo, inizio, fine)
 VALUES (1, '2022-23', '2022-09-01', '2023-08-31');
 INSERT INTO PeriodoValutazione (
         periodoValutazioneId,
@@ -11,25 +11,25 @@ INSERT INTO PeriodoValutazione (
 VALUES (
         1,
         1,
-        "I Quadrimestre",
-        "2022-09-12",
-        "2023-01-31"
+        'I Quadrimestre',
+        '2022-09-12',
+        '2023-01-31'
     ),
     (
         2,
         1,
-        "II Quadrimestre",
-        "2023-02-02",
-        "2023-06-10"
+        'II Quadrimestre',
+        '2023-02-02',
+        '2023-06-10'
     );
-INSERT INTO "Classe" (
-        "classeId",
-        "annoScolasticoId",
-        "anno",
-        "sezione",
-        "indirizzo",
-        "articolazione",
-        "maxGiustificazioni"
+INSERT INTO Classe (
+        classeId,
+        annoScolasticoId,
+        anno,
+        sezione,
+        indirizzo,
+        articolazione,
+        maxGiustificazioni
     )
 VALUES (
         1000425,
@@ -37,19 +37,19 @@ VALUES (
         4,
         'A',
         'ITE',
-        'Mod AFM/SIA - SIA',
+        'Mod AFM/SIA- SIA',
         2
     ),
     (1000455, 1, 5, 'E', 'LS', 'SA', 2),
     (1000469, 1, 5, 'A', 'ITE', 'SIA', 2),
     (1001011, 1, 3, 'A', 'ITE', 'Mod AFM/Sport', 1),
     (1001014, 1, 3, 'A', 'ITE', 'SIA', 1);
-INSERT INTO "Studente" (
-        "studenteId",
-        "nome",
-        "cognome",
-        "sesso",
-        "email"
+INSERT INTO Studente (
+        studenteId,
+        nome,
+        cognome,
+        sesso,
+        email
     )
 VALUES (
         1007372,
@@ -751,7 +751,7 @@ VALUES (
         'M',
         'riccardo.plescia@savoiabenincasa.it'
     );
-INSERT INTO "Registro" ("studenteId", "classeId")
+INSERT INTO Registro (studenteId, classeId)
 VALUES (1008303, 1001011),
     (1008409, 1001011),
     (1008439, 1001011),
@@ -852,7 +852,7 @@ VALUES (1008303, 1001011),
     (1008021, 1000455),
     (1008027, 1000455),
     (1008030, 1000455);
-INSERT INTO "Argomento" ("argomentoId", "argomento")
+INSERT INTO Argomento (argomentoId, argomento)
 VALUES (1, 'Processi aziendali e sistema informatico'),
     (
         2,
@@ -886,7 +886,7 @@ VALUES (1, 'Processi aziendali e sistema informatico'),
         24,
         'Aspetti giuridici delle reti e della sicurezza'
     );
-INSERT INTO "Programmazione" ("classeId", "argomentoId")
+INSERT INTO Programmazione (classeId, argomentoId)
 VALUES (1001014, 1),
     (1001014, 2),
     (1001014, 3),
@@ -911,7 +911,7 @@ VALUES (1001014, 1),
     (1000469, 22),
     (1000469, 23),
     (1000469, 24);
-INSERT INTO "Quesito" ("quesitoId", "argomentoId", "quesito")
+INSERT INTO Quesito (quesitoId, argomentoId, quesito)
 VALUES (
         1,
         1,
@@ -2945,13 +2945,17 @@ VALUES (
         24,
         'Perché sono importanti le norme sull’accessibilità alle risorse informatiche?'
     );
-INSERT INTO "Indicatore" (
-        "indicatoreId",
-        "indicatore",
-        "descrizione",
-        "peso"
+INSERT INTO Griglia (grigliaId, descrizione)
+VALUES (1, 'Griglia valutazione qualità database');
+INSERT INTO Indicatore (
+        indicatoreId,
+        grigliaId,
+        indicatore,
+        descrizione,
+        peso
     )
 VALUES (
+        1,
         1,
         'Correttezza',
         'I concetti devono essere espressi in accordo al loro significato nel rispetto della grammatica del linguaggio di descrizione',
@@ -2959,40 +2963,45 @@ VALUES (
     ),
     (
         2,
+        1,
         'Completezza',
         'descrizioneTutte le idee semplici del concetto devono essere esposte e devono potersi creare delle relazioni tra concetti',
         1.0
     ),
     (
         3,
+        1,
         'Pertinenza',
         'I concetti devono essere quelli richiesti dal quesito e non altri',
         0.5
     ),
     (
         4,
+        1,
         'Minimalità',
         'L''esposizione non deve essere ridondante',
         0.5
     ),
     (
         5,
+        1,
         'Intelligibilità',
         'I concetti sono espressi in modo comprensibile, senza necessità di ulteriori quesiti aggiuntivi',
         0.5
     ),
     (
         6,
+        1,
         'Appropriatezza del lessico',
         'I concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale',
         0.5
     );
-INSERT INTO "Descrittore" (
-        "descrittoreId",
-        "indicatoreId",
-        "descrittore",
-        "descrizione",
-        "livello"
+INSERT INTO Descrittore (
+        descrittoreId,
+        indicatoreId,
+        descrittore,
+        descrizione,
+        livello
     )
 VALUES (
         1,

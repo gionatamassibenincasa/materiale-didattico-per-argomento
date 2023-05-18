@@ -76,7 +76,6 @@ CREATE TABLE IF NOT EXISTS Griglia (
 CREATE TABLE IF NOT EXISTS PredisposizioneProva (
     predisposizioneProvaId INTEGER PRIMARY KEY AUTOINCREMENT,
     classeId INTEGER NOT NULL REFERENCES Classe(classeId),
-    grigliaId INTEGER NOT NULL REFERENCES Griglia(grigliaId),
     descrizione TEXT NOT NULL,
     data TEXT NOT NULL CHECK(data IS date(data, '+0 days')) DEFAULT CURRENT_DATE,
     numeroDomande INTEGER CHECK (
