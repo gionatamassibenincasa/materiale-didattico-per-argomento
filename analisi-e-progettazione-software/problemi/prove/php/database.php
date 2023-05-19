@@ -1,7 +1,7 @@
 <?php
 
 //! path è il percorso del file SQLite
-$path = 'data/prove_orali.sqlite';
+$path = 'data/prove.sqlite';
 //! db è l'oggetto PDO che gestisce la comunicazione con il database
 $db;
 try {
@@ -162,17 +162,17 @@ function studentiDellaClasse($classeId, $data)
     try {
         $pStmtStudenti = $db->prepare(
             'SELECT ' .
-            '	RANK() OVER (ORDER BY cognome, nome) AS pos, ' .
-            '	reg.studenteId, ' .
-            '	cognome, ' .
-            '	nome ' .
-            'FROM ' .
-            '	Registro reg ' .
-            '		LEFT OUTER JOIN Studente s USING (studenteId) ' .
-            '		LEFT OUTER JOIN Ritirato rit USING (studenteId, classeId) ' .
-            'WHERE ' .
-            '	classeId = :classeId AND (rit.data IS NULL OR :data < rit.data) ' .
-            'ORDER BY cognome, nome'
+                '	RANK() OVER (ORDER BY cognome, nome) AS pos, ' .
+                '	reg.studenteId, ' .
+                '	cognome, ' .
+                '	nome ' .
+                'FROM ' .
+                '	Registro reg ' .
+                '		LEFT OUTER JOIN Studente s USING (studenteId) ' .
+                '		LEFT OUTER JOIN Ritirato rit USING (studenteId, classeId) ' .
+                'WHERE ' .
+                '	classeId = :classeId AND (rit.data IS NULL OR :data < rit.data) ' .
+                'ORDER BY cognome, nome'
         );
         $pStmtStudenti->bindValue(':classeId', $classeId, SQLITE3_INTEGER);
         $pStmtStudenti->bindValue(':data', $data, SQLITE3_TEXT);
@@ -331,7 +331,6 @@ function caricaAppello($classeId, $data)
             } else {
                 $gi = true;
             }
-
         }
         $residuo = $maxGiustificazioni;
         if (isset($giustificazioniResidue[$id])) {
@@ -498,12 +497,40 @@ function caricaArgomenti($classeId)
 }
 
 /**
- * caricaPredisposizioneColloqui
+ * caricaGriglie
+ *
+ * @return void
+ */
+function caricaGriglie()
+{
+    global $db;
+    $griglie = [];
+    if ($db == null) {
+        apriConnessione();
+    }
+
+    try {
+        // TODO: usare prepared statement!
+        $sql = "SELECT grigliaId, descrizione
+             FROM Griglia
+             ORDER BY descrizione;";
+        $griglie = $db->query($sql);
+    } catch (PDOException $e) {
+        // Print PDOException message
+        echo $e->getMessage();
+        $db = null;
+    }
+    // argomentoId, argomento
+    return $griglie;
+}
+
+/**
+ * caricaPredisposizioneProva
  *
  * @param  mixed $classeId
- * @return  [predisposizioneId, descrizione, data, numeroDomande, numeroArgomenti]
+ * @return  [predisposizioneId, descrizione, data, numeroQuesiti, numeroArgomenti]
  */
-function caricaPredisposizioneColloqui($classeId)
+function caricaPredisposizioneProva($classeId)
 {
     global $db;
     $predisposizione = [];
@@ -512,10 +539,10 @@ function caricaPredisposizioneColloqui($classeId)
     }
 
     try {
-        $sql = "SELECT pc.predisposizioneColloquioId AS predisposizioneId, pc.descrizione AS descrizione, pc.data AS data, pc.numeroDomande AS numeroDomande, count(*) AS numeroArgomenti FROM PredisposizioneColloquio pc
-INNER JOIN ArgomentiColloquio ac USING (predisposizioneColloquioId) WHERE classeId = {$classeId} GROUP BY pc.predisposizioneColloquioId, pc.descrizione, pc.data, pc.numeroDomande ORDER BY data DESC
-";
-        //echo "{$sql}<br>";
+        // $sql = "SELECT pc.predisposizioneProvaId AS predisposizioneId, pc.descrizione AS descrizione, pc.data AS data, pc.numeroQuesiti AS numeroQuesiti, count(*) AS numeroArgomenti FROM PredisposizioneProva pc INNER JOIN ArgomentiProva ac USING (predisposizioneProvaId) WHERE classeId = {$classeId} GROUP BY ac.ArgomentiProvaId, pc.descrizione, pc.data, pc.numeroQuesiti ORDER BY data DESC";
+        $sql = "SELECT pc.predisposizioneProvaId AS predisposizioneId, pc.descrizione AS descrizione, pc.data AS data, pc.numeroQuesiti AS numeroQuesiti, 0 AS numeroArgomenti FROM PredisposizioneProva pc ORDER BY data DESC";
+
+        echo "{$sql}<br>";
         $predisposizione = $db->query($sql)->fetchAll();
     } catch (Exception $e) {
         echo "ECCEZIONE";
@@ -564,16 +591,17 @@ function caricaCandidatiSceltaCasuale($classeId, $data, $predisposizioneId)
 }
 
 /**
- * salvaPredisposizioneColloqui
+ * salvaPredisposizioneProva
  *
  * @param  mixed $classeId
+ * @param  mixed $grigliaId
  * @param  mixed $descrizione
- * @param  mixed $nDomande
+ * @param  mixed $nQuesiti
  * @param  mixed $argomenti
  * @param  mixed $nQuesitiPerArgomento
  * @return void
  */
-function salvaPredisposizioneColloqui($classeId, $descrizione, $nDomande, $argomenti, $nQuesitiPerArgomento)
+function salvaPredisposizioneProva($classeId, $grigliaId, $descrizione, $nQuesiti, $argomenti, $nQuesitiPerArgomento)
 {
     global $db;
     if ($db == null) {
@@ -585,16 +613,17 @@ function salvaPredisposizioneColloqui($classeId, $descrizione, $nDomande, $argom
     try {
         //$istat = $db->prepare($sql);
         $db->beginTransaction();
-        //$istat . execute(array($descrizione, $nDomande));
-        $sql = "INSERT INTO PredisposizioneColloquio(classeId, descrizione, numeroDomande) VALUES ({$classeId}, '{$descrizione}', {$nDomande})";
-        $db->query($sql);
+        //$istat . execute(array($descrizione, $nQuesiti));
+        // AGGIUNGERE GRIGLIA
+        $sql = "INSERT INTO PredisposizioneProva(classeId, grigliaId, descrizione, numeroQuesiti) VALUES ({$classeId},{$grigliaId}, '{$descrizione}', {$nQuesiti})";
         echo "{$sql}<br>";
+        $db->query($sql);
         $predisposizioneId = $db->lastInsertId();
         echo "Inserito {$predisposizioneId}<br>";
         $argcount = count($argomenti);
         for ($i = 0; $i < $argcount; $i++) {
             if ($nQuesitiPerArgomento[$i] > 0) {
-                $sql = "INSERT INTO ArgomentiColloquio (predisposizioneColloquioId, argomentoId, numeroDomande) VALUES ({$predisposizioneId},{$argomenti[$i]},{$nQuesitiPerArgomento[$i]})";
+                $sql = "INSERT INTO ArgomentiProva (predisposizioneProvaId, argomentoId, numeroQuesiti) VALUES ({$predisposizioneId},{$argomenti[$i]},{$nQuesitiPerArgomento[$i]})";
                 $db->query($sql);
                 echo "Inserito {$sql}<br>";
             }
@@ -622,7 +651,6 @@ function controllaParametri($array, $elenco)
         if (!isset($array[$p])) {
             return false;
         }
-
     }
     return true;
 }

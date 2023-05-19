@@ -22,9 +22,9 @@
 
 **Griglia** (  **grigliaId**: INTEGER, descrizione: TEXT)
 
-**PredisposizioneProva** (  **predisposizioneProvaId**: INTEGER, _classeId_: INTEGER -> Classe(classeId), _grigliaId_: INTEGER -> Griglia(grigliaId), descrizione: TEXT, data: TEXT, numeroDomande: INTEGER)
+**PredisposizioneProva** (  **predisposizioneProvaId**: INTEGER, _classeId_: INTEGER -> Classe(classeId), _grigliaId_: INTEGER -> Griglia(grigliaId), descrizione: TEXT, data: TEXT, numeroQuesiti: INTEGER)
 
-**ArgomentiProva** (  ***predisposizioneProvaId***: INTEGER -> PredisposizioneProva(predisposizioneProvaId), ***argomentoId***: INTEGER -> Argomento(argomentoId), numeroDomande: INTEGER, probabilita: INTEGER)
+**ArgomentiProva** (  ***predisposizioneProvaId***: INTEGER -> PredisposizioneProva(predisposizioneProvaId), ***argomentoId***: INTEGER -> Argomento(argomentoId), numeroQuesiti: INTEGER, probabilita: INTEGER)
 
 **Indicatore** (  **indicatoreId**: INTEGER, _grigliaId_: INTEGER -> Griglia(grigliaId), indicatore: TEXT, descrizione: TEXT, peso: REAL)
 

@@ -80,13 +80,13 @@
 , __grigliaId__: INTEGER -> Griglia(grigliaId)
 , descrizione: TEXT
 , data: TEXT
-, numeroDomande: INTEGER
+, numeroQuesiti: INTEGER
 )
 
 `ArgomentiProva` (
   **__predisposizioneProvaId__**: INTEGER -> PredisposizioneProva(predisposizioneProvaId)
 , **__argomentoId__**: INTEGER -> Argomento(argomentoId)
-, numeroDomande: INTEGER
+, numeroQuesiti: INTEGER
 , probabilita: INTEGER
 )
 

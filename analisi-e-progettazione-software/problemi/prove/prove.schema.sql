@@ -76,19 +76,20 @@ CREATE TABLE IF NOT EXISTS Griglia (
 CREATE TABLE IF NOT EXISTS PredisposizioneProva (
     predisposizioneProvaId INTEGER PRIMARY KEY AUTOINCREMENT,
     classeId INTEGER NOT NULL REFERENCES Classe(classeId),
+    grigliaId INTEGER REFERENCES Griglia(grigliaId),
     descrizione TEXT NOT NULL,
     data TEXT NOT NULL CHECK(data IS date(data, '+0 days')) DEFAULT CURRENT_DATE,
-    numeroDomande INTEGER CHECK (
-        numeroDomande IS NULL
-        OR numeroDomande BETWEEN 1 AND 10
+    numeroQuesiti INTEGER CHECK (
+        numeroQuesiti IS NULL
+        OR numeroQuesiti BETWEEN 1 AND 10
     )
 );
 CREATE TABLE IF NOT EXISTS ArgomentiProva (
     predisposizioneProvaId INTEGER NOT NULL REFERENCES PredisposizioneProva(predisposizioneProvaId),
     argomentoId INTEGER NOT NULL REFERENCES Argomento(argomentoId),
-    numeroDomande INTEGER CHECK (
-        numeroDomande IS NULL
-        OR numeroDomande BETWEEN 1 AND 10
+    numeroQuesiti INTEGER CHECK (
+        numeroQuesiti IS NULL
+        OR numeroQuesiti BETWEEN 1 AND 10
     ),
     probabilita INTEGER CHECK (
         probabilita IS NULL
@@ -96,11 +97,11 @@ CREATE TABLE IF NOT EXISTS ArgomentiProva (
     ),
     CHECK(
         (
-            numeroDomande IS NULL
+            numeroQuesiti IS NULL
             AND probabilita IS NOT NULL
         )
         OR (
-            numeroDomande IS NOT NULL
+            numeroQuesiti IS NOT NULL
             AND probabilita IS NULL
         )
     ),

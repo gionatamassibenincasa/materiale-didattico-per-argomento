@@ -75,7 +75,7 @@ include 'prologo.php';
         </table>
     </figure>
     <input type="button" id="salva-btn" value="Salva" />
-    <input type="button" id="predisponi-btn" value="Predisponi il colloquio" class="secondary" />
+    <input type="button" id="predisponi-btn" value="Predisponi la prova" class="secondary" />
 </form>
 <script>
     window.addEventListener("load", (evt) => {

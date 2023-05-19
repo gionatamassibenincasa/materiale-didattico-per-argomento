@@ -1,2 +1,5 @@
 rm -f prove.sqlite
-cat prove.schema.sql prove.data.sql | sqlite3 prove.sqlite
+echo "Genera lo schema"
+cat prove.schema.sql | sqlite3 prove.sqlite
+echo "Inserisci i dati"
+cat prove.data.sql | sqlite3 prove.sqlite

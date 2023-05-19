@@ -109,14 +109,14 @@ table( PredisposizioneProva ) {
    foreign_key( grigliaId )  :INTEGER 
    column( descrizione )  :TEXT 
    column( data )  :TEXT 
-   column( numeroDomande )  :INTEGER 
+   column( numeroQuesiti )  :INTEGER 
  }
 
 
 table( ArgomentiProva ) {
    primary_and_foreign_key( predisposizioneProvaId )  :INTEGER 
    primary_and_foreign_key( argomentoId )  :INTEGER 
-   column( numeroDomande )  :INTEGER 
+   column( numeroQuesiti )  :INTEGER 
    column( probabilita )  :INTEGER 
  }
 

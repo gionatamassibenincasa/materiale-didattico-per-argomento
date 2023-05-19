@@ -81,13 +81,13 @@ erDiagram
   INTEGER grigliaId FK
   TEXT descrizione
   TEXT data
-  INTEGER numeroDomande
+  INTEGER numeroQuesiti
  }
 
  ArgomentiProva {
   INTEGER predisposizioneProvaId PK
   INTEGER argomentoId PK
-  INTEGER numeroDomande
+  INTEGER numeroQuesiti
   INTEGER probabilita
  }
 
