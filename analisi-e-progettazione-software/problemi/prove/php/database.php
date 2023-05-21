@@ -4,21 +4,6 @@
 $path = 'data/prove.sqlite';
 //! db è l'oggetto PDO che gestisce la comunicazione con il database
 $db;
-try {
-    // Connect to SQLite database in file
-    $db = new PDO("sqlite:{$path}");
-    // Set errormode to exceptions
-    $db->setAttribute(
-        PDO::ATTR_ERRMODE,
-        PDO::ERRMODE_EXCEPTION
-    );
-    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    // Print PDOException message
-    echo $e->getMessage();
-    $db = null;
-}
-
 date_default_timezone_set('UTC');
 
 /**
@@ -74,11 +59,11 @@ function caricaClassi()
     }
 
     try {
-        $sql = "SELECT classeId, anno || ' ' || sezione || ' ' || articolazione AS classe" .
-            " FROM Classe INNER JOIN AnnoScolastico USING (annoScolasticoId) " .
-            " WHERE date() BETWEEN inizio AND fine" .
-            " ORDER BY anno, sezione, articolazione";
-        $classi = $db->query($sql);
+        $sql = "SELECT classeId, anno || ' ' || sezione || ' ' || articolazione AS classe
+             FROM Classe INNER JOIN AnnoScolastico USING (annoScolasticoId)
+             WHERE date() BETWEEN inizio AND fine
+             ORDER BY anno, sezione, articolazione";
+        $classi = $db->query($sql)->fetchAll();
     } catch (PDOException $e) {
         // Print PDOException message
         echo $e->getMessage();
@@ -161,18 +146,18 @@ function studentiDellaClasse($classeId, $data)
 
     try {
         $pStmtStudenti = $db->prepare(
-            'SELECT ' .
-                '	RANK() OVER (ORDER BY cognome, nome) AS pos, ' .
-                '	reg.studenteId, ' .
-                '	cognome, ' .
-                '	nome ' .
-                'FROM ' .
-                '	Registro reg ' .
-                '		LEFT OUTER JOIN Studente s USING (studenteId) ' .
-                '		LEFT OUTER JOIN Ritirato rit USING (studenteId, classeId) ' .
-                'WHERE ' .
-                '	classeId = :classeId AND (rit.data IS NULL OR :data < rit.data) ' .
-                'ORDER BY cognome, nome'
+            "SELECT
+                	RANK() OVER (ORDER BY cognome, nome) AS pos
+                	reg.studenteId,
+                	cognome,
+                	nome
+                FROM
+                	Registro reg
+                		LEFT OUTER JOIN Studente s USING (studenteId)
+                		LEFT OUTER JOIN Ritirato rit USING (studenteId, classeId)
+                WHERE
+                	classeId = :classeId AND (rit.data IS NULL OR :data < rit.data)
+                ORDER BY cognome, nome"
         );
         $pStmtStudenti->bindValue(':classeId', $classeId, SQLITE3_INTEGER);
         $pStmtStudenti->bindValue(':data', $data, SQLITE3_TEXT);
@@ -268,24 +253,24 @@ function giustificazioniSpesePerId($data, $classeId, $elencoStudentiId)
     $res = [];
     try {
         $sql =
-            "SELECT " .
-            "   s.studenteId, " .
-            "   COALESCE(sum(immotivata), 0) AS giustificazioniFruite " .
-            "FROM " .
-            "	Studente s " .
-            "	LEFT OUTER JOIN Registro r USING (studenteId) " .
-            "	LEFT OUTER JOIN Classe c USING (classeId) " .
-            "	LEFT OUTER JOIN AnnoScolastico a USING (annoScolasticoId) " .
-            "	LEFT OUTER JOIN PeriodoValutazione pv USING (annoScolasticoId) " .
-            "	LEFT OUTER JOIN Giustificazione g USING (studenteId) " .
-            "	LEFT OUTER JOIN Ritirato rit USING(studenteId, classeId) " .
-            "WHERE " .
-            "   studenteId IN ({$elencoStudentiId}) " .
-            "   AND classeId = {$classeId} " .
-            "   AND '{$data}' BETWEEN pv.inizio AND pv.fine " .
-            "   AND g.data <= '{$data}' " .
-            "   AND (rit.data IS NULL OR '{$data}' < rit.data) " .
-            "GROUP BY s.studenteId, rit.data";
+            "SELECT
+   s.studenteId,
+   COALESCE(sum(immotivata), 0) AS giustificazioniFruite
+FROM
+	Studente s
+	LEFT OUTER JOIN Registro r USING (studenteId)
+	LEFT OUTER JOIN Classe c USING (classeId)
+	LEFT OUTER JOIN AnnoScolastico a USING (annoScolasticoId)
+	LEFT OUTER JOIN PeriodoValutazione pv USING (annoScolasticoId)
+	LEFT OUTER JOIN Giustificazione g USING (studenteId)
+	LEFT OUTER JOIN Ritirato rit USING(studenteId, classeId)
+WHERE
+   studenteId IN ({$elencoStudentiId})
+   AND classeId = {$classeId}
+   AND '{$data}' BETWEEN pv.inizio AND pv.fine
+   AND g.data <= '{$data}'
+   AND (rit.data IS NULL OR '{$data}' < rit.data)
+GROUP BY s.studenteId, rit.data";
         $tmp = $db->query($sql)->fetchAll();
         foreach ($tmp as $a) {
             $res[$a['studenteId']] = true;
@@ -486,7 +471,7 @@ function caricaArgomenti($classeId)
             " FROM Argomento INNER JOIN Programmazione USING (argomentoId) " .
             " WHERE classeId = " . $classeId .
             " ORDER BY argomentoId";
-        $argomenti = $db->query($sql);
+        $argomenti = $db->query($sql)->fetchAll();
     } catch (PDOException $e) {
         // Print PDOException message
         echo $e->getMessage();
@@ -514,7 +499,7 @@ function caricaGriglie()
         $sql = "SELECT grigliaId, descrizione
              FROM Griglia
              ORDER BY descrizione;";
-        $griglie = $db->query($sql);
+        $griglie = $db->query($sql)->fetchAll();
     } catch (PDOException $e) {
         // Print PDOException message
         echo $e->getMessage();
@@ -539,8 +524,19 @@ function caricaPredisposizioneProva($classeId)
     }
 
     try {
-        // $sql = "SELECT pc.predisposizioneProvaId AS predisposizioneId, pc.descrizione AS descrizione, pc.data AS data, pc.numeroQuesiti AS numeroQuesiti, count(*) AS numeroArgomenti FROM PredisposizioneProva pc INNER JOIN ArgomentiProva ac USING (predisposizioneProvaId) WHERE classeId = {$classeId} GROUP BY ac.ArgomentiProvaId, pc.descrizione, pc.data, pc.numeroQuesiti ORDER BY data DESC";
-        $sql = "SELECT pc.predisposizioneProvaId AS predisposizioneId, pc.descrizione AS descrizione, pc.data AS data, pc.numeroQuesiti AS numeroQuesiti, 0 AS numeroArgomenti FROM PredisposizioneProva pc ORDER BY data DESC";
+        $sql =
+            "SELECT
+    pc.predisposizioneProvaId AS predisposizioneId,
+    pc.peso AS peso,
+    pc.descrizione AS descrizione,
+    pc.data AS data,
+    pc.numeroQuesiti AS numeroQuesiti,
+    0 AS numeroArgomenti -- rifare !!!
+FROM
+    PredisposizioneProva pc
+WHERE
+        pc.classeId = {$classeId}
+ORDER BY data DESC";
 
         echo "{$sql}<br>";
         $predisposizione = $db->query($sql)->fetchAll();
@@ -560,6 +556,7 @@ function caricaPredisposizioneProva($classeId)
  * I candidati per la selezione manuale devono essere:
  * 1. presenti
  * 2. non giustificati
+ * 3. non ritirati
  *
  * @param  mixed $classeId
  * @param  mixed $data
@@ -568,7 +565,81 @@ function caricaPredisposizioneProva($classeId)
  */
 function caricaCandidati($classeId, $data, $predisposizioneId)
 {
-    return [];
+    global $db;
+    $predisposizione = [];
+    if ($db == null) {
+        apriConnessione();
+    }
+
+    try {
+        $sql =
+            "WITH periodo AS (
+-- Periodo corrente
+SELECT periodoValutazioneId, inizio, fine 
+FROM 
+	PeriodoValutazione pv 
+WHERE DATE() BETWEEN inizio AND fine 
+),
+conta_voti AS (
+	SELECT count(provaId) AS voti, studenteId
+	FROM
+		Prova JOIN
+		periodo
+	WHERE
+		data BETWEEN inizio AND fine
+	GROUP BY provaId
+)
+SELECT studenteId, cognome, nome, COALESCE (voti, 0) as voti 
+FROM 
+	Registro r INNER JOIN
+	Studente s USING (studenteId) LEFT JOIN
+	conta_voti USING (studenteId)
+WHERE
+	r.classeId = {$classeId} AND
+	studenteId NOT IN (
+	-- Studenti della classe classeId giustificati nel giorno data
+	SELECT s.studenteId
+	FROM
+		Registro r INNER JOIN
+		Studente s USING (studenteId) INNER JOIN	
+		Giustificazione g USING (studenteId)
+	WHERE
+		r.classeId = {$classeId} AND
+		g.data = '{$data}'
+	UNION 
+	-- Studenti della classe classeId ritirati a non oltre il giorno data
+	SELECT s.studenteId
+	FROM
+		Registro r INNER JOIN
+		Studente s USING (studenteId) INNER JOIN	
+		Ritirato rit USING (studenteId)
+	WHERE
+		r.classeId = {$classeId} AND
+		rit.data <= '{$data}'
+	UNION
+	-- Studenti della classe classeId assenti nel giorno data
+	SELECT s.studenteId
+	FROM
+		Registro r INNER JOIN
+		Studente s USING (studenteId) INNER JOIN	
+		Assenza a USING (studenteId)
+	WHERE
+		r.classeId = {$classeId} AND
+		a.data = '{$data}'
+	)
+ORDER BY
+	cognome,
+	nome";
+        //echo "<pre><code>{$sql}</code></pre>";
+        $candidati = $db->query($sql)->fetchAll();
+    } catch (Exception $e) {
+        echo "ECCEZIONE";
+        echo $e->getMessage();
+        $db = null;
+        throw $e;
+    }
+
+    return $candidati;
 }
 
 /**
@@ -601,7 +672,7 @@ function caricaCandidatiSceltaCasuale($classeId, $data, $predisposizioneId)
  * @param  mixed $nQuesitiPerArgomento
  * @return void
  */
-function salvaPredisposizioneProva($classeId, $grigliaId, $descrizione, $nQuesiti, $argomenti, $nQuesitiPerArgomento)
+function salvaPredisposizioneProva($classeId, $grigliaId, $descrizione, $peso, $nQuesiti, $argomenti, $nQuesitiPerArgomento)
 {
     global $db;
     if ($db == null) {
@@ -611,11 +682,48 @@ function salvaPredisposizioneProva($classeId, $grigliaId, $descrizione, $nQuesit
     $predisposizioneId = 0;
 
     try {
-        //$istat = $db->prepare($sql);
         $db->beginTransaction();
-        //$istat . execute(array($descrizione, $nQuesiti));
         // AGGIUNGERE GRIGLIA
-        $sql = "INSERT INTO PredisposizioneProva(classeId, grigliaId, descrizione, numeroQuesiti) VALUES ({$classeId},{$grigliaId}, '{$descrizione}', {$nQuesiti})";
+        $sql = "INSERT INTO PredisposizioneProva(classeId, grigliaId, peso, descrizione, numeroQuesiti) VALUES (?, ?, ?, ?, ?)";
+        $qry = $db->prepare($sql);
+        $qry->execute(array($classeId, $grigliaId, $peso, $descrizione, $nQuesiti));
+        $predisposizioneId = $db->lastInsertId();
+        $db->commit();
+        echo "Inserito predisposizioneId: {$predisposizioneId}<br>";
+        $db->beginTransaction();
+        $sql = "INSERT INTO ArgomentiProva (predisposizioneProvaId, argomentoId, numeroQuesiti) VALUES (?, ?, ?)";
+        $qry = $db->prepare($sql);
+        $argcount = count($argomenti);
+        for ($i = 0; $i < $argcount; $i++) {
+            if ($nQuesitiPerArgomento[$i] > 0) {
+                $qry->execute(array($predisposizioneId, $argomenti[$i], $nQuesitiPerArgomento[$i]));
+                $id = $db->lastInsertId();
+                echo "Inserito {$id}<br>";
+            }
+        }
+        $db->commit();
+    } catch (Exception $e) {
+        echo "ECCEZIONE<br>";
+        $db->rollback();
+        echo $e->getMessage();
+        $db = null;
+        throw $e;
+    }
+}
+
+function salvaProve($studenteId, $predisposizioneId, $data)
+{
+    global $db;
+    if ($db == null) {
+        apriConnessione();
+    }
+    //
+    $provaId = 0;
+
+    try {
+        $db->beginTransaction();
+        foreach ($studenteId as $s)
+            $sql = "INSERT INTO Prova(studenteId, predisposizioneProvaId, data) VALUES ({$s},{$predisposizioneId}, {$$data}";
         echo "{$sql}<br>";
         $db->query($sql);
         $predisposizioneId = $db->lastInsertId();

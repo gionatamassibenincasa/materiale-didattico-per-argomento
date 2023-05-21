@@ -2,7 +2,7 @@
 require_once 'database.php';
 
 // PREREQUISITI
-$parametriObbligatori = array('classeId', 'grigliaId', 'data', 'descrizione');
+$parametriObbligatori = array('classeId', 'grigliaId', 'data', 'descrizione', 'peso');
 if (!controllaParametri($_GET, $parametriObbligatori)) {
     header('Location: index.php');
     die();
@@ -20,6 +20,6 @@ if ($nQuesiti != $n) {
     echo "Errore!";
     die();
 }
-salvaPredisposizioneProva($classeId, $grigliaId, $descrizione, $nQuesiti, $argomenti, $nQuesitiPerArgomento);
+salvaPredisposizioneProva($classeId, $grigliaId, $descrizione, $peso, $nQuesiti, $argomenti, $nQuesitiPerArgomento);
 header('Location: ' . $_SERVER['HTTP_REFERER']);
 die();

@@ -37,6 +37,7 @@ include 'prologo.php';
                         <th scope="col">Data</th>
                         <th scope="col">Numero argomenti</th>
                         <th scope="col">Numero quesiti</th>
+                        <th scope="col">Peso</th>
                         <th scope="col">Seleziona</th>
                         <!--th scope="col">Elimina</th-->
                     </tr>
@@ -49,6 +50,7 @@ include 'prologo.php';
                             echo "\n\t\t\t\t\t\t\t\t<td>{$r['data']}</td>";
                             echo "\n\t\t\t\t\t\t\t\t<td>{$r['numeroArgomenti']}</td>";
                             echo "\n\t\t\t\t\t\t\t\t<td>{$r['numeroQuesiti']}</td>";
+                            echo "\n\t\t\t\t\t\t\t\t<td>{$r['peso']}</td>";
                             echo "\n\t\t\t\t\t\t\t\t<td><input type=\"radio\" name=\"predisposizioneId\" value=\"{$r['predisposizioneId']}\"></td>";
                             echo "\n\t\t\t\t\t\t\t</tr>\n";
                         }
@@ -71,6 +73,13 @@ include 'prologo.php';
         <input type="text" id="descrizione" name="descrizione" placeholder="Interrogazione sul capitolo..." required>
         <label for="descrizione">Numero di quesiti</label>
         <input type="number" id="nQuesiti" name="nQuesiti" min="1" max="10" required>
+        <label for="peso">Peso del voto nella media ponderata</label>
+        <select id="peso" name="peso"><?php
+                                        foreach ([0.25, 0.33, 0.5, 0.75, 1] as $p) {
+                                            echo "<option value=\"{$p}\">{$p}</option>";
+                                        }
+                                        ?>
+        </select>
         <label for="griglia">Griglia di valutazione</label>
         <select id="griglia" name="grigliaId"><?php
                                                 foreach ($griglie as $g) {

@@ -37,8 +37,9 @@ include 'prologo.php';
                 <h3>Interrogandi scelti dall'insegnante</h3>
             </hgroup>
             <form method="get" action="">
-                <input type="hidden" name="data" value="<?=$data?>">
-                <input type="hidden" name="classeId" value="<?=$classeId?>">
+                <input type="hidden" name="data" value="<?= $data ?>">
+                <input type="hidden" name="classeId" value="<?= $classeId ?>">
+                <input type="hidden" name="predisposizioneId" value="<?= $predisposizioneId ?>">
                 <figure>
                     <table role="grid">
                         <thead>
@@ -51,19 +52,20 @@ include 'prologo.php';
                         </thead>
                         <tbody>
                             <?php
-foreach ($righe as $r) {
-    echo "<tr>";
-    echo "<td><input role=\"switch\" type=\"checkbox\" name=\"studenteId[]\" value=\"{$r['studenteId']}\"/></td>";
-    echo "<td>{$r['cognome']}</td>";
-    echo "<td>{$r['nome']}</td>";
-    echo "</tr>";
-}
-?>
+                            foreach ($righe as $r) {
+                                echo "<tr>";
+                                echo "<td><input role=\"switch\" type=\"checkbox\" name=\"studenteId[]\" value=\"{$r['studenteId']}\"/></td>";
+                                echo "<td>{$r['cognome']}</td>";
+                                echo "<td>{$r['nome']}</td>";
+                                echo "<td>{$r['voti']}</td>";
+                                echo "</tr>";
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </figure>
                 <button onclick="salva()">Salva</button>
-                <button onclick="argomenti()">Predisponi il colloquio</button>
+                <button onclick="prova()">Gestione della prova</button>
             </form>
         </article>
     </div>
@@ -71,29 +73,16 @@ foreach ($righe as $r) {
 <script>
     function salva() {
         const f = document.getElementsByTagName('form')[0];
-        f.action = "salva_appello.php";
-        f.submit();
+        //f.action = "salva_candidati.php";
+        //f.submit();
     }
 
-    function argomenti() {
+    function prova() {
         const f = document.getElementsByTagName('form')[0];
-        f.action = "predisposizione.php";
-        if (confirm("Sicuro di aver salvato l'appello?"))
-            location.href = 'predisposizione.php';
+        f.action = "prova.php";
+        if (confirm("Sicuro di aver salvato i candidati?"))
+            location.href = 'prova.php';
     }
-    [<?=$e?>].forEach(id => {
-        srcId = "gm" + id;
-        dstId = "gi" + id;
-        const s = document.getElementById(srcId);
-        const d = document.getElementById(dstId);
-        s.addEventListener("click", () => {
-            if (s.checked) d.checked = false;
-        }, true);
-        d.addEventListener("click", () => {
-            if (d.checked) s.checked = false;
-        }, true);
-
-    });
 </script>
 <?php
 include 'epilogo.php';

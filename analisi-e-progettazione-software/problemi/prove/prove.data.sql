@@ -910,7 +910,8 @@ VALUES (1001014, 1),
     (1000469, 21),
     (1000469, 22),
     (1000469, 23),
-    (1000469, 24);
+    (1000469, 24),
+    (1001011, 24);
 INSERT INTO Quesito (quesitoId, argomentoId, quesito)
 VALUES (
         1,
@@ -2946,7 +2947,8 @@ VALUES (
         'Perché sono importanti le norme sull’accessibilità alle risorse informatiche?'
     );
 INSERT INTO Griglia (grigliaId, descrizione)
-VALUES (1, 'Griglia valutazione qualità database');
+VALUES (1, 'Griglia valutazione qualità database'),
+    (2, 'Griglia colloqui');
 INSERT INTO Indicatore (
         indicatoreId,
         grigliaId,
@@ -2995,6 +2997,27 @@ VALUES (
         'Appropriatezza del lessico',
         'I concetti devono fare riferimento al lessico settoriale e non devono essere scelti in modo casuale',
         0.5
+    ),
+    (
+        7,
+        2,
+        'Conoscenze',
+        'Misura la quantità e la qualità (pertinenza, coerenza e completezza) delle nozioni apprese',
+        4
+    ),
+    (
+        8,
+        2,
+        'Abilità',
+        'Misura la padronanza nell ’ uso del codice linguistico, ed espressivo, del lessico specifico della disciplina e l ’ organizzazione logica del discorso',
+        3
+    ),
+    (
+        9,
+        2,
+        'Competenza',
+        'Capacità di misura, analisi e interpretazione di dati e testi, di rielaborazione critica e di collegamento a livello disciplinare e interdisciplinare',
+        3
     );
 INSERT INTO Descrittore (
         descrittoreId,
@@ -3142,8 +3165,167 @@ VALUES (
         'Non appropriato',
         'La scelta dei termini è casuale',
         0
+    ),
+    (
+        21,
+        7,
+        'Livello 5',
+        'Conoscenze ampie, articolate ed usate in modo efficace, completo e pienamente rispondente alle richieste',
+        5
+    ),
+    (
+        22,
+        7,
+        'Livello 4',
+        'Conoscenze dei concetti fondamentali e sostanzialmente sicure che dimostrano un discreto approfondimento',
+        4
+    ),
+    (
+        23,
+        7,
+        'Livello 3',
+        'Conoscenze dei contenuti per grandi ambiti di riferimento nei loro elementi essenziali utilizzate per lo più in modo pertinente e schematico',
+        3
+    ),
+    (
+        24,
+        7,
+        'Livello 2',
+        'Conoscenze superficiali, incomplete e / o usate in modo schematico e non completamente pertinenti',
+        2
+    ),
+    (
+        25,
+        7,
+        'Livello 1',
+        'Conoscenze scarse, incoerenti e pressoché assenti',
+        1
+    ),
+    (
+        26,
+        8,
+        'Livello 5',
+        'Lo studente si esprime con sicurezza ed autonomia utilizzando in modo articolato i diversi codici linguistici.',
+        5
+    ),
+    (
+        27,
+        8,
+        'Livello 4',
+        'Lo studente si esprime in modo appropriato, argomenta i passaggi con una esposizione logica e con un uso corretto dei termini tecnici',
+        4
+    ),
+    (
+        28,
+        8,
+        'Livello 3',
+        'Il linguaggio è semplice, chiaro, ma non appropriato e tecnico',
+        3
+    ),
+    (
+        29,
+        8,
+        'Livello 2',
+        'Lo studente espone in modo sostanzialmente ordinato i contenuti di base, presentati non sempre in modo organico ed espressi in modo non appropriato e / o scorretto',
+        2
+    ),
+    (
+        30,
+        8,
+        'Livello 1',
+        'Lo studente si esprime in modo scorretto, disorganico ed impreciso',
+        1
+    ),
+    (
+        31,
+        9,
+        'Livello 5',
+        'Lo studente riesce ad operare in modo autonomo relazioni e confronti. Analizza con precisione ed inserisce elementi di valutazione personale caratterizzati anche da una sicura autonomia. Costruisce collegamenti di tipo interdisciplinare',
+        5
+    ),
+    (
+        32,
+        9,
+        'Livello 4',
+        'Lo studente organizza efficacemente i dati, opera collegamenti in modo corretto ed approfondisce i temi trattati in modo preciso',
+        4
+    ),
+    (
+        33,
+        9,
+        'Livello 3',
+        'Lo studente ordina i dati e coglie in modo semplice i nessi logici. Approfondisce le problematiche in modo essenziale e collega gli aspetti principali',
+        3
+    ),
+    (
+        34,
+        9,
+        'Livello 2',
+        'Lo studente non è in grado di organizzare coerentemente i dati e coglie solo parzialmente i nessi problematici, opera analisi e sintesi solo se guidato',
+        2
+    ),
+    (
+        35,
+        9,
+        'Livello 1',
+        'Lo studente non si orienta nella disciplina né in senso diacronico né in senso sincronico Confonde i dati essenziali con aspetti secondari e non effettua analisi e sintesi',
+        1
     );
 INSERT INTO Ritirato(studenteId, classeId, data)
 VALUES (1008655, 1001014, '2023-01-31'),
     (1008953, 1001011, '2022-11-01');
 COMMIT;
+INSERT INTO Assenza(studenteId, data)
+VALUES (1008672, '2023-05-20'),
+    (1008620, '2023-05-20'),
+    (1008605, '2023-05-20');
+INSERT INTO Giustificazione(studenteId, data, immotivata)
+VALUES (1008642, '2023-05-20', 0),
+    (1008663, '2023-05-20', 0),
+    (1008652, '2023-05-20', 1),
+    (1008632, '2023-05-20', 1);
+INSERT INTO PredisposizioneProva(
+        predisposizioneProvaId,
+        classeId,
+        grigliaId,
+        descrizione,
+        data,
+        peso,
+        numeroQuesiti
+    )
+VALUES (
+        1,
+        1001014,
+        1,
+        'Compito Flowgorithm',
+        '2023-05-19',
+        0.5,
+        7
+    ),
+    (
+        2,
+        1001011,
+        1,
+        'Interrogazione sugli aspetti giuridici della cybersicurezza',
+        '2023-04-20',
+        1,
+        3
+    ),
+    (
+        3,
+        1001011,
+        2,
+        'Quiz sugli aspetti giuridici della cybersicurezza',
+        '2023-04-30',
+        0.33,
+        10
+    ),
+    (
+        4,
+        1001011,
+        2,
+        'Interrogazione di recupero sugli aspetti giuridici della cybersicurezza',
+        '2023-05-10',
+        0.75,
+        4
+    );

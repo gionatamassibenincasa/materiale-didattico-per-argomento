@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS PredisposizioneProva (
     grigliaId INTEGER REFERENCES Griglia(grigliaId),
     descrizione TEXT NOT NULL,
     data TEXT NOT NULL CHECK(data IS date(data, '+0 days')) DEFAULT CURRENT_DATE,
+    peso REAL DEFAULT 1 CHECK (peso IN (0.25, 0.33, 0.5, 0.75, 1)),
     numeroQuesiti INTEGER CHECK (
         numeroQuesiti IS NULL
         OR numeroQuesiti BETWEEN 1 AND 10
@@ -131,13 +132,28 @@ CREATE TABLE Prova (
 );
 CREATE TABLE IF NOT EXISTS ValutazioneQuesito (
     provaId INTEGER NOT NULL REFERENCES Prova(provaId),
+    quesitoId INTEGER NOT NULL REFERENCES Quesito(quesitoId),
+    descrittoreId INTEGER NOT NULL REFERENCES Descrittore(descrittoreId),
+    note TEXT,
+    PRIMARY KEY (provaId, quesitoId),
+    CHECK (
+        descrittoreId IS NOT NULL
+        OR (
+            descrittoreId ISNULL
+            AND note IS NOT NULL
+        )
+    )
+);
+CREATE TABLE IF NOT EXISTS ValutazioneProva (
+    provaId INTEGER NOT NULL REFERENCES Prova(provaId),
     descrittoreId INTEGER NOT NULL REFERENCES Descrittore(descrittoreId),
     PRIMARY KEY (provaId, descrittoreId)
 );
 CREATE TABLE IF NOT EXISTS Verbale (
     provaId INTEGER NOT NULL REFERENCES Prova(provaId),
-    quesitoId INTEGER NOT NULL REFERENCES Quesito(quesitoId),
-    PRIMARY KEY (provaId, quesitoId)
+    voto REAL NOT NULL CHECK (round(voto * 2) - (voto * 2) < 0.01),
+    note TEXT,
+    PRIMARY KEY (provaId)
 );
 CREATE TABLE Competenza (
     competenzaId INTEGER PRIMARY KEY AUTOINCREMENT,
