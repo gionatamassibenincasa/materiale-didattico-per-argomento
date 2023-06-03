@@ -881,7 +881,7 @@ VALUES (1, 'Processi aziendali e sistema informatico'),
     ),
     (21, 'Informatica mobile'),
     (22, 'Sistemi ERP e CRM'),
-    (23, 'Analisi dei dati aziendali e big data'),
+    (23, 'Analisi dei dati aziendali e big giorno'),
     (
         24,
         'Aspetti giuridici delle reti e della sicurezza'
@@ -972,13 +972,13 @@ VALUES (
     (
         13,
         1,
-        'Perché è importante estrarre informazioni dai database aziendali?'
+        'Perché è importante estrarre informazioni dai giornobase aziendali?'
     ),
-    (14, 1, 'Spiega il significato di data mining.'),
+    (14, 1, 'Spiega il significato di giorno mining.'),
     (
         15,
         1,
-        'Quali sono gli aspetti pratici del data mining?'
+        'Quali sono gli aspetti pratici del giorno mining?'
     ),
     (
         16,
@@ -2055,7 +2055,7 @@ VALUES (
     (
         264,
         14,
-        'Spiega il significato dei termini chiave, chiave candidata, determinante.'
+        'Spiega il significato dei termini chiave, chiave candigiorno, determinante.'
     ),
     (
         265,
@@ -2227,17 +2227,17 @@ VALUES (
     (
         300,
         16,
-        'Quali sono i comandi che realizzano la connessione ai database MySQL in PHP?'
+        'Quali sono i comandi che realizzano la connessione ai giornobase MySQL in PHP?'
     ),
     (
         301,
         16,
-        'Come si rappresentano le operazioni di manipolazione sul database in rete?'
+        'Come si rappresentano le operazioni di manipolazione sul giornobase in rete?'
     ),
     (
         302,
         16,
-        'Come si utilizza il comando Select per fare interrogazioni al database in rete?'
+        'Come si utilizza il comando Select per fare interrogazioni al giornobase in rete?'
     ),
     (
         303,
@@ -2816,8 +2816,12 @@ VALUES (
         22,
         'Che cosa significa controllare la pipeline della gestione dei clienti?'
     ),
-    (448, 23, 'Che cosa si intende con data mining?'),
-    (449, 23, 'Che cos’è un Data Warehouse?'),
+    (
+        448,
+        23,
+        'Che cosa si intende con giorno mining?'
+    ),
+    (449, 23, 'Che cos’è un giorno Warehouse?'),
     (
         450,
         23,
@@ -2868,12 +2872,12 @@ VALUES (
     (
         461,
         23,
-        'Spiega il significato di big data in generale.'
+        'Spiega il significato di big giorno in generale.'
     ),
     (
         462,
         23,
-        'Fornisci alcuni esempi di applicazione dei big data.'
+        'Fornisci alcuni esempi di applicazione dei big giorno.'
     ),
     (
         463,
@@ -2947,7 +2951,7 @@ VALUES (
         'Perché sono importanti le norme sull’accessibilità alle risorse informatiche?'
     );
 INSERT INTO Griglia (grigliaId, descrizione)
-VALUES (1, 'Griglia valutazione qualità database'),
+VALUES (1, 'Griglia valutazione qualità giornobase'),
     (2, 'Griglia colloqui');
 INSERT INTO Indicatore (
         indicatoreId,
@@ -3271,25 +3275,26 @@ VALUES (
         'Lo studente non si orienta nella disciplina né in senso diacronico né in senso sincronico Confonde i dati essenziali con aspetti secondari e non effettua analisi e sintesi',
         1
     );
-INSERT INTO Ritirato(studenteId, classeId, data)
+INSERT INTO Ritirato(studenteId, classeId, giorno)
 VALUES (1008655, 1001014, '2023-01-31'),
     (1008953, 1001011, '2022-11-01');
 COMMIT;
-INSERT INTO Assenza(studenteId, data)
-VALUES (1008672, '2023-05-20'),
-    (1008620, '2023-05-20'),
-    (1008605, '2023-05-20');
-INSERT INTO Giustificazione(studenteId, data, immotivata)
-VALUES (1008642, '2023-05-20', 0),
-    (1008663, '2023-05-20', 0),
-    (1008652, '2023-05-20', 1),
-    (1008632, '2023-05-20', 1);
+INSERT INTO Assenza(studenteId, giorno, classeId)
+VALUES (1008672, '2023-06-02', 1001011),
+    (1008620, '2023-06-02', 1001011),
+    (1008605, '2023-06-02', 1001011);
+INSERT INTO Giustificazione(studenteId, giorno, immotivata, classeId)
+VALUES (1008642, '2023-06-02', 0, 1001011),
+    (1008663, '2023-06-02', 0, 1001011),
+    (1008652, '2023-06-01', 1, 1001011),
+    (1008652, '2023-06-02', 1, 1001011),
+    (1008632, '2023-06-02', 1, 1001011);
 INSERT INTO PredisposizioneProva(
         predisposizioneProvaId,
         classeId,
         grigliaId,
         descrizione,
-        data,
+        giorno,
         peso,
         numeroQuesiti
     )

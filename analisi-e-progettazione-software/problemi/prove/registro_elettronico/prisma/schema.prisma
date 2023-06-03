@@ -1,0 +1,249 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./prove.db"
+}
+
+model Abilita {
+  abilitaId       Int        @id @default(autoincrement())
+  competenzaId    Int
+  abilita         String
+  obiettivoMinino Int
+  Competenza      Competenza @relation(fields: [competenzaId], references: [competenzaId], onDelete: Cascade)
+}
+
+model AnnoScolastico {
+  annoScolasticoId   Int                  @id @default(autoincrement())
+  testo              String               @unique(map: "sqlite_autoindex_AnnoScolastico_1")
+  inizio             String               @unique(map: "sqlite_autoindex_AnnoScolastico_2")
+  fine               String               @unique(map: "sqlite_autoindex_AnnoScolastico_3")
+  Classe             Classe[]
+  PeriodoValutazione PeriodoValutazione[]
+}
+
+model ArgomentiProva {
+  predisposizioneProvaId Int
+  argomentoId            Int
+  numeroQuesiti          Int?
+  probabilita            Int?
+  Argomento              Argomento            @relation(fields: [argomentoId], references: [argomentoId], onDelete: Cascade)
+  PredisposizioneProva   PredisposizioneProva @relation(fields: [predisposizioneProvaId], references: [predisposizioneProvaId], onDelete: Cascade)
+
+  @@id([predisposizioneProvaId, argomentoId])
+}
+
+model Argomento {
+  argomentoId    Int              @id @default(autoincrement())
+  argomento      String
+  ArgomentiProva ArgomentiProva[]
+  Programmazione Programmazione[]
+  Quesito        Quesito[]
+  Traguardo      Traguardo[]
+}
+
+model Assenza {
+  studenteId Int
+  classeId   Int
+  giorno     String
+  Registro   Registro @relation(fields: [studenteId, classeId], references: [studenteId, classeId], onDelete: Cascade)
+
+  @@id([studenteId, classeId, giorno])
+}
+
+model Classe {
+  classeId             Int                    @id @default(autoincrement())
+  annoScolasticoId     Int
+  anno                 Int?
+  sezione              String?
+  indirizzo            String?
+  articolazione        String?
+  maxGiustificazioni   Int?                   @default(2)
+  AnnoScolastico       AnnoScolastico         @relation(fields: [annoScolasticoId], references: [annoScolasticoId], onDelete: Cascade)
+  PredisposizioneProva PredisposizioneProva[]
+  Programmazione       Programmazione[]
+  Registro             Registro[]
+}
+
+model Competenza {
+  competenzaId Int          @id @default(autoincrement())
+  competenza   String
+  cittadinanza Int
+  Abilita      Abilita[]
+  Conoscenza   Conoscenza[]
+  Traguardo    Traguardo[]
+}
+
+model Conoscenza {
+  conoscenzaId    Int        @id @default(autoincrement())
+  competenzaId    Int
+  conoscenza      String
+  obiettivoMinino Int
+  Competenza      Competenza @relation(fields: [competenzaId], references: [competenzaId], onDelete: Cascade)
+}
+
+model Descrittore {
+  descrittoreId      Int                  @id @default(autoincrement())
+  indicatoreId       Int
+  descrittore        String
+  descrizione        String?
+  livello            Int?
+  Indicatore         Indicatore           @relation(fields: [indicatoreId], references: [indicatoreId], onDelete: Cascade)
+  ValutazioneProva   ValutazioneProva[]
+  ValutazioneQuesito ValutazioneQuesito[]
+}
+
+model Giustificazione {
+  studenteId Int
+  classeId   Int
+  giorno     String
+  immotivata Int?
+  Registro   Registro @relation(fields: [studenteId, classeId], references: [studenteId, classeId], onDelete: Cascade)
+
+  @@id([studenteId, classeId, giorno])
+}
+
+model Griglia {
+  grigliaId            Int                    @id @default(autoincrement())
+  descrizione          String?
+  Indicatore           Indicatore[]
+  PredisposizioneProva PredisposizioneProva[]
+}
+
+model Indicatore {
+  indicatoreId Int           @id @default(autoincrement())
+  grigliaId    Int
+  indicatore   String?
+  descrizione  String?
+  peso         Float?
+  Descrittore  Descrittore[]
+  Griglia      Griglia       @relation(fields: [grigliaId], references: [grigliaId], onDelete: Cascade)
+}
+
+model PeriodoValutazione {
+  periodoValutazioneId Int            @id @default(autoincrement())
+  annoScolasticoId     Int
+  descrizione          String
+  inizio               String         @unique(map: "sqlite_autoindex_PeriodoValutazione_1")
+  fine                 String         @unique(map: "sqlite_autoindex_PeriodoValutazione_2")
+  AnnoScolastico       AnnoScolastico @relation(fields: [annoScolasticoId], references: [annoScolasticoId], onDelete: Cascade)
+}
+
+model PredisposizioneProva {
+  predisposizioneProvaId Int              @id @default(autoincrement())
+  classeId               Int
+  grigliaId              Int?
+  descrizione            String
+  giorno                 String           @default("CURRENT_DATE")
+  peso                   Float?           @default(1)
+  numeroQuesiti          Int?
+  ArgomentiProva         ArgomentiProva[]
+  Griglia                Griglia?         @relation(fields: [grigliaId], references: [grigliaId], onDelete: Cascade)
+  Classe                 Classe           @relation(fields: [classeId], references: [classeId], onDelete: Cascade)
+  Prova                  Prova[]
+}
+
+model Programmazione {
+  classeId    Int
+  argomentoId Int
+  Argomento   Argomento @relation(fields: [argomentoId], references: [argomentoId], onDelete: Cascade)
+  Classe      Classe    @relation(fields: [classeId], references: [classeId], onDelete: Cascade)
+
+  @@id([classeId, argomentoId])
+}
+
+model Prova {
+  provaId                Int                  @id @default(autoincrement())
+  studenteId             Int
+  predisposizioneProvaId Int
+  giorno                 String
+  PredisposizioneProva   PredisposizioneProva @relation(fields: [predisposizioneProvaId], references: [predisposizioneProvaId], onDelete: Cascade)
+  Studente               Studente             @relation(fields: [studenteId], references: [studenteId], onDelete: Cascade)
+  ValutazioneProva       ValutazioneProva[]
+  ValutazioneQuesito     ValutazioneQuesito[]
+  Verbale                Verbale?
+}
+
+model Quesito {
+  quesitoId          Int                  @id @default(autoincrement())
+  argomentoId        Int
+  quesito            String
+  Argomento          Argomento            @relation(fields: [argomentoId], references: [argomentoId], onDelete: Cascade)
+  ValutazioneQuesito ValutazioneQuesito[]
+}
+
+model Registro {
+  studenteId      Int
+  classeId        Int
+  Assenza         Assenza[]
+  Giustificazione Giustificazione[]
+  Classe          Classe            @relation(fields: [classeId], references: [classeId], onDelete: Cascade)
+  Studente        Studente          @relation(fields: [studenteId], references: [studenteId], onDelete: Cascade)
+  Ritirato        Ritirato[]
+
+  @@id([studenteId, classeId])
+}
+
+model Ritirato {
+  studenteId Int
+  classeId   Int
+  giorno     String
+  Registro   Registro @relation(fields: [studenteId, classeId], references: [studenteId, classeId], onDelete: Cascade)
+
+  @@id([studenteId, classeId, giorno])
+}
+
+model Studente {
+  studenteId Int        @id @default(autoincrement())
+  nome       String
+  cognome    String
+  sesso      String?
+  email      String?
+  Prova      Prova[]
+  Registro   Registro[]
+}
+
+model Traguardo {
+  argomentoId  Int
+  competenzaId Int
+  Competenza   Competenza @relation(fields: [competenzaId], references: [competenzaId], onDelete: Cascade)
+  Argomento    Argomento  @relation(fields: [argomentoId], references: [argomentoId], onDelete: Cascade)
+
+  @@id([argomentoId, competenzaId])
+}
+
+model ValutazioneProva {
+  provaId       Int
+  descrittoreId Int
+  Descrittore   Descrittore @relation(fields: [descrittoreId], references: [descrittoreId], onDelete: Cascade)
+  Prova         Prova       @relation(fields: [provaId], references: [provaId], onDelete: Cascade)
+
+  @@id([provaId, descrittoreId])
+}
+
+model ValutazioneQuesito {
+  provaId       Int
+  quesitoId     Int
+  descrittoreId Int
+  note          String?
+  Descrittore   Descrittore @relation(fields: [descrittoreId], references: [descrittoreId], onDelete: Cascade)
+  Quesito       Quesito     @relation(fields: [quesitoId], references: [quesitoId], onDelete: Cascade)
+  Prova         Prova       @relation(fields: [provaId], references: [provaId], onDelete: Cascade)
+
+  @@id([provaId, quesitoId])
+}
+
+model Verbale {
+  provaId Int     @id @default(autoincrement())
+  voto    Float
+  note    String?
+  Prova   Prova   @relation(fields: [provaId], references: [provaId], onDelete: Cascade)
+}
+
+view vista_classi {
+  classeId Int             @id
+  classe   Unsupported("")
+}
