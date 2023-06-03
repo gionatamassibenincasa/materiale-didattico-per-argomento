@@ -245,5 +245,5 @@ model Verbale {
 
 view vista_classi {
   classeId Int             @id
-  classe   Unsupported("")
+  classe   String
 }

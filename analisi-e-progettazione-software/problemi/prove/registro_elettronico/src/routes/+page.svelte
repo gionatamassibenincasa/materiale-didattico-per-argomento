@@ -26,8 +26,10 @@
 
 <div class="grid">
 	<div>
-		<form>
-			<label for="data">Data:<input type="date" id="data" name="data" bind:value={giorno} /></label>
+		<form method="get" action="appello">
+			<label for="giorno"
+				>Data:<input type="date" id="giorno" name="giorno" bind:value={giorno} /></label
+			>
 
 			<label for="classe"
 				>Classe:
@@ -37,7 +39,7 @@
 					{/each}
 				</select>
 			</label>
-			<button on:click={appello}>Appello</button>
+			<button type="submit">Appello</button>
 		</form>
 	</div>
 </div>

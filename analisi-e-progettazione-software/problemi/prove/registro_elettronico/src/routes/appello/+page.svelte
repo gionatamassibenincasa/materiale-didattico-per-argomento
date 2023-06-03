@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Appello } from '../../../api/appello/[classeId]/[giorno]/+server';
+	import type { Appello } from '../../../api/appello/+server';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
 

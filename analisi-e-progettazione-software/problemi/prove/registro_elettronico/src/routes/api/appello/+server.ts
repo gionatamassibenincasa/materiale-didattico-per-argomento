@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import prisma from '$lib/prisma';
-import { json } from '@sveltejs/kit';
+import { error, fail, json, redirect, resolvePath, text } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type {
 	Registro,
@@ -29,9 +29,19 @@ type Appello = {
 
 export type { Appello, TipoGiustificazione };
 
-export const GET: RequestHandler = async ({ params: { classeId, giorno } }) => {
+export const GET: RequestHandler = async ({ request, params, url }) => {
+	//console.log('ENDPOINT /api/appello', url, params, request);
+	const classeId = url.searchParams.get('classeId');
+	if (classeId === null) {
+		throw error(412, 'Manca il parametro classeId');
+	}
 	const id: number = parseInt(classeId);
-	// console.log('Chiamata API GET api/appello/' + classeId + '/' + giorno);
+	const giorno = url.searchParams.get('giorno');
+	if (giorno === null) {
+		throw error(412, 'Manca il parametro giorno');
+	}
+
+	console.log('Chiamata API GET api/appello?classeId=' + id + '&giorno=' + giorno);
 
 	const studentiIscritti: Registro[] = await prisma.registro.findMany({
 		include: {
