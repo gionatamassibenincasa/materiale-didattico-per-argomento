@@ -19,6 +19,9 @@
 		"@sveltejs/kit": "^1.5.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
+		"carbon-components-svelte": "^0.75.1",
+		"carbon-icons-svelte": "^11.4.0",
+		"carbon-preprocess-svelte": "^0.9.1",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.26.0",
@@ -35,6 +38,7 @@
 	"type": "module",
 	"dependencies": {
 		"@picocss/pico": "^1.5.10",
-		"@prisma/client": "4.15.0"
+		"@prisma/client": "4.15.0",
+		"flatpickr": "^4.6.13"
 	}
 }

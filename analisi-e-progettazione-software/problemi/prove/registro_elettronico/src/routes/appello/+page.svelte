@@ -1,7 +1,21 @@
 <script lang="ts">
 	import type { Appello } from '../../../api/appello/+server';
+	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
+	import {
+		Form,
+		Button,
+		Table,
+		TableContainer,
+		TableHeader,
+		TableBody,
+		TableRow,
+		TableHead,
+		TableCell,
+		Toggle
+	} from 'carbon-components-svelte';
+	import RigaStudente from './RigaStudente.svelte';
 
 	export let data: PageData;
 	let a: Appello[];
@@ -9,181 +23,46 @@
 	let giorno: string;
 	$: {
 		a = data.appello;
-		classeId = parseInt(data.classeId);
-		giorno = data.giorno;
-	}
-
-	const giusMotArrayName = 'giustMot[]',
-		giusImmotArrayName = 'giustImm[]';
-
-	async function toggleAssenza(evt: Event) {
-		const src = evt.target as HTMLInputElement;
-		if (src == null) return;
-		const value: string = src.value || '';
-		const name: string = src.name || '';
-		const new_status = src.checked;
-
-		if (new_status) {
-			console.log('INSERT');
-			await (
-				await fetch(`/api/assenza`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ studenteId: value, classeId: classeId, giorno: giorno })
-				})
-			).json();
-		} else {
-			await (
-				await fetch(`/api/assenza`, {
-					method: 'DELETE',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ studenteId: value, classeId: classeId, giorno: giorno })
-				})
-			).json();
-		}
-	}
-
-	async function toggleAltraGiustificazione(evt: Event) {
-		const findFirstParentOfTag = (elem: HTMLElement, tag: string): HTMLElement | null => {
-			let p: HTMLElement | null = elem.parentElement;
-			while (p !== null) {
-				if (p.tagName === tag) return p;
-				p = p.parentElement;
-			}
-			return null;
-		};
-		const src = evt.target as HTMLInputElement;
-		if (src == null) return;
-		const value: string = src.value || '';
-		const name: string = src.name || '';
-		const new_status = src.checked;
-		if (new_status === false) {
-			// TODO cancella giustificazione
-			console.log(
-				`Da giustificato a non. DELETE FROM Giustificazione WHEN studenteId = ${value} AND classe = ${classeId} AND giorno = '${giorno}'`
-			);
-			await (
-				await fetch(`/api/giustificazione`, {
-					method: 'DELETE',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ studenteId: value, classeId: classeId, giorno: giorno })
-				})
-			).json();
-
-			return;
-		}
-		const tr = findFirstParentOfTag(src, 'TR') as HTMLTableRowElement;
-		if (tr == null) return;
-		const dst = (
-			name === giusMotArrayName
-				? tr.querySelector(`input[name="${giusImmotArrayName}"]`)
-				: tr.querySelector(`input[name="${giusMotArrayName}"]`)
-		) as HTMLInputElement;
-		const consumo: number = name === giusMotArrayName ? 0 : 1;
-		if (dst.checked) {
-			// TODO aggiorna tipo giustificazione
-			console.log(
-				`Aggiorna tipo. UPDATE Giustificazione SET immotivata = ${consumo} WHEN studenteId = ${value} AND classe = ${classeId} AND giorno = '${giorno}'`
-			);
-			await fetch(`/api/giustificazione`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					studenteId: value,
-					classeId: classeId,
-					giorno: giorno,
-					immotivata: consumo
-				})
-			});
-			dst.checked = false;
-		} else {
-			// TODO inserisci giustificazione
-			console.log(
-				`Inserisci. INSERT INTO Giustificazione VALUES (${value}, ${classeId}, ${giorno}, ${consumo})`
-			);
-			await fetch(`/api/giustificazione`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					studenteId: value,
-					classeId: classeId,
-					giorno: giorno,
-					immotivata: consumo
-				})
-			});
-		}
+		classeId = parseInt($page.url.searchParams.get('classeId')) || 0;
+		giorno = $page.url.searchParams.get('giorno') || '0000-01-01';
 	}
 </script>
 
 <h1>Appello</h1>
-<form method="get" action="">
-	<figure>
-		<table class="striped">
-			<thead>
-				<tr>
-					<th scope="col">Pos.</th>
-					<th scope="col">Cognome</th>
-					<th scope="col">Nome</th>
-					<th scope="col">Assente</th>
-					<th scope="col">G residue</th>
-					<th scope="col">Giust. motivata</th>
-					<th scope="col">Giust.</th>
-				</tr>
-			</thead>
-			<tbody>
+<Form method="get" action="prova/predisposizione" on:submit>
+	<input type="hidden" name="giorno" value={$page.url.searchParams.get('giorno')} />
+	<input type="hidden" name="classeId" value={$page.url.searchParams.get('classeId')} />
+
+	<TableContainer>
+		<Table zebra>
+			<TableHead>
+				<TableRow>
+					<TableHeader scope="col">Pos.</TableHeader>
+					<TableHeader scope="col">Cognome</TableHeader>
+					<TableHeader scope="col">Nome</TableHeader>
+					<TableHeader scope="col">Assente</TableHeader>
+					<TableHeader scope="col">G residue</TableHeader>
+					<TableHeader scope="col">Giust. motivata</TableHeader>
+					<TableHeader scope="col">Giust.</TableHeader>
+				</TableRow>
+			</TableHead>
+			<TableBody>
 				{#each a as s, i}
-					<tr>
-						<td>{i + 1}</td>
-						<td>{s.cognome}</td>
-						<td>{s.nome}</td>
-						<td
-							><input
-								role="switch"
-								type="checkbox"
-								name="assenza[]"
-								value={s.studenteId}
-								checked={s.assenza}
-								on:change={toggleAssenza}
-							/></td
-						>
-						<td>{s.residuo}</td>
-						<td
-							><input
-								role="switch"
-								type="checkbox"
-								name={giusMotArrayName}
-								value={s.studenteId}
-								checked={s.giustificazione !== null && s.giustificazione == 0}
-								disabled={s.assenza}
-								on:change={toggleAltraGiustificazione}
-							/></td
-						>
-						<td
-							><input
-								role="switch"
-								type="checkbox"
-								name={giusImmotArrayName}
-								value={s.studenteId}
-								checked={s.giustificazione !== null && s.giustificazione == 1}
-								disabled={s.assenza || s.residuo <= 0}
-								on:change={toggleAltraGiustificazione}
-							/></td
-						>
-					</tr>
+					<RigaStudente
+						studenteId={s.studenteId}
+						{classeId}
+						{giorno}
+						pos={i + 1}
+						cognome={s.cognome}
+						nome={s.nome}
+						assenza={s.assenza}
+						giustificazioneDovuta={s.giustificazione !== null && s.giustificazione == 0}
+						giustificazioneAccordata={s.giustificazione !== null && s.giustificazione == 1}
+						residuoGiustificazioni={s.residuo}
+					/>
 				{/each}
-			</tbody>
-		</table>
-	</figure>
-	<input type="button" id="salva-btn" value="Salva" />
-	<input type="button" id="predisponi-btn" value="Predisponi la prova" class="secondary" />
-</form>
+			</TableBody>
+		</Table>
+	</TableContainer>
+	<Button type="submit">Predisponi la prova</Button>
+</Form>
