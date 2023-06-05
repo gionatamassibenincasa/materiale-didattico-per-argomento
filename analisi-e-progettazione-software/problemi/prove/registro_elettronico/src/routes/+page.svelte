@@ -12,6 +12,7 @@
 		SelectItem
 	} from 'carbon-components-svelte';
 	import { Italian } from 'flatpickr/dist/l10n/it.js';
+	import DataInspector from '$lib/components/DataInspector.svelte';
 	/**
 	 * Specify the locale
 	 * @type {import("flatpickr/dist/types/locale").CustomLocale | import("flatpickr/dist/types/locale").key}
@@ -58,3 +59,5 @@
 	</Select>
 	<Button kind="primary" tabIndex={0} type="submit">Appello</Button>
 </Form>
+
+<DataInspector {data} />

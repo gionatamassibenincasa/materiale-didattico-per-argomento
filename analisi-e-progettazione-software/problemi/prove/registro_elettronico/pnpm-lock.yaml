@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@ibm/plex':
+    specifier: ^6.3.0
+    version: 6.3.0
   '@picocss/pico':
     specifier: ^1.5.10
     version: 1.5.10
@@ -333,6 +336,10 @@ packages:
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
+
+  /@ibm/plex@6.3.0:
+    resolution: {integrity: sha512-kb1ATGXrFu/gF2NZY40OlRUAEWCcrq9mIEYkuWqXUPaC6Zrb7iA9wQYTkJdAPP+V6ySfp7NLAyzAnK9c5k90Sg==}
+    dev: false
 
   /@jridgewell/resolve-uri@3.1.0:
     resolution: {integrity: sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==}

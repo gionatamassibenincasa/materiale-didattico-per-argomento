@@ -1,3 +1,4 @@
+/** @type {import('./$types').PageServerLoad} */
 export const load: PageServerLoad = async ({ fetch, url }) => {
 	const classeId = url.searchParams.get('classeId') || '0';
 	const giorno = url.searchParams.get('giorno') || '0000-01-01';

@@ -881,7 +881,7 @@ VALUES (1, 'Processi aziendali e sistema informatico'),
     ),
     (21, 'Informatica mobile'),
     (22, 'Sistemi ERP e CRM'),
-    (23, 'Analisi dei dati aziendali e big giorno'),
+    (23, 'Analisi dei dati aziendali e big data'),
     (
         24,
         'Aspetti giuridici delle reti e della sicurezza'
@@ -972,13 +972,13 @@ VALUES (
     (
         13,
         1,
-        'Perché è importante estrarre informazioni dai giornobase aziendali?'
+        'Perché è importante estrarre informazioni dai database aziendali?'
     ),
-    (14, 1, 'Spiega il significato di giorno mining.'),
+    (14, 1, 'Spiega il significato di data mining.'),
     (
         15,
         1,
-        'Quali sono gli aspetti pratici del giorno mining?'
+        'Quali sono gli aspetti pratici del data mining?'
     ),
     (
         16,
@@ -2055,7 +2055,7 @@ VALUES (
     (
         264,
         14,
-        'Spiega il significato dei termini chiave, chiave candigiorno, determinante.'
+        'Spiega il significato dei termini chiave, chiave candidata, determinante.'
     ),
     (
         265,
@@ -2227,17 +2227,17 @@ VALUES (
     (
         300,
         16,
-        'Quali sono i comandi che realizzano la connessione ai giornobase MySQL in PHP?'
+        'Quali sono i comandi che realizzano la connessione ai database MySQL in PHP?'
     ),
     (
         301,
         16,
-        'Come si rappresentano le operazioni di manipolazione sul giornobase in rete?'
+        'Come si rappresentano le operazioni di manipolazione sul database in rete?'
     ),
     (
         302,
         16,
-        'Come si utilizza il comando Select per fare interrogazioni al giornobase in rete?'
+        'Come si utilizza il comando Select per fare interrogazioni al database in rete?'
     ),
     (
         303,
@@ -2819,9 +2819,9 @@ VALUES (
     (
         448,
         23,
-        'Che cosa si intende con giorno mining?'
+        'Che cosa si intende con data mining?'
     ),
-    (449, 23, 'Che cos’è un giorno Warehouse?'),
+    (449, 23, 'Che cos’è un data Warehouse?'),
     (
         450,
         23,
@@ -2872,12 +2872,12 @@ VALUES (
     (
         461,
         23,
-        'Spiega il significato di big giorno in generale.'
+        'Spiega il significato di big data in generale.'
     ),
     (
         462,
         23,
-        'Fornisci alcuni esempi di applicazione dei big giorno.'
+        'Fornisci alcuni esempi di applicazione dei big data.'
     ),
     (
         463,
@@ -2951,7 +2951,7 @@ VALUES (
         'Perché sono importanti le norme sull’accessibilità alle risorse informatiche?'
     );
 INSERT INTO Griglia (grigliaId, descrizione)
-VALUES (1, 'Griglia valutazione qualità giornobase'),
+VALUES (1, 'Griglia valutazione qualità database'),
     (2, 'Griglia colloqui');
 INSERT INTO Indicatore (
         indicatoreId,

@@ -11,11 +11,11 @@
 		TableHeader,
 		TableBody,
 		TableRow,
-		TableHead,
-		TableCell,
-		Toggle
+		TableHead
 	} from 'carbon-components-svelte';
 	import RigaStudente from './RigaStudente.svelte';
+
+	import DataInspector from '$lib/components/DataInspector.svelte';
 
 	export let data: PageData;
 	let a: Appello[];
@@ -66,3 +66,5 @@
 	</TableContainer>
 	<Button type="submit">Predisponi la prova</Button>
 </Form>
+
+<DataInspector {data} />

@@ -19,7 +19,8 @@
 		Grid,
 		Row,
 		Column,
-		Theme
+		Theme,
+		LocalStorage
 	} from 'carbon-components-svelte';
 	//import SettingsAdjust from 'carbon-icons-svelte/lib/SettingsAdjust.svelte';
 	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
@@ -39,6 +40,17 @@
 		theme = themeAlternatives[(i + 1) % themes];
 	}
 </script>
+
+<LocalStorage
+	key="__carbon-theme"
+	bind:value={theme}
+	on:save={() => {
+		console.log(`Salvataggio LS del tema ${theme}`);
+	}}
+	on:update={({ detail }) => {
+		console.log(`Lettura LS del tema ${theme}`, detail);
+	}}
+/>
 
 <Theme bind:theme persist persistKey="__carbon-theme" />
 

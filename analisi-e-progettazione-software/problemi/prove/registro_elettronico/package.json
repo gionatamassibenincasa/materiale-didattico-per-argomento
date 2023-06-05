@@ -37,6 +37,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@ibm/plex": "^6.3.0",
 		"@picocss/pico": "^1.5.10",
 		"@prisma/client": "4.15.0",
 		"flatpickr": "^4.6.13"
