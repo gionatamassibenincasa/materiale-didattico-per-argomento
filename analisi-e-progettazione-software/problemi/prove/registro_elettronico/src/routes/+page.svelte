@@ -35,7 +35,7 @@
 		dateFormat: string = 'd/m/Y',
 		giornoVisualizzato: string = [day, month, year].join('/'),
 		giorno: string,
-		classeId: number | null = null;
+		classeId: number = parseInt(data.classi[0].classeId);
 
 	$: {
 		try {
@@ -44,15 +44,17 @@
 		} catch (error) {
 			console.log(error);
 		}
+
+		console.log('classeId: ', classeId);
 	}
 </script>
 
-<Form method="get" action="appello" on:submit>
-	<input name="giorno" type="hidden" value={giorno} />
+<Form method="get" action={`/classi/${classeId}/appello/${giorno}`} on:submit>
+	<input type="hidden" value={giorno} />
 	<DatePicker bind:value={giornoVisualizzato} datePickerType="single" locale="it" {dateFormat}>
 		<DatePickerInput labelText="Data" helperText="Esempio: 25/12/1990" placeholder="gg/mm/aaaa" />
 	</DatePicker>
-	<Select name="classeId" bind:value={classeId} labelText="Classe">
+	<Select labelText="Classe" on:change={(e) => (classeId = parseInt(e.target.value))}>
 		{#each data.classi as c}
 			<SelectItem value={c.classeId} text={c.classe} />
 		{/each}

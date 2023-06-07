@@ -3,12 +3,12 @@ import { json } from '@sveltejs/kit';
 
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }) => {
-	const params = await request.json();
-	const sId = parseInt(params.studenteId);
-	const cId = parseInt(params.classeId);
-	const giorno = params.giorno;
-	const immotivata = parseInt(params.immotivata);
+export const POST: RequestHandler = async ({ params, request }) => {
+	const reqParams = await request.json();
+	const sId = parseInt(reqParams.studenteId);
+	const cId = parseInt(params['classeId']);
+	const giorno = params['giorno'];
+	const immotivata = parseInt(reqParams.immotivata);
 
 	const giustificazioneInserita = await prisma.giustificazione.create({
 		data: {

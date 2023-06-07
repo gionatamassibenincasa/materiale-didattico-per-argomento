@@ -15,15 +15,15 @@
 		peso: number;
 
 	function modifica() {
-		goto(`predisposizione/modifica/${predisposizioneProvaId}`);
+		goto(`predisposizione/modifica/${predisposizioneProvaId}?classeId=${classeId}`);
 	}
 	function elimina() {
 		// Chiama API con predisposizioneProvaId
 		// /api/predisposizione/[id]
-		goto(`predisposizione/elimina/?classeId=${classeId}`);
+		goto(`predisposizione/elimina/${predisposizioneProvaId}`);
 	}
 	function procedi() {
-		goto(`predisposizione/modifica/?classeId=${classeId}`);
+		goto(`predisposizione/modifica/${predisposizioneProvaId}`);
 	}
 </script>
 

@@ -23,15 +23,13 @@
 			// Controlla il db
 			console.log(`INSERT - Assenza (${studenteId}, ${classeId}, ${giorno})`);
 			const esito = await (
-				await fetch(`/api/assenza`, {
+				await fetch(`/api/classi/${classeId}/appello/${giorno}/assenze`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						studenteId: studenteId,
-						classeId: classeId,
-						giorno: giorno
+						studenteId: studenteId
 					})
 				})
 			).json();
@@ -39,7 +37,7 @@
 		} else {
 			console.log(`DELETE - Assenza (${studenteId}, ${classeId}, ${giorno})`);
 			const esito = await (
-				await fetch(`/api/assenza`, {
+				await fetch(`/api/classi/${classeId}/appello/${giorno}/assenze`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json'
@@ -67,7 +65,7 @@
 				`DELETE FROM Giustificazione WHEN studenteId = ${studenteId} AND classe = ${classeId} AND giorno = '${giorno}'`
 			);
 			const esito = await (
-				await fetch(`/api/giustificazione`, {
+				await fetch(`/api/classi/${classeId}/appello/${giorno}/giustificazioni`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json'
@@ -86,7 +84,7 @@
 			console.log(
 				`UPDATE Giustificazione SET immotivata = ${sorgente} WHEN studenteId = ${studenteId} AND classe = ${classeId} AND giorno = '${giorno}'`
 			);
-			const esito = await fetch(`/api/giustificazione`, {
+			const esito = await fetch(`/api/classi/${classeId}/appello/${giorno}/giustificazioni`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'
@@ -105,7 +103,7 @@
 			console.log(
 				`Inserisci. INSERT INTO Giustificazione VALUES (${studenteId}, ${classeId}, ${giorno}, ${sorgente})`
 			);
-			const esito = await fetch(`/api/giustificazione`, {
+			const esito = await fetch(`/api/classi/${classeId}/appello/${giorno}/giustificazioni`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -130,7 +128,7 @@
 </script>
 
 <TableRow>
-	<TableHead>{pos}</TableHead>
+	<TableCell>{pos}</TableCell>
 	<TableCell><strong>{cognome}</strong></TableCell>
 	<TableCell>{nome}</TableCell>
 	<TableCell><Toggle bind:toggled={assenza} on:toggle={toggleAssenza} /></TableCell>

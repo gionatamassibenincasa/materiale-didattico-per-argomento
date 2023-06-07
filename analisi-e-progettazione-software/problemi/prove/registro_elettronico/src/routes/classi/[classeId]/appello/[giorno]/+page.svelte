@@ -2,7 +2,7 @@
 	import type { Appello } from '../../../api/appello/+server';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import type { PageData } from './$types';
+	import type { PageData } from '../../../appello/$types';
 	import {
 		Form,
 		Button,
@@ -23,16 +23,13 @@
 	let giorno: string;
 	$: {
 		a = data.appello;
-		classeId = parseInt($page.url.searchParams.get('classeId')) || 0;
-		giorno = $page.url.searchParams.get('giorno') || '0000-01-01';
+		classeId = parseInt($page.params['classeId']);
+		giorno = $page.params['giorno'];
 	}
 </script>
 
 <h1>Appello</h1>
-<Form method="get" action="prova/predisposizione" on:submit>
-	<input type="hidden" name="giorno" value={$page.url.searchParams.get('giorno')} />
-	<input type="hidden" name="classeId" value={$page.url.searchParams.get('classeId')} />
-
+<Form method="get" action="../prova/predisposizione" on:submit>
 	<TableContainer>
 		<Table zebra>
 			<TableHead>

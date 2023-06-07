@@ -30,18 +30,15 @@ type Appello = {
 export type { Appello, TipoGiustificazione };
 
 export const GET: RequestHandler = async ({ request, params, url }) => {
-	//console.log('ENDPOINT /api/appello', url, params, request);
-	const classeId = url.searchParams.get('classeId');
-	if (classeId === null) {
+	const classeIdz = params['classeId'];
+	if (classeIdz === null) {
 		throw error(412, 'Manca il parametro classeId');
 	}
-	const id: number = parseInt(classeId);
-	const giorno = url.searchParams.get('giorno');
-	if (giorno === null) {
-		throw error(412, 'Manca il parametro giorno');
+	const classeId: number = parseInt(classeIdz);
+	const giorno = params['giorno'];
+	if (giorno === null || isNaN(Date.parse(giorno))) {
+		throw error(412, 'Manca il parametro giorno (format: yyyy-mm-dd)');
 	}
-
-	console.log('Chiamata API GET api/appello?classeId=' + id + '&giorno=' + giorno);
 
 	const studentiIscritti: Registro[] = await prisma.registro.findMany({
 		include: {
@@ -54,7 +51,7 @@ export const GET: RequestHandler = async ({ request, params, url }) => {
 			AND: [
 				{
 					classeId: {
-						equals: id
+						equals: classeId
 					}
 				}
 			]
@@ -69,7 +66,7 @@ export const GET: RequestHandler = async ({ request, params, url }) => {
 		where: {
 			AND: [
 				{
-					classeId: id
+					classeId: classeId
 				},
 				{
 					giorno: {
@@ -88,7 +85,7 @@ export const GET: RequestHandler = async ({ request, params, url }) => {
 		where: {
 			AND: [
 				{
-					classeId: id
+					classeId: classeId
 				},
 				{
 					giorno: giorno
@@ -106,7 +103,7 @@ export const GET: RequestHandler = async ({ request, params, url }) => {
 		where: {
 			AND: [
 				{
-					classeId: id
+					classeId: classeId
 				},
 				{
 					giorno: giorno
@@ -121,7 +118,7 @@ export const GET: RequestHandler = async ({ request, params, url }) => {
 			maxGiustificazioni: true
 		},
 		where: {
-			classeId: id
+			classeId: classeId
 		}
 	});
 	// console.log('Giustificazioni per quadrimestre: ' + JSON.stringify(giustificazioniConcesse, null, 2));
@@ -154,10 +151,11 @@ export const GET: RequestHandler = async ({ request, params, url }) => {
 			}
 		},
 		where: {
-			classeId: id
+			classeId: classeId
 		}
 	});
-	//// console.log('periodoValutazione: ' + JSON.stringify(periodoValutazione, null, 2));
+	// console.log('periodoValutazione: ' + JSON.stringify(periodoValutazione, null, 2));
+	// Controllare che esista, altrimenti errore del server!
 	const inizio = periodoValutazione.AnnoScolastico.PeriodoValutazione[0].inizio;
 	const fine = periodoValutazione.AnnoScolastico.PeriodoValutazione[0].fine;
 	// console.log('inizio: ' + inizio, 'fine: ' + fine);
@@ -168,7 +166,7 @@ export const GET: RequestHandler = async ({ request, params, url }) => {
 			immotivata: true
 		},
 		where: {
-			AND: [{ classeId: id }, { giorno: { gte: inizio } }, { giorno: { lte: fine } }]
+			AND: [{ classeId: classeId }, { giorno: { gte: inizio } }, { giorno: { lte: fine } }]
 		}
 	});
 	// console.log('Storico giustificazioni: ' + JSON.stringify(giustificazioniNelPeriodoDiValutazione, null, 2));
