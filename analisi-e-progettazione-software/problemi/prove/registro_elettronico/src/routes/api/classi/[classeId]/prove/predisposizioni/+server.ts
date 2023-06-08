@@ -21,7 +21,7 @@ export async function GET({ request, params, url }): Promise<Response> {
 			where: { predisposizioneProvaId: parseInt(predisposizioneProvaIdz) }
 		});
 	} else {
-		const classeIdz = url.searchParams.get('classeId');
+		const classeIdz = params['classeId'];
 		if (classeIdz == null) {
 			predisposizioneProva = await prisma.predisposizioneProva.findMany({
 				include: include
@@ -56,6 +56,8 @@ export async function GET({ request, params, url }): Promise<Response> {
 		predisposizioneProva.numeroArgomenti = predisposizioneProva._count.ArgomentiProva;
 		delete predisposizioneProva._count;
 	}
+
+	console.log(predisposizioneProva);
 
 	return json(predisposizioneProva);
 }

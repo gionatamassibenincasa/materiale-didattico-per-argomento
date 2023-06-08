@@ -22,17 +22,15 @@
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 	import RigaStrutturaProva from './RigaStrutturaProva.svelte';
 
-	let classeId: number;
+	let classeId: number = parseInt($page.params['classeId']);
 	let giorno: string;
 
 	$: {
-		classeId = parseInt($page.url.searchParams.get('classeId')) || 0;
 		giorno = $page.url.searchParams.get('giorno') || '0000-01-01';
-		console.log(data);
 	}
 
 	function nuovo() {
-		goto(`predisposizione/nuova/?classeId=${classeId}`);
+		goto(`predisposizione/nuova/?giorno=${giorno}`);
 	}
 </script>
 

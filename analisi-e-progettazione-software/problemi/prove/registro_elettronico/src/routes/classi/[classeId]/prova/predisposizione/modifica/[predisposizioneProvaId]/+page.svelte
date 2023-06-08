@@ -8,10 +8,16 @@
 		TextInput,
 		DatePicker,
 		DatePickerInput,
-		MultiSelect
+		MultiSelect,
+		TableContainer,
+		Table,
+		TableHead,
+		TableBody,
+		TableHeader
 	} from 'carbon-components-svelte';
+	import SelectArgomento from './SelectArgomento.svelte';
+	//import type { MultiSelectItem } from 'carbon-components-svelte/types/MultiSelect/MultiSelect.svelte';
 	import DataInspector from '$lib/components/DataInspector.svelte';
-	import type { MultiSelectItem } from 'carbon-components-svelte/types/MultiSelect/MultiSelect.svelte';
 
 	/***/
 	export interface DataPippo {
@@ -22,31 +28,7 @@
 		descrizione: string;
 		predisposizioneProvaId: any;
 	}
-
-	export interface PredisposizioneProva {
-		predisposizioneProvaId: number;
-		classeId: number;
-		grigliaId: number;
-		descrizione: string;
-		giorno: string;
-		peso: number;
-		numeroQuesiti: number;
-		griglia: string;
-		numeroArgomenti: number;
-	}
-
-	export interface Griglie {
-		grigliaId: number;
-		descrizione: string;
-	}
-
-	export interface Argomenti {
-		argomentoId: number;
-		argomento: string;
-	}
-	/***/
-
-	export let data: DataPippo; //PageData;
+	export let data: PageData;
 	function zeroPad(number: number, width: number): string {
 		var string: string = String(number);
 		while (string.length < width) string = '0' + string;
@@ -59,10 +41,6 @@
 		year: string = String(dt.getFullYear()),
 		dateFormat: string = 'd/m/Y',
 		giornoVisualizzato: string = [day, month, year].join('/');
-
-	let opzioniArgomenti = data.argomenti.map((a: Argomenti): MultiSelectItem => {
-		return { id: a.argomentoId, text: a.argomento };
-	});
 </script>
 
 <h1>Modifica la struttura della prova</h1>
@@ -96,11 +74,26 @@
 			<SelectItem value={g.grigliaId} text={g.descrizione} />
 		{/each}
 	</Select>
-	<MultiSelect
-		titleText="Argomenti"
-		label="Seleziona gli argomenti della prova"
-		items={opzioniArgomenti}
-	/>
+	<TableContainer>
+		<Table titleText="Argomenti" label="Seleziona gli argomenti della prova">
+			<TableHead>
+				<TableHeader>Seleziona</TableHeader>
+				<TableHeader>Argomento</TableHeader>
+				<TableHeader>Quesiti prova</TableHeader>
+				<TableHeader>Quesiti disponibili</TableHeader>
+			</TableHead>
+			<TableBody>
+				{#each data.argomenti as a}
+					<SelectArgomento
+						selezionato={a.selezionato == 1}
+						argomentoId={a.argomentoId}
+						argomento={a.argomento}
+						quesitiDisponibili={a.quesitiDisponibili}
+					/>
+				{/each}
+			</TableBody>
+		</Table>
+	</TableContainer>
 </Form>
 
 <DataInspector {data} />

@@ -30,6 +30,7 @@
 
 <h1>Appello</h1>
 <Form method="get" action="../prova/predisposizione" on:submit>
+	<input type="hidden" name="giorno" value={giorno} />
 	<TableContainer>
 		<Table zebra>
 			<TableHead>
