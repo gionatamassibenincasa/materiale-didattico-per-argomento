@@ -1,0 +1,145 @@
+= Il software gestionale della Cooperativa agricola _ValNettarina_
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+2024-01-13
+
+== Descrizione del problema
+
+=== Introduzione
+La Cooperativa _ValNettarina_ è una società di recente costituzione che raccoglie alcune aziende agricole del centro Italia specializzate nella coltivazione di pesche.
+Lo scopo principale della cooperativa è quello di migliorare la redditività della produzione concentrando l'offerta, selezionando la frutta e confezionandola nel migliore dei modi.
+Per massimizzare i ricavi dei soci agisce tramite la destinazione ottimale dei prodotti tra il mercato della trasformazione industriale, a bassa redditività, e quello del consumo di frutta fresca, con redditività più elevata.
+Essa offre i servizi i servizi commerciali, di gestione contabile e di statistica per i propri soci.
+
+I soci lavorano i terreni agricoli di loro proprietà o da loro affittati, e poi apportano tutta la produzione di pesche e nettarine alla cooperativa, in modo che quest'ultima li selezioni e li distribuisca. La cooperativa acquista unicamente dai soci, retribuendoli mensilmente, e rivende a terzi.
+La cooperativa effettua una preselezione della frutta che consista nella rimozione precoce dei frutti affetti da parassiti e di quelli non commercializzabili così da evitare i respingimenti delle partite di vendita.
+
+In considerazione dell'incidenza del costo della manodopera per la selezione manuale della frutta destinata alla vendita per il consumo fresco e della maggiore redditività di confezionamenti di prodotti di qualità commerciale omogenea, la cooperativa usa un'impianto di selezione automatica.
+
+La cooperativa raccoglie la produzione nel suo centro di deposito organizzato in partite di acquisto dai propri clienti.
+Procede quindi alla pesatura, al lavaggio dei prodotti, e ad un primo controllo automatico della qualità al fine di separare i frutti in tre segmenti: scarti, prodotti destinati alla produzione industriale e prodotti destinati al consumo fresco.
+Le pesche e le nettarine destinate al consumo fresco vengono classificate per la commercializzazione in base al calibro e alla categoria.
+Il confezionamento avviene nel rispetto dei regolamenti:
+
+* https://eur-lex.europa.eu/legal-content/IT/TXT/HTML/?uri=CELEX:32019R0428&from=IT[Regolamento delegato (UE) 2019/428 della Commissione, del 12 luglio 2018, recante modifica del regolamento di esecuzione (UE) n. 543/2011 per quanto concerne le norme di commercializzazione nel settore degli ortofrutticoli]
+* https://eur-lex.europa.eu/legal-content/IT/TXT/HTML/?uri=CELEX:32004R1861&qid=1639056518933&from=IT[Regolamento (CE) N. 1861/2004 della Commissione del 26 ottobre 2004 che stabilisce la norma di commercializzazione applicabile alle pesche e alle nettarine]..
+
+=== Lavorazioni e servizi
+
+I soci stabiliscono che per ogni partita essi inseriranno i dati relativi all'azienda agricola, alla cultivar, alla zona di produzione e al processo di raccolta.
+Depositeranno le cassette della partita, di cui sarà stata effettuata la pesatura, in un'area di immagazzinamento dalla quale le cassette quale saranno prelevate per essere avviate alla linea di spazzolatura. Le pesche pulite transiteranno in una linea di preselezione dove saranno analizzate da un sistema automatico di diagnosi dei difetti interni al fine di individuare le condizioni di:
+
+* imbrunimento interno,
+* pastosità
+
+e da sistema di visione artificiale per determinare la presenza di difetti esterni quali:
+
+* marciume (bruno, nero),
+* muffa (grigia, verde-azzurra),
+* gravi lesioni dell'epidermide (spaccature, macchie estese),
+* deformazioni.
+
+In base alla presenza e alla gravità dei difetti, i frutti saranno scartati, destinati alla trasformazione industriale, oppure lasciati nella linea per transitare nella zona destinata al mercato del consumo fresco.
+
+La parte restante della linea opera i processi di calibrazione e controllo di qualità. Qui le pesche saranno pesate singolarmente e, tramite un ulteriore sistema di visione artificiale, classificate per:
+
+* conferma della varietà,
+* calibro,
+* colore
+** di fondo (verde chiaro, biancastro, giallo-verde, giallo chiaro, giallo, aranciato chiaro, aranciato)
+** sovracolore (assente, rosa chiaro, rosato, rosso chiaro, rosso vivo, rosso intenso)
+** tonalità (opaca, semiluminosa, brillante)
+** distribuzione (uniforme, punteggiata, striata, marezzata, sfumata)
+* forma
+** longitudinale (piatta, oblata, rotonda, oblunga, ellittica)
+** trasversale (oblata, rotonda, ellittica, ovata, triangolare)
+** apice (molto incavato, incavato, arrotondato, sporgente, molto sporgente)
+** simmetria (simmetrico, leggermente asimmetrico, mediamente asimmetrico, asimmetrico)
+** sutura ventrale (molto profonda, medio profonda, superficiale, sporgente, molto sporgente)
+* imperfezioni o lesioni dell'epidermide
+** spaccature (all'apice, alla cavità peduncolare, alla guancia, alla sutura)
+** rugginosità e altre macchie
+
+e destinate ai banchi di confezionamento in base a carattestiche uniformi.
+
+Il calibro e le categorie sono attribuite secondo le scale del Regolamento (CE) n. 2335/1999 esposte nei riquadri.
+
+.Calibro - Reg. CE n. 2335/1999
+****
+Il calibro è determinato:
+
+* dalla circonferenza, o
+* dal diametro massimo della sezione normale all'asse del frutto.
+
+|===
+|Diametro|Identificazione del calibro|Circonferenza
+|90 mm e oltre|AAAA|28 cm e oltre
+|da 80 mm inclusi a 90 mm esclusi|AAA|da 25 cm inclusi a 28 cm esclusi
+|da 73 mm inclusi a 80 mm esclusi|AA|da 23 cm inclusi a 25 cm esclusi
+|da 67 mm inclusi a 73 mm esclusi|A|da 21 cm inclusi a 23 cm esclusi
+|da 61 mm inclusi a 67 mm esclusi|B|da 19 cm inclusi a 21 cm esclusi
+|da 56 mm inclusi a 61 mm esclusi|C|da 17,5 cm inclusi a 19 cm esclusi
+|da 51 mm inclusi a 56 mm esclusi|D|da 16 cm inclusi a 17,5 cm esclusi
+|===
+****
+
+.Categorie - Reg. CE n. 2335/1999
+****
+["lowerroman"]
+. Categoria *Extra*
+* fattori di forma nell'intervallo di riferimento
+* colore omogeneo e vicino a quello di riferimento
+. Categoria *I*
+* difetti di forma allungata inferiori o uguale a 1 cm
+* superficie totale per tutti gli altri difetti inferiore o uguale a 0,5 cm²
+. Categoria *II*
+* sono ammessi i frutti aperti al punto d'attacco del peduncolo
+* difetti di forma allungata inferiori o uguale a 2 cm
+* superficie totale per tutti gli altri difetti inferiori o uguale a 1,5 cm².
+****
+
+L'operatore per ogni partita carica o crea il part program con i parametri di pre-selezione e calibrazione e il prezzo da corrispondere per kilogrammo di prodotto in base alla destinazione del prodotto.
+
+
+Fatte le opportune ipotesi aggiuntive e costruito un glossario di progetto, si fornisca un modello dei dati del sistema informatico di supporto al sistema informativo del centro.
+Il modello deve essere costituito da uno schema concettuale (diagramma delle classi di analisi) e da uno logico (modello relazionale).
+Si valuti la completezza del modello con riferimento alle seguenti operazioni:
+
+. Operazioni del socio:
+* registrazione dei dati di fatturazione,
+* inserimento della cultivar, della zona di coltivazione, della data di raccolta,
+* generazione dei dati di sintesi di tutte le partite consegnate in un intervallo temporale: peso complessivo, scarto, prodotto destinato alla trasformazione industriale, prodotto destinato al consumo fresco; in riferimento al mercato fresco i dati devono essere raggruppati per categoria, calibro e colorazione
+. Operazioni dell'operatore:
+* calibrazione dei sistemi automatici,
+* creazione, aggiornamento e modifica dei part program della linea (pre-selezione della frutta e scelta dei parametri dei banchi di confezionamento),
+* generazione del rapporto delle partite lavorate in un dato periodo di riferimento,
+. Operazioni per la contabilità:
+* generazione della fattura elettronica di pagamento della partita, con una riga per lo scarto, una per i prodotti destinati alla trasformazione e tante altre righe quante sono state le linee di confezionamento usate,
+* calcolo dell'importo complessivo da corrispondere ad ogni socio nel mese corrente,
+. Operazioni statistiche:
+* redditività per cultivar per chilogrammo della produzione di ogni socio in un dato intervallo temporale,
+* redditività per cultivar per chilogrammo della produzione di tutta la produzione in un dato intervallo temporale,
+* peso netto complessivo delle confezioni per categoria e calibro per partita di acquisto,
+* numero, frequenza relativa e peso delle pesche scartate per partita d'acquisto,
+* aerogramma indicante le destinazioni di prodotto (tre aree) in un dato intervallo temporale,
+* aerogramma indicante le destinazioni le classi di confezionamento in un dato intervallo temporale,
+* calibro medio,
+* rapporto sulla qualità.
+
+
+// background subtraction
+// histogram
+
+[NOTE]
+----
+Il sistema di visione usa una singola videocamera che cattura un certo numero _n_ di frutti per fotogramma.
+----
+
+[NOTE]
+----
+Il sistema di visione ha più modalità operative:
+
+* registra _n_ immagini in un video, per consentire lo sviluppo
+* determina le regioni di interesse
+* calibrazione dell'ottica: messa a fuoco e apertura (da contorni e saturazione dei canali del colore)
+* calibra la telecamera (distorsione e pixel per millimetro)
+----
