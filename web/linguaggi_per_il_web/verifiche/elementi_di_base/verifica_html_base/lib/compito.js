@@ -388,7 +388,7 @@ console.log(event);
       punti: 1,
       fn_valutazione: function (d) {
         var unparsedText = document.querySelector("#render").getAttribute("srcdoc");
-        cercaRegExp(unparsedText, /<!DOCTYPE\s+html>/, function (testo) {
+        return cercaRegExp(unparsedText, /<!DOCTYPE\s+html>/, function (testo) {
          return testo.slice(0, testo.indexOf("\n"));
         })
       }
